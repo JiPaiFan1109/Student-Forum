@@ -1,7 +1,7 @@
-'''from app.main import db'''
+from app.main import db
 
 
-'''class User(db.Model):
+class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -9,4 +9,4 @@
     password_hash = db.Column(db.String(128))
 
     def __repr__(self):
-        return '<用户名:{}>'.format(self.username)'''
+        return '<用户名:{}>'.format(self.username)
