@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, url_for
 from app.main import app
 from app.main.forms import LoginForm
 
@@ -7,17 +7,14 @@ from app.main.forms import LoginForm
 @app.route('/index')
 def index():
     user = {'username': 'group1Mel'}
-    posts = [
-
-    ]
-    return render_template('index.html', title='Home', user=user, posts = posts)
+    return render_template('index.html', title='Home', user=user)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
     form = LoginForm()
-    '''if form.validate_on_submit():
+    if form.validate_on_submit():
         flash('用户登录的名户名是:{} , 是否记住我:{}'.format(
             form.username.data, form.remember_me.data))
-        return redirect('/index')'''
+        return redirect(url_for('index'))
     return render_template('login.html', title='登 录', form=form)

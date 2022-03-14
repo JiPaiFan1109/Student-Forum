@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html  lang="">
-<head>
-    <meta charset="UTF-8">
-     {% if title %}
-        <title>{{ title }} - GROUP1</title>
-        {% else %}
-        <title>欢迎来到GROUP1!</title>
-        {% endif %}
-    </head>
-    <body>
-        <h1>Hello, {{ user.username }}!</h1>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+     {% block content %}
+
+       <h1>Hello, {{ user.username }} !</h1>
+
+     {% endblock %}

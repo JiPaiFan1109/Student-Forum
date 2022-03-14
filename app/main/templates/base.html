@@ -10,12 +10,22 @@
     </head>
     <body>
        <div>WEB :
-           <a href="/index">首页</a>
-           <a href="/login">登录</a>
-
+           <a href="{{ url_for('index') }}">首页</a>
+           <a href="{{ url_for('login') }}">登录</a>
        </div>
+       <hr>
+       {% with messages = get_flashed_messages() %}
+           {% if messages %}
+            <ur>
+                {% for message in messages %}
+                    <li>{{ message }}</li>>
+                {% endfor %}
+            </ur>
+           {% endif %}
+       {% endwith %}
+
         {% block content %}
 
-        {% end-block %}
+        {% endblock %}
     </body>
 </html>
