@@ -10,8 +10,7 @@
     </head>
     <body>
        <div>WEB :
-           <a href="{{ url_for('index') }}">首页</a>
-           <a href="{{ url_for('login') }}">登录</a>
+           <a href="{{ url_for('auth.login') }}">登录</a>
        </div>
        <hr>
        {% with messages = get_flashed_messages() %}

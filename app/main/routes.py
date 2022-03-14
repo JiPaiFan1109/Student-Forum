@@ -1,20 +1,16 @@
-from flask import render_template, flash, redirect, url_for
-from app.main import app
-from app.main.forms import LoginForm
+from flask import render_template, flash, redirect, url_for, session
+
+from . import main
+from .forms import NameForm
+from .. import db
+from ..models import User
 
 
-@app.route('/')
-@app.route('/index')
+@main.route('/', methods=['GET', 'POST'])
 def index():
-    user = {'username': 'group1Mel'}
-    return render_template('index.html', title='Home', user=user)
-
-
-@app.route('/login', methods=['GET','POST'])
-def login():
-    form = LoginForm()
+    form = NameForm()
     if form.validate_on_submit():
-        flash('用户登录的名户名是:{} , 是否记住我:{}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect(url_for('index'))
-    return render_template('login.html', title='登 录', form=form)
+        return redirect(url_for('.index'))
+    return render_template('index.html',
+                           form = form, name = session.get('name'),
+                           known = session.get('known', False))
