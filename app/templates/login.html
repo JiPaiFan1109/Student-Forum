@@ -2,11 +2,17 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}Flasky - Login{% endblock %}
 
-{% block page_content %}
-<div class="page-header">
-    <h1>Login</h1>
-</div>
-<div class="col-md-4">
-    {{wtf.quick_form(form, )}}
-</div>
-{% endblock %}
+<h1>Sign In</h1>
+<form action="" method="post" novalidate>
+    {{form.hidden_tag() }}
+    <p>
+        {{form.userame.label}}<br>
+        {{form.username(size=32)}}
+    </p>
+    <p>
+        {{form.password.label}}<br>
+        {{form.password(size=32)}}
+    </p>
+    <p>{{form.remember_me()}}{{form.remember_me.label}}</p>
+    <p>{{form.submit()}}</p>
+</form>
