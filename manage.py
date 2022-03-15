@@ -1,11 +1,12 @@
 import os
 
 from app import create_app, db
-from flask import Flask
-from flask_migrate import Migrate
+from flask_migrate import Migrate, command
+from app.models import User, Role
+from flask_bootstrap import Bootstrap
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 Migrate(app, db)
-
+bootstrap = Bootstrap(app)
 if __name__ == '__main__':
     app.run()
