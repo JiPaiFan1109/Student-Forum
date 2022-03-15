@@ -1,18 +1,31 @@
-{% extends 'bootstrap/base.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
-{% block title %}Flasky - Login{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
-<h1>Sign In</h1>
-<form action="" method="post" novalidate>
-    {{form.hidden_tag() }}
-    <p>
-        {{form.userame.label}}<br>
-        {{form.username(size=32)}}
-    </p>
-    <p>
-        {{form.password.label}}<br>
-        {{form.password(size=32)}}
-    </p>
-    <p>{{form.remember_me()}}{{form.remember_me.label}}</p>
-    <p>{{form.submit()}}</p>
+</head>
+<body>
+
+<div>
+    {% include 'base.html' %}
+</div>
+
+    <h1>登陆</h1>
+<!--<form action="", method="get">-->
+<form action="", method="post">
+    账号：
+    <label>
+        <input type="text" name="name">
+    </label>
+    <!--<br>表示为换行-->
+    <br>
+    <label>
+        密码：
+        <input type="password" name="password">
+    </label>
+    <br>
+    <input type="submit" name="submit">
 </form>
+</body>
+</html>

@@ -1,17 +1,23 @@
-{% extends 'base.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Index{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
-{% block page_content %}
-<div class="page-header">
-    <h1>Hello,
-        {% if current_user.is_authenticated %}
-            {{current_user.username}}
-        {% else %}
-            Stranger
-        {% endif %}!</h1>
+</head>
+<body>
+
+<div>
+    {% include 'base.html' %}
 </div>
 
-{% endblock %}
+<h1> Hello, my guests!!! </h1>
+
+</body>
+</html>
+
+
+
+
 
