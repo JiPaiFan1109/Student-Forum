@@ -37,3 +37,9 @@ def register():
         flash('You can now Login')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
+
+
+@auth.route('/userinfo', methods=['GET', 'POST'])
+def userinfo():
+
+    return render_template('user.html')

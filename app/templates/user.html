@@ -1,9 +1,40 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 
-{% block title %}Flasky{% endblock %}
-
-{% block page_content %}
-<div class="page-header">
-        <h1>Hello, {{name}}!</h1>
+<div>
+    {% include 'base.html' %}
 </div>
-{% endblock %}
+    <h1>个人信息</h1>
+
+<div class="well">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#home" data-toggle="tab">Profile</a></li>
+      <li><a href="#profile" data-toggle="tab">Privacy</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane active in" id="home">
+    <form id="tab">
+        <label>Username</label>
+        <input type="text" value="Owen" class="input-xlarge">
+        <label>First Name</label>
+        <input type="text" value="William" class="input-xlarge">
+        <label>Last Name</label>
+        <input type="text" value="Owen" class="input-xlarge">
+        <label>Email</label>
+        <input type="text" value="feihe.huang@ucdconnect.ie" class="input-xlarge">
+        <label>Personalized Signature</label>
+        <textarea value="Smith" rows="3" class="input-xlarge">
+Good Good study!!!
+        </textarea>
+    </form>
+      </div>
+    </div>
+</div>>
+</body>
+</html>
