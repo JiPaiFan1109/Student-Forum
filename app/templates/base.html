@@ -32,6 +32,11 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
             </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+    <li><a href=" 'auth.register')}}">Registration</a ></li>
+</ul>
+
             <a class="navbar-brand navbar-right" href="{{url_for('auth.userinfo')}}">Account</a>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
