@@ -1,11 +1,12 @@
 from flask import render_template, flash, redirect, url_for, session
 from . import main
 from .forms import NameForm
+from .. import db
+from ..models import User
 
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    name = None
     form = NameForm()
     if form.validate_on_submit():
         old_name = session.get('name')
