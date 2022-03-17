@@ -17,3 +17,25 @@ def index():
     return render_template('index.html',
                            form=form, name=session.get('name'),
                            known=session.get('know', False))
+
+
+@main.route('/user/<username>')
+def user(username):
+    user = User.query.filter_by(usernamne=username).first_or_404()
+    return render_template('userinfo.html', user=user)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

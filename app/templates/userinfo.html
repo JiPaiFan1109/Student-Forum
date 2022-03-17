@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Group1 - {{user.username}}{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>{{user.username}}</h1>
+    {% if user.name %}
+    <p>
+        {% if user.name %}{{user.name}}{% endif %}

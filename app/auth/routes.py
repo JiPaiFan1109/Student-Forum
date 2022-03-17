@@ -46,3 +46,4 @@ def register():
 def userinfo():
 
     return render_template('user.html')
+
