@@ -2,7 +2,7 @@ import os
 
 from app import create_app, db
 from flask_migrate import Migrate, command
-from app.models import User, Role
+from app.models import User, Role, Permission
 '''from flask_script import Manager, Shell'''
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
