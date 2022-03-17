@@ -1,0 +1,23 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Flasky - Registration{% endblock %}
+
+<h1>Registration</h1>
+<form action="" method="get,post" novalidate>
+    <p>
+        {{form.email.label}}<br>
+        {{form.email(size=32)}}
+    </p>
+    <p>
+        {{form.username.label}}<br>
+        {{form.username(size=32)}}
+    </p>
+    <p>
+        {{form.password.label}}<br>
+        {{form.password(size=32)}}
+    </p>
+    <p>
+        {{form.password2.label}}<br>
+        {{form.password2(size=32)}}
+    </p>
+    <p>{{form.submit()}}</p>
+</form>

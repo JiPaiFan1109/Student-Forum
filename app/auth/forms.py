@@ -34,3 +34,5 @@ class RegistrationForm(Form):
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Username already in use')
+    def validate_on_submit(self):
+        pass
