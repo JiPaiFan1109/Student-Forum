@@ -1,11 +1,13 @@
+
+
+
 <div>
-    {% include 'base.html' %}
+        {% include 'base.html' %}
 </div>
 
-{% import "bootstrap/wtf.html" as wtf %}
 
 <h1>Sign In</h1>
-<form action=""method="post"novalidate>
+<form action="" method="post" novalidate>
     <p>
         {{form.text.label}}<br>
         {{form.text(size=32)}}
