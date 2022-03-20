@@ -5,22 +5,38 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 <h1>Registration</h1>
-<form action="" method="get" novalidate>
+<form action="" method="post" novalidate>
     <p>
         {{form.email.label}}<br>
         {{form.email(size=32)}}
+        {% for error in form.email.errors %}
+            <span style="color: red;">
+        {{form.email.errors}}</span>
+            {% endfor %}
     </p>
     <p>
         {{form.username.label}}<br>
         {{form.username(size=32)}}
+        {% for error in form.username.errors %}
+            <span style="color: red;">
+        {{form.username.errors}}</span>
+            {% endfor %}
     </p>
     <p>
         {{form.password.label}}<br>
         {{form.password(size=32)}}
+        {% for error in form.password.errors %}
+            <span style="color: red;">
+        {{form.password.errors}}</span>
+            {% endfor %}
     </p>
     <p>
         {{form.password2.label}}<br>
         {{form.password2(size=32)}}
+        {% for error in form.password2.errors %}
+            <span style="color: red;">
+        {{form.password2.errors}}</span>
+            {% endfor %}
     </p>
     <p>{{form.submit()}}</p>
 </form>

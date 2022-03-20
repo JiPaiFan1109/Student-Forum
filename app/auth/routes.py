@@ -34,6 +34,7 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    print(form.validate_on_submit())
     if form.validate_on_submit():
         user = User(email=form.email.data,
                     username=form.username.data,
@@ -51,7 +52,7 @@ def register():
 @login_required
 def confirm(token):
     if current_user.confirmed:
-        return redirect(url_for('main.idex'))
+        return redirect(url_for('main.index'))
     if current_user.confirm(token):
         db.session.commit()
         flash('you have confirmed your account. Thanks')

@@ -76,9 +76,9 @@ class Role(db.Model):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    location = db.Column(db.String(64))
-    name = db.Column(db.String(64))
-    about_me = db.Column(db.Text())
+    # location = db.Column(db.String(64))
+    # name = db.Column(db.String(64))
+    # about_me = db.Column(db.Text())
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), index=True, unique=True)
     username = db.Column(db.String(64), index=True, unique=True)
