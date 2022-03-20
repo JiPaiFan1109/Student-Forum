@@ -38,6 +38,7 @@ def register():
         user = User(email=form.email.data,
                     username=form.username.data,
                     password=form.password.data)
+        print(user)
         db.session.add(user)
         db.session.commit()
         '''token = user.generate_confirmation_token()
@@ -51,7 +52,7 @@ def register():
 @login_required
 def confirm(token):
     if current_user.confirmed:
-        return redirect(url_for('main.idex'))
+        return redirect(url_for('main.index'))
     if current_user.confirm(token):
         db.session.commit()
         flash('you have confirmed your account. Thanks')
