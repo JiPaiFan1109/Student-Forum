@@ -4,16 +4,15 @@ from . import auth
 from .forms import LoginForm, RegistrationForm
 from .. import db
 from ..models import User
-from werkzeug.security import  generate_password_hash
+from werkzeug.security import generate_password_hash
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        '''passw_hash = generate_password_hash(form.password.data)'''
-        user = User.query.filter_by(email=form.email.data).first()
-        '''user = User(username=form.username.data, email=form.email.data, password_hash=passw_hash)'''
+        passw_hash = generate_password_hash(form.password.data)
+        user = User(username=form.username.data, email=form.email.data, password_hash=passw_hash)
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
             next = request.args.get('next')
@@ -80,5 +79,5 @@ def unconfirmed():
 @auth.route('/userinfo', methods=['GET', 'POST'])
 def userinfo():
 
-    return render_template('user.html')
+    return render_template('userinfo.html')
 
