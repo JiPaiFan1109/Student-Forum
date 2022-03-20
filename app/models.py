@@ -1,5 +1,5 @@
 from app import db
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from . import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedSerializer as Serializer
@@ -41,7 +41,7 @@ class Role(db.Model):
             self.permissions = 0
 
     def add_permission(self, perm):
-        if not self.has_permision(perm):
+        if not self.has_permission(perm):
             self.permissions += perm
 
     def remove_permission(self, perm):
@@ -53,6 +53,7 @@ class Role(db.Model):
 
     def has_permission(self, perm):
         return self.permissions & perm == perm
+
     @staticmethod
     def insert_roles():
         roles = {
@@ -72,8 +73,12 @@ class Role(db.Model):
             db.session.add(role)
         db.session.commit()
 
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
+    location = db.Column(db.String(64))
+    name = db.Column(db.String(64))
+    about_me = db.Column(db.Text())
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), index=True, unique=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -89,6 +94,11 @@ class User(UserMixin, db.Model):
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
 
+    def can(self, perm):
+        return self.role is not None and self.role.has_permission(perm)
+
+    def is_administrator(self):
+        return self.can(Permission.ADMIN)
 
     def generate_confirmation_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
@@ -119,3 +129,13 @@ class User(UserMixin, db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permissions):
+        return False
+
+    def is_administrator(self):
+        return False
+
+login_manager.anonymous_user = AnonymousUser
