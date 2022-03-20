@@ -8,7 +8,6 @@ a:hover {
 }
 
 blockquote {
-  background: whitesmoke url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/quote.png") no-repeat 20px 25px;
   border: 1px solid #e8e8e8;
   padding: 20px 20px 20px 60px;
   color: #6f7579;
@@ -56,7 +55,7 @@ blockquote p {
 }
 
 span.tag-line {
-  color: #818a90;
+  color: #ffffff;
   font-size: 12px;
   position: relative;
   top: 2px;
@@ -139,9 +138,9 @@ span.tag-line {
   display: none;
 }
 
-/* Header - Search ---------------------------------------------------------------------------------------------------*/
+/* Header - Search     search image*/
 .search-area-wrapper {
-  background: #353b65 url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/main-bg.jpg") center top no-repeat;
+  background: #353b65 center top no-repeat;
   background-size: 100%;
   min-height: 279px;
   height: auto !important;
@@ -191,7 +190,6 @@ form.search-form input.search-term {
   margin-bottom: 0;
 }
 form.search-form input.search-term.loading {
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/search-loader.gif");
   background-repeat: no-repeat;
   background-position: 98% 50%;
 }
@@ -430,7 +428,8 @@ li.comment > article .avatar {
 .widget ul li {
   list-style: none;
   padding: 8px 8px 8px 23px;
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/li-arrow.png") no-repeat 8px 15px;
+  background:  no-repeat 8px 15px;
+  /*background 后可加入url（导入图片）*/
   border-bottom: 1px solid #f2f2f2;
 }
 .widget ul li:last-child {
@@ -444,7 +443,7 @@ li.comment > article .avatar {
 .support-widget {
   border: 1px solid #e9e6c4;
   padding: 10px 100px 10px 20px;
-  background: #fefbdc url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/support.png") no-repeat 95% 20px;
+  background: #fefbdc  no-repeat 95% 20px;
   margin-bottom: 20px;
 }
 .support-widget h3 {
@@ -497,7 +496,7 @@ li.comment > article .avatar {
 .top-cats h4.category {
   margin: 9px 0;
   padding: 2px 0 2px 30px;
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/category-main-icon.png") no-repeat 0 0;
+  background:  no-repeat 0 0;
   font-weight: 600;
 }
 
@@ -529,7 +528,7 @@ ul.articles .article-entry {
   position: relative;
   border-bottom: 1px solid #f2f2f2;
   padding: 0 0 0 24px;
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/standard.png") no-repeat 0 3px;
+  background:  no-repeat 0 3px;
 }
 ul.articles .article-entry.standard {
   background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/standard.png") no-repeat 0 3px;
@@ -1248,7 +1247,7 @@ a#scroll-top:hover {
   }
 
   span.tag-line {
-    color: #818a90;
+    color: #ffffff;
     font-size: 12px;
     display: block;
     text-align: center;
