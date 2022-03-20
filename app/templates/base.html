@@ -37,7 +37,10 @@
     <li><a href=" {{url_for('auth.register')}}">Registration</a ></li>
             </ul>
 
-            <a class="navbar-brand navbar-right" href="{{url_for('auth.userinfo')}}">Account</a>
+            <a class="navbar-brand navbar-right" href="{{url_for('main.user', username=current_user.username)}}">
+                Profile
+            </a>
+
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
                 <li><a href="{{url_for('auth.logout')}}">Sign Out</a></li>

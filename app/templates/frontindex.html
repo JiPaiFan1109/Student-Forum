@@ -12,18 +12,13 @@
     {% include 'base.html' %}
 </div>
 
-<h1> Hello,
-    {% if current_user.is_authenticated %}
-        {{current_user.username}}
-    {% else %}
-    my guests
-    {% endif %}    !
-</h1>
-
+<h1> Hello, my guests!!! </h1>
+Hello,
+{% if current_user.is_authenticated %}
+    {{ current_user.username }}
+{% else %}
+    Stranger
+{% endif %}
 </body>
 </html>
-
-
-
-
 

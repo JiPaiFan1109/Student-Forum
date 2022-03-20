@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Group1 - {{user.username}}{% endblock %}
+{% block title %}Group1 - {{user.username}}{% end block %}
 
 {% block page_content %}
 <div class="page-header">
@@ -7,3 +7,13 @@
     {% if user.name %}
     <p>
         {% if user.name %}{{user.name}}{% endif %}
+        {% if user.location %}
+            From <a href="http://maps.google.com/?q={{user.location}}">
+                {{user.location}}
+            </a>
+        {% endif %}
+    </p>
+    {% endif %}
+    {% if user.about_me %}<p>{{user.about_me}}</p>{%% endif %}
+</div>
+{% end block %}
