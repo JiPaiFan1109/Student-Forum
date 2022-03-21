@@ -13,7 +13,8 @@ def login():
     print(form.validate_on_submit())
     if form.validate_on_submit():
         passw_hash = generate_password_hash(form.password.data)
-        user = User(username=form.username.data, email=form.email.data, password_hash=passw_hash)
+        '''user = User(username=form.username.data, email=form.email.data, password_hash=passw_hash)'''
+        user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
             next = request.args.get('next')
