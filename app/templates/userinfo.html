@@ -9,7 +9,7 @@
 
     <style>
         body{
-            background-image: url("../static/img/10.jpg");
+            /*background-image: url("../static/img/10.jpg");*/
         }
         h1{
             text-align:center;
@@ -25,15 +25,48 @@
             overflow: hidden;
             background-color: #619ac3;
             position:fixed;
-            left:60px;
+            left:360px;
             top:100px;
 
+        }
+        .sidebar {
+            position: absolute;
+            left: 0;
+            top: 60px;
+            bottom: 0;
+            width: 210px;
+            background-color: #d6e9c6;
+        }
+        .MyPosts {
+            position: absolute;
+            left: 72px;
+            top: 100px;
+            bottom: 0;
+            width: 65px;
+            height: 25px;
+            border-style:solid;
+            border-color: #8a6d3b;
+        }
+        .MyReply {
+            position: absolute;
+            left: 72px;
+            top: 150px;
+            bottom: 0;
+            width: 65px;
+            height: 25px;
+            border-style:solid;
+            border-color: #8a6d3b;
         }
 
         img{
         width: 100%;
         }
 
+        .c2{
+            position:fixed;
+            left:355px;
+            top:210px;
+        }
 
     </style>
 
@@ -67,6 +100,15 @@
         {{form.PersonalizedSignature(size=500)}}
     </p>
     <p>{{form.submit()}}</p>
+    <p class="c2">{{form.UploadPortrait()}}</p>
 </form>
+<div class="sidebar">
+    <div class="MyPosts">
+        <a href="url_for()">我的帖子</a>
+    </div>
+    <div class="MyReply">
+        <a href="url_for()">我的回复</a>
+    </div>
+</div>
 
 </body>

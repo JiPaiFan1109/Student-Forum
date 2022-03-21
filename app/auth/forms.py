@@ -45,3 +45,4 @@ class UserInformationForm(FlaskForm):
     PersonalizedSignature = TextAreaField('PersonalizedSignature', render_kw={'placeholder': 'Good'},
                                           validators=[DataRequired(), Length(0, 500)])
     submit = SubmitField('save changes')
+    UploadPortrait = SubmitField('change portrait')
