@@ -531,16 +531,16 @@ ul.articles .article-entry {
   background:  no-repeat 0 3px;
 }
 ul.articles .article-entry.standard {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/standard.png") no-repeat 0 3px;
+  background: no-repeat 0 3px;
 }
 ul.articles .article-entry.video {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/video.png") no-repeat 0 3px;
+  background: no-repeat 0 3px;
 }
 ul.articles .article-entry.image {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/image.png") no-repeat 0 3px;
+  background: no-repeat 0 3px;
 }
 ul.articles .article-entry.gallery {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/image.png") no-repeat 0 3px;
+  background: no-repeat 0 3px;
 }
 ul.articles li.article-entry:last-child {
   border-bottom: 1px solid #f2f2f2;
@@ -570,10 +570,10 @@ ul.articles li.article-entry:last-child {
   padding: 3px 5px 3px 20px;
   border: 1px solid #f2f2f2;
   border-bottom: none;
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like.png") no-repeat 6px 8px;
+  background:no-repeat 6px 8px;
 }
 .article-entry:hover .like-count {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like.png") no-repeat 6px -22px;
+  background:no-repeat 6px -22px;
   color: #395996;
 }
 
@@ -609,23 +609,23 @@ ul.articles li.article-entry:last-child {
   line-height: 22px;
 }
 .hentry .post-meta .date {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/calendar-icon.png") no-repeat left center;
+  background: no-repeat left center;
 }
 .hentry .post-meta .category {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/category-icon.png") no-repeat left center;
+  background: no-repeat left center;
 }
 .hentry .post-meta .author {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/user.png") no-repeat left center;
+  background:no-repeat left center;
 }
 .hentry .post-meta .comments {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/comment.png") no-repeat left center;
+  background: no-repeat left center;
 }
 .hentry .post-meta .like-count {
   float: right;
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like.png") no-repeat 4px 6px;
+  background:no-repeat 4px 6px;
 }
 .hentry .post-meta .like-count:hover {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like.png") no-repeat 4px -24px;
+  background: no-repeat 4px -24px;
   color: #395996;
 }
 
@@ -635,7 +635,7 @@ ul.articles li.article-entry:last-child {
   line-height: 20px;
   padding: 5px 13px;
   padding-left: 25px;
-  background: #fafafa url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like-btn.png") no-repeat 10px -20px;
+  background: #fafafa no-repeat 10px -20px;
   cursor: pointer;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -643,20 +643,20 @@ ul.articles li.article-entry:last-child {
   color: #8cd24e;
 }
 .like-btn .like-it:hover {
-  background: #b6b6b6 url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like-btn.png") no-repeat 10px 10px;
+  background: #b6b6b6 no-repeat 10px 10px;
   color: #fff;
 }
 .like-btn .like-it.already-voted {
   cursor: default;
 }
 .like-btn .like-it.already-voted:hover {
-  background: #fafafa url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like-btn.png") no-repeat 10px -20px;
+  background: #fafafa no-repeat 10px -20px;
   color: #8cd24e;
 }
 
 .hentry.type-post .post-title {
   padding-left: 35px;
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/standard-large.png") no-repeat 0 3px;
+  background:no-repeat 0 3px;
   font-size: 20px;
   line-height: 30px;
 }
@@ -675,15 +675,15 @@ ul.articles li.article-entry:last-child {
 }
 
 .hentry.format-image .post-title {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/image-large.png") no-repeat 0 3px;
+  background: no-repeat 0 3px;
 }
 
 .hentry.format-video .post-title {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/video-large.png") no-repeat 0 3px;
+  background: no-repeat 0 3px;
 }
 
 .faq.hentry .post-title {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/question-large.png") no-repeat 0 5px;
+  background: no-repeat 0 5px;
   padding-left: 30px;
 }
 
@@ -756,7 +756,6 @@ h1.search-title span {
 #live-search-results .search-result {
   position: relative;
   padding: 10px 10px 10px 35px;
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/standard.png");
   background-repeat: no-repeat;
   background-position: 10px 13px;
 }
@@ -769,21 +768,7 @@ h1.search-title span {
 #live-search-results .search-result a {
   font-weight: 600;
 }
-#live-search-results .search-result.standard {
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/standard.png");
-}
-#live-search-results .search-result.video {
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/video.png");
-}
-#live-search-results .search-result.image {
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/image.png");
-}
-#live-search-results .search-result.gallery {
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/image.png");
-}
-#live-search-results .search-result.faq {
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/question.png");
-}
+
 #live-search-results .no-result {
   padding: 10px 10px 10px 10px;
   font-weight: 600;
@@ -799,10 +784,10 @@ h1.search-title span {
   line-height: 18px;
   font-weight: 600;
   padding: 3px 5px 3px 20px;
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like.png") no-repeat 6px 8px;
+  background:  no-repeat 6px 8px;
 }
 #live-search-results .search-result:hover .like-count {
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/like.png") no-repeat 6px -22px;
+  background: no-repeat 6px -22px;
   color: #395996;
 }
 
@@ -815,7 +800,6 @@ h1.search-title span {
 }
 
 .faq-icon {
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/faq-plus.png");
   background-repeat: no-repeat;
   background-position: 0 0;
   position: absolute;
@@ -825,10 +809,6 @@ h1.search-title span {
   top: 15px;
   left: 15px;
   cursor: pointer;
-}
-
-.faq-item.active .faq-icon {
-  background-image: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/faq-minus.png");
 }
 
 .faq-item.active {
