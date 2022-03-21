@@ -31,3 +31,15 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Username already in use')
+
+
+class UserInformationForm(FlaskForm):
+    username = StringField('Username', validators=[
+        DataRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
+                                              'Usernames must have only letters,'
+                                              'numbers, dots or underscores')])
+    Firstname = StringField('Firstname', validators=[DataRequired(), Length(1, 64)])
+    Lastname = StringField('Lastname', validators=[DataRequired(), Length(1, 64)])
+    Birthday = StringField('Birthday', validators=[DataRequired(), Length(1, 64)])
+    PersonalizedSignature = StringField('PersonalizedSignature', validators=[DataRequired(), Length(0, 500)])
+    submit = SubmitField('save changes')

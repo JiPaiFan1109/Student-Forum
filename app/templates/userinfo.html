@@ -1,19 +1,28 @@
-{% extends 'base.html' %}
-{% block title %}Group1 - {{user.username}}{% end block %}
-
-{% block page_content %}
-<div class="page-header">
-    <h1>{{user.username}}</h1>
-    {% if user.name %}
-    <p>
-        {% if user.name %}{{user.name}}{% endif %}
-        {% if user.location %}
-            From <a href="http://maps.google.com/?q={{user.location}}">
-                {{user.location}}
-            </a>
-        {% endif %}
-    </p>
-    {% endif %}
-    {% if user.about_me %}<p>{{user.about_me}}</p>{%% endif %}
+<div>
+    {% include 'base.html' %}
 </div>
-{% end block %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+<h1>UserInformationPage</h1>
+<form action="" method="get" novalidate>
+    <p type="text" id="7dadi" name="7dadi" value="username"
+               onFocus="if(value==defaultValue){value='';this.style.color='#000'}"
+               onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999999">
+        {{form.username.label}}<br>
+        {{form.username(size=32)}}
+    </p>
+    <p>
+        {{form.Firstname.label}}<br>
+        {{form.Firstname(size=32)}}
+    </p>
+    <p>
+        {{form.Lastname.label}}<br>
+        {{form.Lastname(size=32)}}
+    </p>
+    <p>
+        {{form.Birthday.label}}<br>
+        {{form.Birthday(size=32)}}
+    </p>
+    <p>{{form.submit()}}</p>
+</form>

@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, login_required, logout_user, current_user
 from . import auth
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, UserInformationForm
 from .. import db
 from ..models import User
 from werkzeug.security import generate_password_hash
@@ -36,19 +36,18 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(email=form.email.data,
-                    username=form.username.data,
-                    password=form.password.data)
-        print(user)
+                username=form.username.data,
+                password=form.password.data)
         db.session.add(user)
         db.session.commit()
+        flash('You can now Login')
         '''token = user.generate_confirmation_token()
         send_email(user.email, 'Confirm Your Account', 'auth/email/confirm', user=user, token=token)'''
-        flash('You can now Login')
         return redirect(url_for('auth.login'))
     return render_template('register.html', form=form)
 
 
-@auth.route('/confirm/<token>')
+'''@auth.route('/confirm/<token>')
 @login_required
 def confirm(token):
     if current_user.confirmed:
@@ -74,11 +73,20 @@ def before_request():
 def unconfirmed():
     if current_user.is_anoymous or current_user.confirmed:
         return redirect(url_for('main.index'))
-    return render_template('unconfirmed.html')
+    return render_template('unconfirmed.html')'''
 
 
 @auth.route('/userinfo', methods=['GET', 'POST'])
 def userinfo():
-
-    return render_template('userinfo.html')
+    form = UserInformationForm()
+    if form.validate_on_submit():
+        user = User(firstname=form.firstname.data,
+                    lastname=form.lastname.data,
+                    birthday=form.birthday.data,
+                    personalizedsiganture=form.PersonalizedSignature.data,
+                    username=form.username.data)
+        db.session.add(user)
+        db.session.commit()
+        flash("change UserInformation successfully")
+    return render_template('userinfo.html',form=form)
 
