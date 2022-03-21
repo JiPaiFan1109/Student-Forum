@@ -3,12 +3,50 @@
 </div>
 
 {% import "bootstrap/wtf.html" as wtf %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body{
+            background-image: url("../static/img/10.jpg");
+        }
+        h1{
+            text-align:center;
+        }
+        p{
+            text-align:center;
+        }
+        .c1{
+            width: 100px;
+            height: 100px;
+            border: 3px solid white;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #619ac3;
+            position:fixed;
+            left:60px;
+            top:100px;
+
+        }
+
+        img{
+        width: 100%;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+<div class="c1">
+    <img src="2.png" alt="">
+</div>
 
 <h1>UserInformationPage</h1>
 <form action="" method="get" novalidate>
-    <p type="text" id="7dadi" name="7dadi" value="username"
-               onFocus="if(value==defaultValue){value='';this.style.color='#000'}"
-               onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999999">
+    <p>
         {{form.username.label}}<br>
         {{form.username(size=32)}}
     </p>
@@ -24,5 +62,11 @@
         {{form.Birthday.label}}<br>
         {{form.Birthday(size=32)}}
     </p>
+    <p>
+        {{form.PersonalizedSignature.label}}<br>
+        {{form.PersonalizedSignature(size=500)}}
+    </p>
     <p>{{form.submit()}}</p>
 </form>
+
+</body>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import User
@@ -34,12 +34,14 @@ class RegistrationForm(FlaskForm):
 
 
 class UserInformationForm(FlaskForm):
-    username = StringField('Username', validators=[
+    username = StringField('Username', render_kw={'placeholder': 'Username'}, validators=[
         DataRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                                               'Usernames must have only letters,'
                                               'numbers, dots or underscores')])
-    Firstname = StringField('Firstname', validators=[DataRequired(), Length(1, 64)])
-    Lastname = StringField('Lastname', validators=[DataRequired(), Length(1, 64)])
-    Birthday = StringField('Birthday', validators=[DataRequired(), Length(1, 64)])
-    PersonalizedSignature = StringField('PersonalizedSignature', validators=[DataRequired(), Length(0, 500)])
+    Firstname = StringField('Firstname', render_kw={'placeholder': 'San'}, validators=[DataRequired(), Length(1, 64)])
+    Lastname = StringField('Lastname', render_kw={'placeholder': 'Zhang'}, validators=[DataRequired(), Length(1, 64)])
+    Birthday = StringField('Birthday', render_kw={'placeholder': 'January 1st'},
+                           validators=[DataRequired(), Length(1, 64)])
+    PersonalizedSignature = TextAreaField('PersonalizedSignature', render_kw={'placeholder': 'Good'},
+                                          validators=[DataRequired(), Length(0, 500)])
     submit = SubmitField('save changes')

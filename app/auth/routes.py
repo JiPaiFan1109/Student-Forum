@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    print(form.validate_on_submit())
     if form.validate_on_submit():
         passw_hash = generate_password_hash(form.password.data)
         user = User(username=form.username.data, email=form.email.data, password_hash=passw_hash)
@@ -34,7 +35,6 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    print(form.validate_on_submit())
     if form.validate_on_submit():
         user = User(email=form.email.data,
                 username=form.username.data,
