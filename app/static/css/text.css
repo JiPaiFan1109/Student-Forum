@@ -15,7 +15,7 @@ div.remember {
 
 a.forumName{
   font-family: 'Arial Rounded MT Bold';
-  position:relative;
+  position:absolute;
   z-index:9999;
   font-style: normal;
   font-weight: 450;
