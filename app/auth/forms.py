@@ -6,9 +6,9 @@ from ..models import User
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(message='请输入用户名')])
-    password = PasswordField('password', validators=[InputRequired(message='请输入密码')])
-    remember_me = BooleanField('remember_me')
+    email = StringField('', validators=[InputRequired(message='请输入用户名')])
+    password = PasswordField('', validators=[InputRequired(message='请输入密码')])
+    remember_me = BooleanField('Remember')
     submit = SubmitField('submit')
 
     def validate_on_submit(self):
@@ -34,3 +34,9 @@ class RegistrationForm(FlaskForm):
     # def validate_username(self, field):
     #     if User.query.filter_by(username=field.data).first():
     #         raise ValidationError('Username already in use')
+
+    def validate_username(self, field):
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('Username already in use')
+    def validate_on_submit(self):
+        pass
