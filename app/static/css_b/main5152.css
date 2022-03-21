@@ -876,7 +876,6 @@ input[type=text].error,
 /* Footer ------------------------------------------------------------------------------------------------------------*/
 #footer-wrapper {
   width: 100%;
-  background: url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/footer-bg.png");
 }
 #footer-wrapper > #footer {
   padding: 20px 35px;
@@ -1162,7 +1161,7 @@ a#scroll-top {
   height: 42px;
   width: 42px;
   line-height: 42px;
-  background: #131517 url("../../../../前端例子/selected/简洁知识问答技术论坛整站html5模板_简洁 知识 问答 技术 论坛 整站 门户 新闻 杂志 博客 html5 IT 问题 仿百度知道 小清新 灰色 问答社区/mstp_35_knowledge/images/scroll-top.png") center center no-repeat;
+  background: #131517 center center no-repeat;
   opacity: 0.8;
   -moz-opacity: 0.8;
   -webkit-opacity: 0.8;
