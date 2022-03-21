@@ -35,6 +35,7 @@
         <p class="choose1"><a class="back" href="{{url_for('auth.register')}}" > Register</a></p>
         </div>
 <form action="" method="post" novalidate>
+    {{ form.csrf_token }}
     <p>
         {{form.email.label}}<br>
         {{form.email(style="
