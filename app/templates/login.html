@@ -53,6 +53,7 @@
         background-repeat: no-repeat;
         padding: 10px 20px 10px 40px;
         " )}}
+        <br>
         {% for error in form.email.errors %}
             <span style="color: red;">[{
         { error }}]</span>
@@ -73,6 +74,11 @@
         background-repeat: no-repeat;
         padding: 10px 20px 10px 40px;
         " )}}
+        <br>
+        {% for error in form.password.errors %}
+            <span style="color: red;">
+        {{form.password.errors}}</span>
+            {% endfor %}
     </p>
 <!--        style="-->
 <!--        zoom: 180%-->

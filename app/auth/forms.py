@@ -6,9 +6,9 @@ from ..models import User
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(message='username please')])
-    password = PasswordField('password', validators=[DataRequired(message='password please')])
-    remember_me = BooleanField('remember_me')
+    email = StringField('', validators=[DataRequired(message='username please')])
+    password = PasswordField('', validators=[DataRequired(message='password please')])
+    remember_me = BooleanField('remember me')
     submit = SubmitField('submit')
 
 
@@ -21,7 +21,7 @@ class RegistrationForm(FlaskForm):
                                                'numbers, dots or underscores')])
     password = PasswordField('Password', validators=[
         DataRequired(), EqualTo('password2', message='Password must match.')])
-    password2 = PasswordField('Confirm password', validators=[DataRequired()])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
     def validate_email(self, field):
