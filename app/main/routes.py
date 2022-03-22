@@ -23,7 +23,7 @@ def index():
 @main.route('/user/<username>')
 def user(username):
     user = User.query.filter_by(usernamne=username).first_or_404()
-    return render_template('userinfo.html', user=user)
+    return render_template('user1.html', user=user)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
