@@ -141,6 +141,7 @@ span.tag-line {
 /* Header - Search     search image*/
 .search-area-wrapper {
   background: #353b65 center top no-repeat;
+
   background-size: 100%;
   min-height: 279px;
   height: auto !important;
@@ -609,18 +610,18 @@ ul.articles li.article-entry:last-child {
   line-height: 22px;
 }
 .hentry .post-meta .date {
-  background: url("../img/calendar-symbol1.png") no-repeat left center;
+  background: url("../img/date_logo.png") no-repeat left center;
   /*background: no-repeat left center;*/
 }
 .hentry .post-meta .category {
-  background: url("../img/category-symbol2.png") no-repeat left center;
+  background: url("../img/poster_logo.png") no-repeat left center;
   /*background: no-repeat left center;*/
 }
 .hentry .post-meta .author {
   background:no-repeat left center;
 }
 .hentry .post-meta .comments {
-  background: url("../img/reply.png") no-repeat left center;
+  background: url("../img/reply_logo.png") no-repeat left center;
   /*background: no-repeat left center;*/
 }
 .hentry .post-meta .like-count {
@@ -630,7 +631,6 @@ ul.articles li.article-entry:last-child {
 
 /*.hentry.type-post .post-title {*/
 /*  padding-left: 35px;*/
-/*  background: url("../img/standard-large.png") no-repeat 0 3px;*/
 /*  font-size: 20px;*/
 /*  line-height: 30px;*/
 /*}*/
@@ -668,7 +668,7 @@ ul.articles li.article-entry:last-child {
 
 .hentry.type-post .post-title {
   padding-left: 35px;
-  background:no-repeat 0 3px;
+  /*background:no-repeat 0 3px;*/
   font-size: 20px;
   line-height: 30px;
 }
@@ -687,16 +687,16 @@ ul.articles li.article-entry:last-child {
 }
 
 .hentry.format-image .post-title {
-  background: no-repeat 0 3px;
+  /*background: no-repeat 0 3px;*/
 
 }
 
 .hentry.format-video .post-title {
-  background: no-repeat 0 3px;
+  /*background: no-repeat 0 3px;*/
 }
 
 .faq.hentry .post-title {
-  background: no-repeat 0 5px;
+  /*background: no-repeat 0 5px;*/
   padding-left: 30px;
 }
 
