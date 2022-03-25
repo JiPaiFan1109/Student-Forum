@@ -629,13 +629,6 @@ ul.articles li.article-entry:last-child {
   background:no-repeat 4px 6px;
 }
 
-/*.hentry.type-post .post-title {*/
-/*  padding-left: 35px;*/
-/*  font-size: 20px;*/
-/*  line-height: 30px;*/
-/*}*/
-
-
 .hentry .post-meta .like-count:hover {
   background: no-repeat 4px -24px;
   color: #395996;
@@ -669,6 +662,7 @@ ul.articles li.article-entry:last-child {
 .hentry.type-post .post-title {
   padding-left: 35px;
   /*background:no-repeat 0 3px;*/
+  background: url("../img/layout_logo.png") no-repeat 0 3px;
   font-size: 20px;
   line-height: 30px;
 }
@@ -688,15 +682,17 @@ ul.articles li.article-entry:last-child {
 
 .hentry.format-image .post-title {
   /*background: no-repeat 0 3px;*/
-
+  background: url("../img/layout_logo.png") no-repeat 0 3px;
 }
 
 .hentry.format-video .post-title {
   /*background: no-repeat 0 3px;*/
+  background: url("../img/layout_logo.png") no-repeat 0 3px;
 }
 
 .faq.hentry .post-title {
   /*background: no-repeat 0 5px;*/
+  background: url("../img/layout_logo.png") no-repeat 0 5px;
   padding-left: 30px;
 }
 
