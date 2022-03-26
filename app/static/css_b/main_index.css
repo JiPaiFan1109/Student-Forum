@@ -141,7 +141,7 @@ span.tag-line {
 /* Header - Search     search image*/
 .search-area-wrapper {
   background: #353b65 center top no-repeat;
-
+  background-image: url("../img/4.jpg");
   background-size: 100%;
   min-height: 279px;
   height: auto !important;
@@ -628,6 +628,8 @@ ul.articles li.article-entry:last-child {
   float: right;
   background:no-repeat 4px 6px;
 }
+
+
 
 .hentry .post-meta .like-count:hover {
   background: no-repeat 4px -24px;
