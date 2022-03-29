@@ -37,7 +37,9 @@
 <form action="" method="post" novalidate>
     {{ form.csrf_token }}
     <p>
-        {{form.email.label}}<br>
+        <span style="color: red;">*</span>
+        {{form.email.label('Username:&nbsp;')}}
+        <br>
         {{form.email(style="
         width: 100%;
         width:380px;  box-sizing: border-box; border: 2px; border-radius: 7px;
@@ -60,7 +62,9 @@
             {% endfor %}
     </p>
     <p>
-        {{form.password.label}}<br>
+        <span style="color: red;">*</span>
+        {{form.password.label('Password:&nbsp;')}}
+        <br>
         {{form.password(style="
         width: 100%;
         width:380px;  box-sizing: border-box; border: 2px; border-radius: 7px;
