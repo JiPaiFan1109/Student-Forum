@@ -1,3 +1,5 @@
+import datetime
+
 from app import db
 from flask_login import UserMixin, AnonymousUserMixin
 from . import login_manager
@@ -13,11 +15,11 @@ def load_user(user_id):
 
 
 class Permission:
-    FOLLOW = 1
-    COMMENT = 2
-    WRITE = 4
-    MODERATE = 8
-    ADMIN = 16
+    FOLLOW = 0x01
+    COMMENT = 0x02
+    WRITE = 0x04
+    MODERATE = 0x08
+    ADMIN = 0x80
 
 
 class Role(db.Model):
@@ -26,14 +28,12 @@ class Role(db.Model):
     name = db.Column(db.String(64), index=True, unique=True)
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
-
+    users = db.relationship('User', backref='role', lazy='dynamic')
     '''email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))'''
 
     def __repr__(self):
         return '<Role %r>' % self.name
-
-    users = db.relationship('User', backref='role')
 
     def __init__(self, **kwargs):
         super(Role, self).__init__(**kwargs)
@@ -57,34 +57,39 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE],
-            'Moderator': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE, Permission.MODERATE],
-            'Administrator': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE, Permission.MODERATE, Permission.ADMIN]
+            'User': (Permission.FOLLOW |
+                     Permission.COMMENT |
+                     Permission.WRITE, True),
+            'Moderator': (Permission.FOLLOW |
+                          Permission.COMMENT |
+                          Permission.WRITE |
+                          Permission.MODERATE, False),
+            'Administrator': (0xff, False)
         }
-        default_role = 'User'
         for r in roles:
             role = Role.query.filter_by(name=r).first()
             if role is None:
                 role = Role(name=r)
-            role.reset_permissions()
-            for perm in roles[r]:
-                role.add_permission(perm)
-            role.default = (role.name == default_role)
+            role.permissions = role[r][0]
+            role.default = roles[r][1]
             db.session.add(role)
         db.session.commit()
 
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    '''location = db.Column(db.String(64))
+    location = db.Column(db.String(64))
     name = db.Column(db.String(64))
-    about_me = db.Column(db.Text())'''
+    about_me = db.Column(db.Text())
+    member_since = db.Column(db.DateTime())
+    last_seen = db.Column(db.DateTime())
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), index=True, unique=True)
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     '''confirmed = db.Column(db.Boolean, default=False)'''
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -130,6 +135,10 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def ping(self):
+        self.last_seen = datetime.time()
+        db.session.add(self)
+
 
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
@@ -137,6 +146,15 @@ class AnonymousUser(AnonymousUserMixin):
 
     def is_administrator(self):
         return False
+
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
 
 login_manager.anonymous_user = AnonymousUser
 

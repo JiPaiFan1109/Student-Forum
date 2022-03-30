@@ -10,3 +10,8 @@ from . import routes, errors
 @main.app_context_processor
 def inject_prmissions():
     return dict(Permission=Permission)
+
+
+@main.app_context_processor
+def inject_permissions():
+    return dict(Permission=Permission)
