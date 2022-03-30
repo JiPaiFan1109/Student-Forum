@@ -8,7 +8,8 @@ from app.models import User, Role, Permission, Post
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 '''manager = Manager(app)'''
-Migrate(app, db)
+'''Migrate(app, db)'''
+migrate = Migrate(app, db)
 
 
 @app.shell_context_processor
