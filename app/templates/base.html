@@ -51,12 +51,23 @@
                                                         <ul id="menu-top-menu" class="clearfix">
                                                             <li ><a href="{{url_for('main.index')}}"><font size="4" color="#ffffff"><b>Home</b></font></a></li>
 <!--                                                            <li><button type="button" class="btn btn-primary" ><a href="{{url_for('main.index')}}">Home</a></button></li>-->
-                                                            <li><a href="{{url_for('auth.login')}}"><font size="4" color="#ffffff">Login</font></a>
-                                                                        <ul class="sub-menu">
-                                                                            <li><a href="{{url_for('auth.register')}}"><font color="#ffffff">Register</font></a></li>
+
+                                                            {% if current_user.is_authenticated %}
+                                                                <li><a href="{{url_for('main.index')}}"><font size="4" color="#ffffff">Hi, {{ current_user.username }}</font></a>
+                                                                            <ul class="sub-menu">
+                                                                                    <li><a href="{{url_for('auth.logout')}}"><font color="#ffffff">Logout</font></a>
+                                                                                    <li><a href="{{url_for('auth.userinfo')}}"><font color="#ffffff">Account</font></a></li>
+                                                                            </ul>
+                                                                </li>
+                                                            {% else %}
+                                                                <li><a href="{{url_for('auth.login')}}"><font size="4" color="#ffffff">Login</font></a>
+                                                                            <ul class="sub-menu">
+                                                                                <li><a href="{{url_for('auth.register')}}"><font color="#ffffff">Register</font></a></li>
                                                                                 <li><a href="{{url_for('auth.userinfo')}}"><font color="#ffffff">Account</font></a></li>
-                                                                        </ul>
-                                                            </li>
+                                                                            </ul>
+                                                                </li>
+                                                            {% endif %}
+
                                                                 <li><a href="#"><font size="4" color="#ffffff">More</font></a>
                                                                         <ul class="sub-menu">
                                                                                 <li><a href="#"><font color="#ffffff">Contact us</font></a></li>

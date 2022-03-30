@@ -86,6 +86,8 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     '''confirmed = db.Column(db.Boolean, default=False)'''
 
+    posts = db.relationship("Post", backref="post")
+
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if self.role is None:
@@ -137,6 +139,13 @@ class AnonymousUser(AnonymousUserMixin):
 
     def is_administrator(self):
         return False
+class Post(db.Model):
+    __tablename__ = "posts"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), index=True, unique=False)
+    content = db.Column(db.String(1024), index=True, unique=False)
+    user_name = db.Column(db.String(64), db.ForeignKey('users.username'))
+
 
 login_manager.anonymous_user = AnonymousUser
 

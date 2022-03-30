@@ -1,15 +1,10 @@
-/*
-*
-*   Custom JavaScript
-*   Product: KnowledgeBase WordPress Theme
-*
-* */
+
 jQuery(document).ready(function(e) {
 
-	$ = jQuery;
+   $ = jQuery;
 
     /*-----------------------------------------------------------------------------------*/
-    /*	Menu Dropdown Control
+    /* Menu Dropdown Control
      /*-----------------------------------------------------------------------------------*/
     $('.main-nav li').hover(function(){
         $(this).children('ul').stop(true, true).slideDown(500);
@@ -38,46 +33,46 @@ jQuery(document).ready(function(e) {
 
 
     /*-----------------------------------------------------------------------------------*/
-    /*	Page's Nav
+    /* Page's Nav
      /*-----------------------------------------------------------------------------------*/
     $(".pages-nav a").addClass("btn");
 
 
 
     /*-----------------------------------------------------------------------------------*/
-    /*	Tags Cloud
+    /* Tags Cloud
     /*-----------------------------------------------------------------------------------*/
     $('.tagcloud a').removeAttr('style').addClass('btn btn-mini');
 
-	
-	/*-----------------------------------------------------------------------------------*/
-	/*	Flickr Feed
-	/*-----------------------------------------------------------------------------------*/
-	
-	$('#basicuse').jflickrfeed({
-								limit: 9,
-								qstrings: {
-									id: '52617155@N08'
-								},
-								itemTemplate: '<a href="{{image_b}}" title="{{title}}" data-rel="prettyPhoto[flickrg]"><img src="{{image_s}}" alt="{{title}}" /></a>'
-							}, function(data){ 
-										
-											$('a[data-rel]').each(function() {
-												$(this).attr('rel', $(this).data('rel'));
-											});
+
+   /*-----------------------------------------------------------------------------------*/
+   /* Flickr Feed
+   /*-----------------------------------------------------------------------------------*/
+
+   $('#basicuse').jflickrfeed({
+                        limit: 9,
+                        qstrings: {
+                           id: '52617155@N08'
+                        },
+                        itemTemplate: '<a href="{{image_b}}" title="{{title}}" data-rel="prettyPhoto[flickrg]"><img src="{{image_s}}" alt="{{title}}" /></a>'
+                     }, function(data){
+
+                                 $('a[data-rel]').each(function() {
+                                    $(this).attr('rel', $(this).data('rel'));
+                                 });
 
 
-											$("a[rel^='prettyPhoto']").prettyPhoto({
-												deeplinking: false,
-												social_tools: false,
-												overlay_gallery: false
-											});
-							});
+                                 $("a[rel^='prettyPhoto']").prettyPhoto({
+                                    deeplinking: false,
+                                    social_tools: false,
+                                    overlay_gallery: false
+                                 });
+                     });
 
 
     /*-----------------------------------------------------------------------------------*/
-	/* Pretty Photo Lightbox
-	/*-----------------------------------------------------------------------------------*/
+   /* Pretty Photo Lightbox
+   /*-----------------------------------------------------------------------------------*/
    if( jQuery().prettyPhoto )
     {
         $(".pretty-photo").prettyPhoto({
@@ -100,37 +95,37 @@ jQuery(document).ready(function(e) {
 
 
 
-	/* ---------------------------------------------------- */
-	/*	Accordion
-	/* ---------------------------------------------------- */
+   /* ---------------------------------------------------- */
+   /* Accordion
+   /* ---------------------------------------------------- */
     $(function() {
-		$('.accordion dt').click(function(){
-			$(this).siblings('dt').removeClass('current');
-			$(this).addClass('current').next('dd').slideDown(500).siblings('dd').slideUp(500);
-		});	
+      $('.accordion dt').click(function(){
+         $(this).siblings('dt').removeClass('current');
+         $(this).addClass('current').next('dd').slideDown(500).siblings('dd').slideUp(500);
+      });
     });
 
 
 
-	/* ---------------------------------------------------- */
-	/*	Toggle
-	/* ---------------------------------------------------- */
+   /* ---------------------------------------------------- */
+   /* Toggle
+   /* ---------------------------------------------------- */
     $(function() {
-		$('dl.toggle dt').click(function(){
-			if($(this).hasClass('current')){
-				$(this).removeClass('current').next('dd').slideUp(500);
-			}				
-			else{
-				$(this).addClass('current').next('dd').slideDown(500);
-			}
-		});	 
+      $('dl.toggle dt').click(function(){
+         if($(this).hasClass('current')){
+            $(this).removeClass('current').next('dd').slideUp(500);
+         }
+         else{
+            $(this).addClass('current').next('dd').slideDown(500);
+         }
+      });
     });
 
 
 
-	/*-----------------------------------------------------------------------------------*/
-	/*	Scroll to Top
-	/*-----------------------------------------------------------------------------------*/	
+   /*-----------------------------------------------------------------------------------*/
+   /* Scroll to Top
+   /*-----------------------------------------------------------------------------------*/
     $(function() {
         $(window).scroll(function () {
             if(!$('body').hasClass('probably-mobile'))
@@ -158,9 +153,9 @@ jQuery(document).ready(function(e) {
 
 
 
-	/* ---------------------------------------------------- */
-	/*	Tabs
-	/* ---------------------------------------------------- */
+   /* ---------------------------------------------------- */
+   /* Tabs
+   /* ---------------------------------------------------- */
     $(function(){
 
         var $tabsNav    = $('.tabs-nav'),
@@ -186,54 +181,54 @@ jQuery(document).ready(function(e) {
 
 
 
-	 /* ---------------------------------------------------- */
-	 /*  Responsive Tables by ZURB
-	 /*	  Foundation v2.1.4 http://foundation.zurb.com
-	 /* ---------------------------------------------------- */
-	  var switched = false;
-	  var updateTables = function() {
-		if (($(window).width() < 767) && !switched ){
-		  switched = true;
-		  $("table.responsive").each(function(i, element) {
-			splitTable($(element));
-		  });
-		  return true;
-		}
-		else if (switched && ($(window).width() > 767)) {
-		  switched = false;
-		  $("table.responsive").each(function(i, element) {
-			unsplitTable($(element));
-		  });
-		}
-	  };
-	   
-	  $(window).load(updateTables);
-	  $(window).bind("resize", updateTables);
-	   
-		
-		function splitTable(original)
-		{
-			original.wrap("<div class='table-wrapper' />");
-			
-			var copy = original.clone();
-			copy.find("td:not(:first-child), th:not(:first-child)").css("display", "none");
-			copy.removeClass("responsive");
-			
-			original.closest(".table-wrapper").append(copy);
-			copy.wrap("<div class='pinned' />");
-			original.wrap("<div class='scrollable' />");
-		}
-		
-		function unsplitTable(original) {
+    /* ---------------------------------------------------- */
+    /*  Responsive Tables by ZURB
+    /*      Foundation v2.1.4 http://foundation.zurb.com
+    /* ---------------------------------------------------- */
+     var switched = false;
+     var updateTables = function() {
+      if (($(window).width() < 767) && !switched ){
+        switched = true;
+        $("table.responsive").each(function(i, element) {
+         splitTable($(element));
+        });
+        return true;
+      }
+      else if (switched && ($(window).width() > 767)) {
+        switched = false;
+        $("table.responsive").each(function(i, element) {
+         unsplitTable($(element));
+        });
+      }
+     };
+
+     $(window).load(updateTables);
+     $(window).bind("resize", updateTables);
+
+
+      function splitTable(original)
+      {
+         original.wrap("<div class='table-wrapper' />");
+
+         var copy = original.clone();
+         copy.find("td:not(:first-child), th:not(:first-child)").css("display", "none");
+         copy.removeClass("responsive");
+
+         original.closest(".table-wrapper").append(copy);
+         copy.wrap("<div class='pinned' />");
+         original.wrap("<div class='scrollable' />");
+      }
+
+      function unsplitTable(original) {
             original.closest(".table-wrapper").find(".pinned").remove();
             original.unwrap();
             original.unwrap();
-		}
+      }
 
 
 
     /* ---------------------------------------------------- */
-    /*	Like Button JS
+    /* Like Button JS
      /* ---------------------------------------------------- */
     $('#like-it-form .like-it').click(function(){
         var likeButton = $(this);
@@ -249,7 +244,7 @@ jQuery(document).ready(function(e) {
 
 
     /*-----------------------------------------------------------------------------------*/
-    /*	FAQs
+    /* FAQs
     /*-----------------------------------------------------------------------------------*/
     $('.faq-item').not('.faq-item.active').find('.faq-answer').slideUp('slow');
     $('.faq-item').first().addClass('active').find('.faq-answer').slideDown('slow');
@@ -275,22 +270,22 @@ jQuery(document).ready(function(e) {
 
 
     /*-----------------------------------------------------------------------------------*/
-    /*	Contact Form 7
+    /* Contact Form 7
     /*-----------------------------------------------------------------------------------*/
     $('.wpcf7-textarea').addClass('span6');
     $('.wpcf7-submit').addClass('btn');
 
 
     /*-----------------------------------------------------------------------------------*/
-    /*	Search Form Validation
+    /* Search Form Validation
      /*-----------------------------------------------------------------------------------*/
     $('#search-form').validate({
         errorLabelContainer: $("#search-error-container")
     });
-	
-	
-	/*-----------------------------------------------------------------------------------*/
-                /*	Responsive Nav
+
+
+   /*-----------------------------------------------------------------------------------*/
+                /* Responsive Nav
                 /*-----------------------------------------------------------------------------------*/
                 var $mainNav    = $('.main-nav > div').children('ul');
                 var optionsList = '<option value="" selected>Go to...</option>';
@@ -318,9 +313,9 @@ jQuery(document).ready(function(e) {
 
 
                 /*----------------------------------------------------------------------------------*/
-                /*	Contact Form AJAX validation and submition
+                /* Contact Form AJAX validation and submition
                 /*  Validation Plugin : http://bassistance.de/jquery-plugins/jquery-plugin-validation/
-                /*	Form Ajax Plugin : http://www.malsup.com/jquery/form/
+                /* Form Ajax Plugin : http://www.malsup.com/jquery/form/
                 /*---------------------------------------------------------------------------------- */
                 if(jQuery().validate && jQuery().ajaxSubmit)
                 {
@@ -348,12 +343,12 @@ jQuery(document).ready(function(e) {
                 }
 
                 /*-----------------------------------------------------------------------------------*/
-                /*	Live Search
+                /* Live Search
                 /*-----------------------------------------------------------------------------------*/
                 if(jQuery().liveSearch){
                         jQuery('#s').liveSearch({url: 'search.php?livesearch=used&s='});
                 }
-				
+
 });
 
 
