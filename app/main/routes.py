@@ -1,23 +1,22 @@
 from flask import render_template, flash, redirect, url_for, session
 from flask_login import login_required, current_user
 from . import main
-from .forms import NameForm, EditProfileForm
+from .forms import EditProfileForm, PostForm
 from .. import db
-from ..models import User
+from ..models import User, Permission, Post
 
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    form = NameForm()
-    if form.validate_on_submit():
-        old_name = session.get('name')
-        if old_name is not None and old_name != form.name.data:
-            flash('Looks like you have changed your name!')
-        session["name"] = form.name.data
-        return redirect(url_for('index'))
-    return render_template('index.html',
-                           form=form, name=session.get('name'),
-                           known=session.get('know', False))
+    form = PostForm()
+    if current_user.can(Permission.WRITE)and \
+        form.validate_on_submit():
+        post = Post(body=form.body.data,
+                    author=current_user._get_current_object())
+        db.session.add(post)
+        return redirect(url_for('.index'))
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('index.html', form=form, posts=posts)
 
 
 @main.route('/user/<username>')
