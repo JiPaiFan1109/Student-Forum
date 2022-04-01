@@ -27,7 +27,7 @@ def user(username):
     if user is None:
         abort(404)
     posts = user.posts.order_by(Post.timestamp.desc()).all()
-    return render_template('user1.html', user=user, posts=posts)
+    return render_template('user.html', user=user, posts=posts)
 
 
 '''要和userinfo连起来，把对应的数据显示到对应位置，这里提供数据库里对应的数据物体'''
