@@ -15,13 +15,14 @@ div.remember {
 
 a.forumName{
   font-family: 'Arial Rounded MT Bold';
-  position:absolute;
-  z-index:9999;
-  font-style: normal;
+  position:relative;
+  /*z-index:9999;*/
+  /*font-style: normal;*/
   font-weight: 450;
   font-size: 50px;
+  top: 2px;
   line-height: 10px;
-  left: -150px;
+  left: -130px;
 /* identical to box height, or 0% */
 
 color: rgb(246, 0, 0);
@@ -135,3 +136,14 @@ a.back {
     text-decoration:none;
     color: #4d4848;
 }
+
+video.cloud {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -10;
+      object-fit: cover;
+
+    }
