@@ -1,88 +1,82 @@
-<div>
-    {% include 'base.html' %}
-</div>
-
-{% import "bootstrap/wtf.html" as wtf %}
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-    <style>
-        body{
-            /*background-image: url("../static/img/10.jpg");*/
-        }
-        h1{
-            text-align:center;
-        }
-        p{
-            text-align:center;
-        }
-        .c1{
-            width: 100px;
-            height: 100px;
-            border: 3px solid white;
-            border-radius: 50%;
-            overflow: hidden;
-            background-color: #619ac3;
-            position:fixed;
-            left:360px;
-            top:100px;
-
-        }
-        .sidebar {
-            position: absolute;
-            left: 0;
-            top: 60px;
-            bottom: 0;
-            width: 210px;
-            background-color: #d6e9c6;
-        }
-        .MyPosts {
-            position: absolute;
-            left: 72px;
-            top: 100px;
-            bottom: 0;
-            width: 65px;
-            height: 25px;
-            border-style:solid;
-            border-color: #8a6d3b;
-        }
-        .MyReply {
-            position: absolute;
-            left: 72px;
-            top: 150px;
-            bottom: 0;
-            width: 65px;
-            height: 25px;
-            border-style:solid;
-            border-color: #8a6d3b;
-        }
-
-        img{
-        width: 100%;
-        }
-
-        .c2{
-            position:fixed;
-            left:355px;
-            top:210px;
-        }
-
-    </style>
-
-</head>
-
-<body>
-<div class="c1">
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>MySpace</title>
+		<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../static/css_userinfo/font-awesome.css" type="text/css"/>
+        <link rel="shortcut icon" href="../static/img/logo.jpeg" />
+        <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+	</head>
+	<body>
+    <div>
+        {% include 'base.html' %}
+    </div>
+    {% import "bootstrap/wtf.html" as wtf %}
+        <div class="c1">
     <img src="../static/img/logo.jpeg" alt="">
-</div>
-
-<h1>UserInformationPage</h1>
+    </div>
+		<div class="navbar">
+			<input type="checkbox" id="checkbox" />
+			<label for="checkbox">
+				<i class="fa fa-toggle-right"></i>
+			</label>
+			<ul>
+				<li>
+					<img src="../static/img/logo.jpeg" alt="" />
+					<span>User Name</span>
+				</li>
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-id-card-o" aria-hidden="true"></i>
+						<span>Profile</span>
+					</a>
+				</li>
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-keyboard-o"></i>
+						<span>My Posts</span>
+					</a>
+				</li>
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-reply" aria-hidden="true"></i>
+						<span>My Reply</span>
+					</a>
+				</li>
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-cogs" aria-hidden="true"></i>
+						<span>User Setting</span>
+					</a>
+				</li>
+                <li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-comments-o" aria-hidden="true"></i>
+						<span>Chat</span>
+					</a>
+				</li>
+                <li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-envelope-o" aria-hidden="true"></i>
+						<span>Email</span>
+					</a>
+				</li>
+                <li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-sign-out" aria-hidden="true"></i>
+						<span>Sign out</span>
+					</a>
+				</li>
+			</ul>
+		</div>
 <form action="" method="get" novalidate>
+	{{ form.csrf_token }}
     <p>
         {{form.username.label}}<br>
         {{form.username(size=32)}}
     </p>
+
     <p>
         {{form.Firstname.label}}<br>
         {{form.Firstname(size=32)}}
@@ -102,13 +96,8 @@
     <p>{{form.submit()}}</p>
     <p class="c2">{{form.UploadPortrait()}}</p>
 </form>
-<div class="sidebar">
-    <div class="MyPosts">
-        <a href="url_for()">My Posts</a>
-    </div>
-    <div class="MyReply">
-        <a href="url_for()">My Reply</a>
-    </div>
-</div>
 
-</body>
+
+
+	</body>
+</html>
