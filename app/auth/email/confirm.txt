@@ -1,0 +1,8 @@
+亲爱的 {{ user.username }},
+
+欢迎注册BJUT论坛！
+
+请点击下列链接确认你的注册请求：
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+如果您并未提交注册请求，那么请忽略这封邮件
