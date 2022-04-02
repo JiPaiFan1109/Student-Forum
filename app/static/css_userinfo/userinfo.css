@@ -18,7 +18,7 @@ body {
 	width: 100vm;
 	background-color: #f2f2f2;
 }
-.navbar {
+.sidebar {
 	position: relative;
 	width: 100%;
 	height: 50px;
@@ -26,10 +26,10 @@ body {
 	left: -26px;
 	line-height: 50px;
 }
-.navbar input {
+.sidebar input {
 	display: none;
 }
-.navbar label {
+.sidebar label {
 	position: absolute;
 	top: -3px;
 	left: 200px;
@@ -39,7 +39,7 @@ body {
 	cursor: pointer;
 	transition: all 0.5s;
 }
-.navbar ul {
+.sidebar ul {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -48,12 +48,12 @@ body {
 	background-color: #20222a;
 	transition: all 0.5s;
 }
-.navbar ul li {
+.sidebar ul li {
 	width: 100%;
 	height: 70px;
 	margin-bottom: 10px;
 }
-.navbar ul li:first-child {
+.sidebar ul li:first-child {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -62,16 +62,16 @@ body {
 	height: 150px;
 	padding: 10px;
 }
-.navbar ul li:first-child img {
+.sidebar ul li:first-child img {
 	width: 80px;
 	border-radius: 50%;
 }
-.navbar ul li:first-child span {
+.sidebar ul li:first-child span {
 	color: #fff;
 	font-size: 20px;
 	white-space: nowrap;
 }
-.navbar ul li a {
+.sidebar ul li a {
 	display: flex;
 	align-items: center;
 	width: 100%;
@@ -80,24 +80,24 @@ body {
 	text-decoration: none;
 	border-left: 6px solid transparent;
 }
-.navbar ul li a i {
+.sidebar ul li a i {
 	font-size: 20px;
 	margin: 0 15px;
 }
-.navbar ul li a span {
+.sidebar ul li a span {
 	font-size: 20px;
 }
-.navbar ul li a:hover {
+.sidebar ul li a:hover {
 	color: #fff;
 	border-left-color:#1f6377;
 }
-.navbar input:checked + label {
+.sidebar input:checked + label {
 	left: 0;
 }
-.navbar input:checked + label i {
+.sidebar input:checked + label i {
 	transform: rotateY(180deg);
 }
-.navbar input:checked ~ ul {
+.sidebar input:checked ~ ul {
 	left: -200px;
 }
 img{
