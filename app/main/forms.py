@@ -12,6 +12,7 @@ class EditProfileForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
+    title = TextAreaField('Add a title here', validators=[InputRequired()])
     body = TextAreaField('Post whatever you want?', validators=[InputRequired()])
     submit = SubmitField('Submit')
     '''index 的route处理这个表单然后把以前发布的博客列表传给模板'''
