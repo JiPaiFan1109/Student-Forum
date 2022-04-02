@@ -90,5 +90,5 @@ def userinfo():
         db.session.add(user)
         db.session.commit()
         flash("change UserInformation successfully")
-    return render_template('userinfo.html',form=form)
+    return render_template('userinfo.html', form=form)
 
