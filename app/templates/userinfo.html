@@ -71,10 +71,12 @@
 			</ul>
 		</div>
 <form action="" method="get" novalidate>
+	{{ form.csrf_token }}
     <p>
         {{form.username.label}}<br>
         {{form.username(size=32)}}
     </p>
+
     <p>
         {{form.Firstname.label}}<br>
         {{form.Firstname(size=32)}}
