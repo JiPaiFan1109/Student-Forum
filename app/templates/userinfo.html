@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<title>MySpace</title>
+		<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../static/css_userinfo/font-awesome.css" type="text/css"/>
+        <link rel="shortcut icon" href="../static/img/logo.jpeg" />
+        <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+	</head>
+	<body>
+    <div>
+        {% include 'base.html' %}
+    </div>
+    {% import "bootstrap/wtf.html" as wtf %}
+        <div class="c1">
+    <img src="../static/img/logo.jpeg" alt="">
+    </div>
+		<div class="sidebar">
+			<input type="checkbox" id="checkbox" />
+			<label for="checkbox">
+				<i class="fa fa-toggle-right"></i>
+			</label>
+			<ul>
+				<li>
+					<img src="../static/img/logo.jpeg" alt="" />
+					<span>User Name</span>
+				</li>
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-id-card-o" aria-hidden="true"></i>
+						<span>Profile</span>
+					</a>
+				</li>
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-keyboard-o"></i>
+						<span>My Posts</span>
+					</a>
+				</li>
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-reply" aria-hidden="true"></i>
+						<span>My Reply</span>
+					</a>
+				</li>
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-cogs" aria-hidden="true"></i>
+						<span>User Setting</span>
+					</a>
+				</li>
+                <li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-comments-o" aria-hidden="true"></i>
+						<span>Chat</span>
+					</a>
+				</li>
+                <li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-envelope-o" aria-hidden="true"></i>
+						<span>Email</span>
+					</a>
+				</li>
+                <li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-sign-out" aria-hidden="true"></i>
+						<span>Sign out</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+<form action="" method="get" novalidate>
+<!--	{{ form.csrf_token }}-->
+    <p>
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+		<span>User Name</span><br>
+<!--		{{form.username.label}}<br>-->
+        {{form.username(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+        <br>
+    </p>
+
+    <p>
+        {{form.Firstname.label}}<br>
+        {{form.Firstname(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+    </p>
+    <p>
+        {{form.Lastname.label}}<br>
+        {{form.Lastname(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+    </p>
+    <p>
+        {{form.Birthday.label}}<br>
+        {{form.Birthday(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+    </p>
+    <p>
+        {{form.PersonalizedSignature.label}}<br>
+        {{form.PersonalizedSignature(style="
+        width: 100%;
+		height:260px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+    </p>
+<!--    <p>{{form.submit()}}</p>-->
+<!--    <p class="c2">{{form.UploadPortrait()}}</p>-->
+	<p>{{form.UploadPortrait(class="Upload ha")}}</p>
+	<p>{{form.submit(class="Submit a")}}</p>
+</form>
+
+
+
+	</body>
+</html>

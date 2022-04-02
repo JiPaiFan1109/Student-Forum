@@ -1,18 +1,64 @@
-from flask import render_template, flash, redirect, url_for, session
+from flask import render_template, flash, redirect, url_for, session, abort
+from flask_login import login_required, current_user
 from . import main
-from .forms import NameForm
+from .forms import EditProfileForm, PostForm
+from .. import db
+from ..models import User, Permission, Post
 
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    name = None
-    form = NameForm()
+    form = PostForm()
+    # if current_user.can(Permission.WRITE) and \
+    #         form.validate_on_submit():
     if form.validate_on_submit():
-        old_name = session.get('name')
-        if old_name is not None and old_name != form.name.data:
-            flash('Looks like you have changed your name!')
-        session["name"] = form.name.data
-        return redirect(url_for('index'))
-    return render_template('index.html',
-                           form=form, name=session.get('name'),
-                           known=session.get('know', False))
+        post = Post(title=form.title.data,
+                    body=form.body.data,
+                    author=current_user._get_current_object())
+        db.session.add(post)
+        return redirect(url_for('.index'))
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('index.html', form=form, posts=posts)
+
+
+'''同理要和userinfo连起来，这里提供用户的帖子记录posts'''
+@main.route('/user/<username>')
+def user(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        abort(404)
+    posts = user.posts.order_by(Post.timestamp.desc()).all()
+    return render_template('user.html', user=user, posts=posts)
+
+
+'''要和userinfo连起来，把对应的数据显示到对应位置，这里提供数据库里对应的数据物体'''
+@main.route('/edit-profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        current_user.location = form.location.data
+        current_user.about_me = form.about_me.data
+        db.session.add(current_user.get_current_object())
+        db.session.commit()
+        flash('Your profile has been updated')
+        return redirect(url_for('.user', username=current_user.userame))
+    form.name.data = current_user.name
+    form.location.data = current_user.location
+    form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html', form=form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

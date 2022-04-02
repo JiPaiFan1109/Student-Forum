@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<head>
+<link rel="stylesheet" href="../static/css/text.css" type="text/css">
+
+<style>
+    body{
+        background-position: center 0;
+        background-repeat: no-repeat;
+        background-image: url('../static/img/8.jpg');
+        /*background-size: 100%;*/
+        background-attachment:fixed;
+    background-size: cover;
+        -webkit-background-size: cover;/* 兼容Webkit内核浏览器如Chrome和Safari */
+    -o-background-size: cover;/* 兼容Opera */
+    zoom: 1;
+
+        /*对8*/
+        /*background-size: 104%;*/
+    }
+</style>
+    <title>Login WeTalk</title>
+
+</head>
+<body>
+<!--background-color: white;-->
+<!--        opacity:0.1-->
+<div class="box_register"></div>
+
+
+<div id="log_one" class="log">
+    <div class="line">
+        <p class="choose"><a class="back" href="{{url_for('auth.login')}}">Login</a></p>
+        <p class="choose1"><a class="back" href="{{url_for('auth.register')}}"><u>Register</u></a></p>
+        </div>
+
+<form action="" method="post" novalidate>
+     {{ form.csrf_token }}
+    <p>
+        <span style="color: red;">*</span>
+        {{form.email.label}}<br>
+        {{form.email(style="
+        width: 100%;
+        width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
+        outline: none;
+
+        background-color: white;
+        opacity:0.8;
+        font-size: 17px;
+
+         background-image: url('../static/img/username.png');
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+        <br>
+        {% for error in form.email.errors %}
+            <span style="color: red;">
+        {{form.email.errors}}</span>
+            {% endfor %}
+    </p>
+    <p>
+        <span style="color: red;">*</span>
+        {{form.username.label}}<br>
+        {{form.username(style="
+        width: 100%;
+        width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
+        outline: none;
+
+        background-color: white;
+        opacity:0.8;
+        font-size: 17px;
+
+         background-image: url('../static/img/username.png');
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+
+        " )}}
+        <br>
+        {% for error in form.username.errors %}
+            <span style="color: red;">
+        {{form.username.errors}}</span>
+            {% endfor %}
+    </p>
+    <p>
+        <span style="color: red;">*</span>
+        {{form.password.label}}<br>
+        {{form.password(style="
+        width: 100%;
+        width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
+        outline: none;
+        background-color: white;
+        opacity:0.8;
+        font-size: 18px;
+         background-image: url('../static/img/password.png');
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+        <br>
+        {% for error in form.password.errors %}
+            <span style="color: red;">
+        {{form.password.errors}}</span>
+            {% endfor %}
+    </p>
+    <p>
+        <span style="color: red;">*</span>
+        {{form.password2.label}}<br>
+        {{form.password2(style="
+        width: 100%;
+        width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
+        outline: none;
+        background-color: white;
+        opacity:0.8;
+        font-size: 18px;
+         background-image: url('../static/img/password.png');
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+        <br>
+        {% for error in form.password2.errors %}
+            <span style="color: red;">
+        {{form.password2.errors}}</span>
+            {% endfor %}
+    </p>
+    <br>
+    <p>{{form.submit(class="submit sub")}}</p>
+</form>
+</div>
+</body>

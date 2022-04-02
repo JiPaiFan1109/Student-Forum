@@ -1,18 +1,100 @@
-{% extends 'bootstrap/base.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
-{% block title %}Flasky - Login{% endblock %}
+<!DOCTYPE html>
 
-<h1>Sign In</h1>
+<head>
+<link rel="stylesheet" href="../static/css/text.css" type="text/css">
+
+<!--<style>-->
+<!--    body{-->
+<!--        background-position: center 0;-->
+<!--        background-repeat: no-repeat;-->
+<!--        background-image: url('../static/img/8.jpg');-->
+<!--        /*background-size: 100%;*/-->
+<!--        background-attachment:fixed;-->
+<!--    background-size: cover;-->
+<!--        -webkit-background-size: cover;/* 兼容Webkit内核浏览器如Chrome和Safari */-->
+<!--    -o-background-size: cover;/* 兼容Opera */-->
+<!--    zoom: 1;-->
+
+<!--        /*对8*/-->
+<!--        /*background-size: 104%;*/-->
+<!--    }-->
+<!--</style>-->
+    <title>Login WeTalk</title>
+
+</head>
+
+<body>
+<video src="../static/img/beauty.mp4" class="cloud" autoplay loop muted></video>
+
+<!--background-color: white;-->
+<!--        opacity:0.1-->
+<div class="box"></div>
+
+
+<div id="log_one" class="log">
+    <div class="line">
+        <p class="choose"><a class="back" href="{{url_for('auth.login')}}"><u>Login</u></a></p>
+        <p class="choose1"><a class="back" href="{{url_for('auth.register')}}" >Register</a></p>
+        </div>
 <form action="" method="post" novalidate>
-    {{form.hidden_tag() }}
+    {{ form.csrf_token }}
     <p>
-        {{form.userame.label}}<br>
-        {{form.username(size=32)}}
+        <span style="color: red;">*</span>
+        {{form.email.label('Username:&nbsp;')}}
+        <br>
+        {{form.email(style="
+        width: 100%;
+        width:380px;  box-sizing: border-box; border: 2px; border-radius: 7px;
+        outline: none;
+
+        background-color: white;
+        opacity:0.8;
+        font-size: 18px;
+
+         background-image: url('../static/img/username.png');
+        background-size: 34px;
+
+        background-repeat: no-repeat;
+        padding: 10px 20px 10px 40px;
+        " )}}
+        <br>
+        {% for error in form.email.errors %}
+            <span style="color: red;">[{
+        { error }}]</span>
+            {% endfor %}
     </p>
     <p>
-        {{form.password.label}}<br>
-        {{form.password(size=32)}}
+        <span style="color: red;">*</span>
+        {{form.password.label('Password:&nbsp;')}}
+        <br>
+        {{form.password(style="
+        width: 100%;
+        width:380px;  box-sizing: border-box; border: 2px; border-radius: 7px;
+        outline: none;
+        background-color: white;
+        opacity:0.8;
+        font-size: 18px;
+         background-image: url('../static/img/password.png');
+        background-size: 34px;
+
+        background-repeat: no-repeat;
+        padding: 10px 20px 10px 40px;
+        " )}}
+        <br>
+        {% for error in form.password.errors %}
+            <span style="color: red;">
+        {{form.password.errors}}</span>
+            {% endfor %}
     </p>
-    <p>{{form.remember_me()}}{{form.remember_me.label}}</p>
-    <p>{{form.submit()}}</p>
+<!--        style="-->
+<!--        zoom: 180%-->
+<!--        "-->
+
+    <p class="rem">{{form.remember_me()}}{{form.remember_me.label}}
+    </p>
+    <p >{{form.submit(class="submit sub")}}</p>
 </form>
+</div>
+<!--    <hr size=10000 width="1" color="#999999">-->
+<!--<p class="aaa" >0</p>-->
+</body>
