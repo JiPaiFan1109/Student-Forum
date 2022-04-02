@@ -222,7 +222,7 @@ form.search-form input.search-btn:hover {
   width: 100%;
 }
 .page-container > .container {
-  padding: 40px 35px;
+  padding: 40px 75px;
   background-color: #fff;
 }
 
@@ -1296,7 +1296,7 @@ a#scroll-top:hover {
     display: block;
     width: 85%;
     margin: 10px auto;
-    padding: auto;
+    /*padding: auto;*/
     border-radius: 0;
     border: none;
   }
