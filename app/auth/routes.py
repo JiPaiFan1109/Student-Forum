@@ -49,35 +49,6 @@ def register():
     return render_template('register.html', form=form)
 
 
-'''@auth.route('/confirm/<token>')
-@login_required
-def confirm(token):
-    if current_user.confirmed:
-        return redirect(url_for('main.index'))
-    if current_user.confirm(token):
-        db.session.commit()
-        flash('you have confirmed your account. Thanks')
-    else:
-        flash('The confirmation lin is invalid r has expired.')
-    return redirect(url_for('main.index'))'''
-
-'''
-@auth.before_app_request
-def before_request():
-    if current_user.is_authenticated \
-            and not current_user.confirmed \
-            and request.blueprint != 'auth' \
-            and request.endpoint != 'static':
-        return redirect(url_for('auth.unconfirmed'))'''
-
-
-'''@auth.route('/unconfirmed')
-def unconfirmed():
-    if current_user.is_anoymous or current_user.confirmed:
-        return redirect(url_for('main.index'))
-    return render_template('unconfirmed.html')'''
-
-
 @auth.route('/userinfo', methods=['GET', 'POST'])
 def userinfo():
     form = UserInformationForm()
