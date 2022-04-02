@@ -16,7 +16,7 @@
         <div class="c1">
     <img src="../static/img/logo.jpeg" alt="">
     </div>
-		<div class="navbar">
+		<div class="sidebar">
 			<input type="checkbox" id="checkbox" />
 			<label for="checkbox">
 				<i class="fa fa-toggle-right"></i>
@@ -71,28 +71,115 @@
 			</ul>
 		</div>
 <form action="" method="get" novalidate>
+<!--	{{ form.csrf_token }}-->
     <p>
-        {{form.username.label}}<br>
-        {{form.username(size=32)}}
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+		<span>User Name</span><br>
+<!--		{{form.username.label}}<br>-->
+        {{form.username(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+        <br>
     </p>
+
     <p>
         {{form.Firstname.label}}<br>
-        {{form.Firstname(size=32)}}
+        {{form.Firstname(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
     </p>
     <p>
         {{form.Lastname.label}}<br>
-        {{form.Lastname(size=32)}}
+        {{form.Lastname(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
     </p>
     <p>
         {{form.Birthday.label}}<br>
-        {{form.Birthday(size=32)}}
+        {{form.Birthday(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
     </p>
     <p>
         {{form.PersonalizedSignature.label}}<br>
-        {{form.PersonalizedSignature(size=500)}}
+        {{form.PersonalizedSignature(style="
+        width: 100%;
+		height:260px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
     </p>
-    <p>{{form.submit()}}</p>
-    <p class="c2">{{form.UploadPortrait()}}</p>
+<!--    <p>{{form.submit()}}</p>-->
+<!--    <p class="c2">{{form.UploadPortrait()}}</p>-->
+	<p>{{form.UploadPortrait(class="Upload ha")}}</p>
+	<p>{{form.submit(class="Submit a")}}</p>
 </form>
 
 
