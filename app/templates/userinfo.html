@@ -71,6 +71,8 @@
 			</ul>
 		</div>
 <form action="" method="get" novalidate>
+		<div class="user">
+
 <!--	{{ form.csrf_token }}-->
     <p>
         <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -178,8 +180,11 @@
     </p>
 <!--    <p>{{form.submit()}}</p>-->
 <!--    <p class="c2">{{form.UploadPortrait()}}</p>-->
-	<p>{{form.UploadPortrait(class="Upload ha")}}</p>
 	<p>{{form.submit(class="Submit a")}}</p>
+		</div>
+
+		<p>{{form.UploadPortrait(class="Upload ha")}}</p>
+
 </form>
 
 
