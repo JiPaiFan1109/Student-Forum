@@ -4,7 +4,7 @@ import bleach
 from flask_login import UserMixin, AnonymousUserMixin
 from . import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
-from itsdangerous import TimedSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from . import db
 
@@ -77,9 +77,10 @@ class Role(db.Model):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    location = db.Column(db.String(64))
     name = db.Column(db.String(64))
+    birthday = db.Column(db.String(64))
     about_me = db.Column(db.Text())
+    institute = db.Column(db.Text())
     member_since = db.Column(db.DateTime())
     last_seen = db.Column(db.DateTime())
     id = db.Column(db.Integer, primary_key=True)
@@ -87,7 +88,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    '''confirmed = db.Column(db.Boolean, default=False)'''
+    confirmed = db.Column(db.Boolean, default=False)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
 
@@ -107,12 +108,12 @@ class User(UserMixin, db.Model):
 
     def generate_confirmation_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps({'confirm': self.id}).decode('utf-8')
+        return s.dumps({'confirm': self.id})
 
     def confirm(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token.encode('utf-8'))
+            data = s.loads(token)
         except:
             return False
         if data.get('confirm') != self.id:

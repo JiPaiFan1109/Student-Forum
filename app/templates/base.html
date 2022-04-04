@@ -56,14 +56,14 @@
                                                                 <li><a href="{{url_for('main.index')}}"><font size="4" color="#ffffff">Hi, {{ current_user.username }}</font></a>
                                                                             <ul class="sub-menu">
                                                                                     <li><a href="{{url_for('auth.logout')}}"><font color="#ffffff">Logout</font></a>
-                                                                                    <li><a href="{{url_for('auth.userinfo')}}"><font color="#ffffff">Account</font></a></li>
+                                                                                    <li><a href="{{url_for('main.edit_profile')}}"><font color="#ffffff">Account</font></a></li>
                                                                             </ul>
                                                                 </li>
                                                             {% else %}
                                                                 <li><a href="{{url_for('auth.login')}}"><font size="4" color="#ffffff">Login</font></a>
                                                                             <ul class="sub-menu">
                                                                                 <li><a href="{{url_for('auth.register')}}"><font color="#ffffff">Register</font></a></li>
-                                                                                <li><a href="{{url_for('auth.userinfo')}}"><font color="#ffffff">Account</font></a></li>
+                                                                                <li><a href="{{url_for('main.edit_profile')}}"><font color="#ffffff">Account</font></a></li>
                                                                             </ul>
                                                                 </li>
                                                             {% endif %}
