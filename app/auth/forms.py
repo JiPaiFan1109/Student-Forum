@@ -33,7 +33,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Username already in use')
 
 
-class UserInformationForm(FlaskForm):
+'''class UserInformationForm(FlaskForm):
     username = StringField('Username', render_kw={'placeholder': 'Username'}, validators=[
         DataRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                                               'Usernames must have only letters,'
@@ -45,4 +45,4 @@ class UserInformationForm(FlaskForm):
     PersonalizedSignature = TextAreaField('PersonalizedSignature', render_kw={'placeholder': 'Good'},
                                           validators=[DataRequired(), Length(0, 500)])
     submit = SubmitField('save changes')
-    UploadPortrait = SubmitField('change portrait')
+    UploadPortrait = SubmitField('change portrait')'''

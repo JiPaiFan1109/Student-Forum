@@ -77,9 +77,10 @@ class Role(db.Model):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    location = db.Column(db.String(64))
     name = db.Column(db.String(64))
+    birthday = db.Column(db.String(64))
     about_me = db.Column(db.Text())
+    institute = db.Column(db.Text())
     member_since = db.Column(db.DateTime())
     last_seen = db.Column(db.DateTime())
     id = db.Column(db.Integer, primary_key=True)
@@ -87,7 +88,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    '''confirmed = db.Column(db.Boolean, default=False)'''
+    confirmed = db.Column(db.Boolean, default=False)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
 

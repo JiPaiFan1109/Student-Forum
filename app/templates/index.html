@@ -76,7 +76,7 @@
 							<article class="format-standard type-post hentry clearfix">
 								<header class="clearfix">
 									<h3 class="post-title">
-										<a href="#">Latest vaccination policy</a>
+										<a href="#">{{ post.title }}</a>
 									</h3>
 									<div class="post-meta clearfix">
 											<span class="date">2022-03-14</span>
@@ -111,8 +111,13 @@
 
 		<form action="" method="post" class="formOne" role="form">
     {{ form.csrf_token }}
+            			<div class="postOne"><label class="control-label" for="body"><font size="4" >Post the title:</font></label>
+                            <br>
+
+            <input class="postTwo" id="body2" name="title" required></input>
 
 			<div class="postOne"><label class="control-label" for="body"><font size="4" >Post whatever you want?</font></label>
+
 
           <textarea class="postTwo" id="body" name="body" required></textarea>
 
@@ -130,7 +135,7 @@
 
 					<div class="row" id="footer">
                         <div class="col-md-12 text-center">
-							<p class="copyright-text"><strong> Copyright © 2022 BJUT Forum</strong> All rights reserved.</p>
+							<p class="copyright-text"><strong> Copyright © Group 1 Project- BJUT Student Forum</strong> All rights reserved.</p>
                         </div>
                     </div>
 

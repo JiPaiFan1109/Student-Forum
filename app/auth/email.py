@@ -2,8 +2,7 @@ from flask import Flask, render_template
 
 from flask_mail import Mail, Message
 
-
-mail = Mail()
+from .. import mail
 
 
 def send_email(to, subject, template, user, token):
