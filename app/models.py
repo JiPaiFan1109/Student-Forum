@@ -77,9 +77,10 @@ class Role(db.Model):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    location = db.Column(db.String(64))
     name = db.Column(db.String(64))
+    birthday = db.Column(db.String(64))
     about_me = db.Column(db.Text())
+    institute = db.Column(db.Text())
     member_since = db.Column(db.DateTime())
     last_seen = db.Column(db.DateTime())
     id = db.Column(db.Integer, primary_key=True)

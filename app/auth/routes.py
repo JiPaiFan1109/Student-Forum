@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, login_required, logout_user, current_user
 from . import auth
-from .forms import LoginForm, RegistrationForm, UserInformationForm
+from .forms import LoginForm, RegistrationForm
 from .. import db
 from ..models import User
 from werkzeug.security import generate_password_hash
@@ -49,7 +49,7 @@ def register():
     return render_template('register.html', form=form)
 
 
-@auth.route('/userinfo', methods=['GET', 'POST'])
+'''@auth.route('/userinfo', methods=['GET', 'POST'])
 def userinfo():
     form = UserInformationForm()
     if form.validate_on_submit():
@@ -61,5 +61,5 @@ def userinfo():
         db.session.add(user)
         db.session.commit()
         flash("change UserInformation successfully")
-    return render_template('userinfo.html', form=form)
+    return render_template('userinfo.html', form=form)'''
 
