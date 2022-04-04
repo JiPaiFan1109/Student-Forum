@@ -12,10 +12,18 @@ class EditProfileForm(FlaskForm):
                                               'numbers, dots or underscores')])
     birthday = StringField('Birthday', render_kw={'placeholder': 'January 1st'},
                            validators=[DataRequired(), Length(1, 64)])
-    name = StringField('Real name', validators=[Length(0, 64)])
-    about_me = TextAreaField('About me')
-    institute = TextAreaField('Institute')
-    submit = SubmitField('Submit')
+    name = StringField('Real name', render_kw={'placeholder': 'ZhangSan'}, validators=[Length(0, 64)])
+    about_me = TextAreaField('About me', render_kw={'placeholder': 'Good'},
+                             validators=[DataRequired(), Length(0, 500)])
+    institute = StringField('Institute', render_kw={'placeholder': 'None'}, validators=[DataRequired(), Length(1, 64)])
+    submit = SubmitField('Save Changes')
+
+
+'''
+    PersonalizedSignature = TextAreaField('PersonalizedSignature', render_kw={'placeholder': 'Good'},
+                                          validators=[DataRequired(), Length(0, 500)])
+    submit = SubmitField('save changes')
+    UploadPortrait = SubmitField('change portrait')'''
 
 
 class PostForm(FlaskForm):

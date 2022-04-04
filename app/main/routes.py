@@ -42,15 +42,15 @@ def edit_profile():
         current_user.name = form.name.data
         current_user.about_me = form.about_me.data
         current_user.institute = form.institute.data
-        db.session.add(current_user.get_current_object())
+        db.session.add(current_user._get_current_object())
         db.session.commit()
         flash('Your profile has been updated')
-        return redirect(url_for('.user', username=current_user.userame))
+        return redirect(url_for('main.edit_profile', username=current_user.username))
     form.username.data = current_user.username
     form.birthday.data = current_user.birthday
     form.name.data = current_user.name
     form.about_me.data = current_user.about_me
-    form.institute = current_user.institute
+    form.institute.data = current_user.institute
     return render_template('userinfo.html', form=form)
 
 
