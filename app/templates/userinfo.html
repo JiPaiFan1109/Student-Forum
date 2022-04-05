@@ -23,8 +23,10 @@
 			</label>
 			<ul>
 				<li>
+
 					<img src="../static/img/logo.jpeg" alt="" />
 					<span>User Name</span>
+
 				</li>
 				<li>
 					<a href="{{url_for('auth.register')}}">
@@ -33,7 +35,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="{{url_for('auth.register')}}">
+					<a href="{{ url_for('.user', username=form.username.data ) }}">
 						<i class="fa fa-keyboard-o"></i>
 						<span>My Posts</span>
 					</a>
@@ -70,6 +72,8 @@
 				</li>
 			</ul>
 		</div>
+
+
 <form action="" method="post" novalidate>
 		<div class="user">
 			{{ form.csrf_token }}

@@ -25,7 +25,6 @@ def index():
                            pagination=pagination)
 
 
-'''同理要和userinfo连起来，这里提供用户的帖子记录posts'''
 @main.route('/user/<username>')
 def user(username):
     user = User.query.filter_by(username=username).first()
@@ -40,7 +39,6 @@ def user(username):
                            pagination=pagination)
 
 
-'''要和userinfo连起来，把对应的数据显示到对应位置，这里提供数据库里对应的数据物体'''
 @main.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -60,7 +58,8 @@ def edit_profile():
     form.name.data = current_user.name
     form.about_me.data = current_user.about_me
     form.institute.data = current_user.institute
-    return render_template('userinfo.html', form=form)
+    username = current_user.username
+    return render_template('userinfo.html', form=form, username=username)
 
 
 
