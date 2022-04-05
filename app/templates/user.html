@@ -1,9 +1,56 @@
-{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Flasky{% endblock %}
+<link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
 
-{% block page_content %}
-<div class="page-header">
-        <h1>Hello, {{name}}!</h1>
-</div>
-{% endblock %}
+                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+<div class="page-container">
+                        <div class="container">
+                                <div class="row">
+
+                                        <!-- start of page content -->
+                                        <div class="span8 page-content">
+
+                                            <div class="page-section" id="projects_New">
+                    <div class="row">
+						<ul class="posts">
+						{% for post in posts %}
+						<div class="col-md-12 main-listing">
+							<article class="format-standard type-post hentry clearfix">
+								<header class="clearfix">
+									<h3 class="post-title">
+										<a href="#">Latest vaccination policy</a>
+									</h3>
+									<div class="post-meta clearfix">
+											<span class="date">2022-03-14</span>
+											<span class="category">
+												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
+											</span>
+									</div><!-- end of post meta -->
+								</header>
+								<div class="post-body">{{ post.body }}</div>
+							</article>
+						</div>
+
+						{% endfor %}
+						</ul>
+
+
+					</div>
+
+												<div id="pagination_New">
+						    <a href="#" class="btn active">1</a>
+						    <a href="#" class="btn">2</a>
+						    <a href="#" class="btn">3</a>
+						    <a href="#" class="btn">Next »</a>
+						    <a href="#" class="btn">Last »</a>
+						</div>
+
+											</div>
+										</div>
+								</div>
+						</div>
+	</div>
+

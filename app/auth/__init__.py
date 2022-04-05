@@ -1,3 +1,4 @@
 from flask import Blueprint
+
 auth = Blueprint('auth', __name__)
-from . import routes, errors
+from . import routes, errors, email
