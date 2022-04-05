@@ -30,7 +30,7 @@
 
 				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
 
-                <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+            <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
                 <!--[if lt IE 9]>
                 <![endif]-->
 
@@ -79,7 +79,9 @@
 										<a href="#">{{ post.title }}</a>
 									</h3>
 									<div class="post-meta clearfix">
-											<span class="date">2022-03-14</span>
+											<span class="date">
+                                                {{post.timestamp}}
+                                            </span>
 											<span class="category">
 												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
 											</span>
@@ -107,26 +109,23 @@
 
 		<form action="" method="post" class="formOne" role="form">
     {{ form.csrf_token }}
-            			<div class="postOne"><label class="control-label" for="body"><font size="4" >Post the title:</font></label>
+
+
+			<div class="postOne"><label class="control-label" for="body"><font size="4" >Post whatever you want</font></label>
                             <br>
+<!--        <input style="border:0;border-bottom:1px solid black;">-->
 
-            <input class="postTwo" id="body2" name="title" required></input>
-
-			<div class="postOne"><label class="control-label" for="body"><font size="4" >Post whatever you want?</font></label>
-
-
+                    <input class="postThree" name="title" required></input>
+                <br>
+                <br>
           <textarea class="postTwo" id="body" name="body" required></textarea>
 
   </div>
 <br>
 			<br>
     <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
-
+                        </div>
 </form>
-
-
-
-
 
 
 					<div class="row" id="footer">
@@ -137,15 +136,6 @@
 
                 <a href="#top" id="scroll-top"></a>
 
-                <!-- script -->
-                <script type='text/javascript' src='../static/js_b/jquery-1.8.3.min.js/'></script>
-                <script type='text/javascript' src='../static/js_b/jquery-1.8.3.min.js'></script>
-                <script type='text/javascript' src='../static/js_b/prettyphoto/jquery.prettyPhoto.js'></script>
-                <script type='text/javascript' src='../static/js_b/jflickrfeed.js'></script>
-				<script type='text/javascript' src='../static/js_b/jquery.liveSearch.js'></script>
-                <script type='text/javascript' src='../static/js_b/jquery.form.js'></script>
-                <script type='text/javascript' src='../static/js_b/jquery.validate.min.js'></script>
-                <script type='text/javascript' src='../static/js_b/custom.js'></script>
 
         </body>
 </html>

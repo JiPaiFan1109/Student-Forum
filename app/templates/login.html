@@ -1,29 +1,32 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
 
 <head>
-<link rel="stylesheet" href="../static/css/text.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/text.css" type="text/css">
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<!--<style>-->
-<!--    body{-->
-<!--        background-position: center 0;-->
-<!--        background-repeat: no-repeat;-->
-<!--        background-image: url('../static/img/8.jpg');-->
-<!--        /*background-size: 100%;*/-->
-<!--        background-attachment:fixed;-->
-<!--    background-size: cover;-->
-<!--        -webkit-background-size: cover;/* 兼容Webkit内核浏览器如Chrome和Safari */-->
-<!--    -o-background-size: cover;/* 兼容Opera */-->
-<!--    zoom: 1;-->
-
-<!--        /*对8*/-->
-<!--        /*background-size: 104%;*/-->
-<!--    }-->
-<!--</style>-->
     <title>Login WeTalk</title>
 
 </head>
 
 <body>
+
+
+<div class="container">
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+{{ message }}
+
+</div>
+{% endfor %}
+{% block page_content %}{% endblock %}
+</div>
+
+
+
 <video src="../static/img/beauty.mp4" class="cloud" autoplay loop muted></video>
 
 <!--background-color: white;-->
@@ -36,13 +39,14 @@
         <p class="choose"><a class="back" href="{{url_for('auth.login')}}"><u>Login</u></a></p>
         <p class="choose1"><a class="back" href="{{url_for('auth.register')}}" >Register</a></p>
         </div>
+    <br>
 <form action="" method="post" novalidate>
     {{ form.csrf_token }}
     <p>
         <span style="color: red;">*</span>
         {{form.email.label('Username: ')}}
         <br>
-        {{form.email(style="
+        {{form.email(autocomplete='off', style="
         width: 100%;
         width:380px;  box-sizing: border-box; border: 2px; border-radius: 7px;
         outline: none;
@@ -59,8 +63,7 @@
         " )}}
         <br>
         {% for error in form.email.errors %}
-            <span style="color: red;">[{
-        { error }}]</span>
+            <span style="color: red;">{{ error }}</span>
             {% endfor %}
     </p>
     <p>
@@ -83,7 +86,7 @@
         <br>
         {% for error in form.password.errors %}
             <span style="color: red;">
-        {{form.password.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
 <!--        style="-->
@@ -98,3 +101,6 @@
 <!--    <hr size=10000 width="1" color="#999999">-->
 <!--<p class="aaa" >0</p>-->
 </body>
+
+
+                <script type='text/javascript' src='../static/bootstrap/js/bootstrap.min.js'></script>
