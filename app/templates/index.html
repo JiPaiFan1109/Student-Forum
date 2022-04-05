@@ -1,5 +1,5 @@
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% import "_macros.html" as macros %}
 <!--<!Doctype html>-->
         <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en-US"> <![endif]-->
         <!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en-US"> <![endif]-->
@@ -97,13 +97,9 @@
 
 					</div>
 
-												<div id="pagination_New">
-						    <a href="#" class="btn active">1</a>
-						    <a href="#" class="btn">2</a>
-						    <a href="#" class="btn">3</a>
-						    <a href="#" class="btn">Next »</a>
-						    <a href="#" class="btn">Last »</a>
-						</div>
+                                                <div class="pagination">
+                                                    {{ macros.pagination_widget(pagination, '.index') }}
+                                                </div>
 
 											</div>
 										</div>

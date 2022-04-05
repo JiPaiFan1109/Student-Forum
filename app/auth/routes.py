@@ -48,7 +48,7 @@ def register():
         db.session.commit()
         flash('You can now Login')
         token = user.generate_confirmation_token()
-        send_email(user.email, 'Confirm Your Account', 'confirm', user=user, token=token)
+        send_email(user.email, 'BJUT Forum Confirmation', 'confirm', user=user, token=token)
         return redirect(url_for('main.index'))
     return render_template('register.html', form=form)
 
@@ -60,7 +60,6 @@ def confirm(token):
         return redirect(url_for('main.index'))
     if current_user.confirm(token):
         db.session.commit()
-        flash('你已经确认了你的账户，谢谢')
     else:
         flash('这个确认链接不可用，或已超时')
     return redirect(url_for('main.index'))
