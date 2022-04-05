@@ -9,9 +9,8 @@ from ..models import User, Permission, Post
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = PostForm()
-    # if current_user.can(Permission.WRITE) and \
-    #         form.validate_on_submit():
-    if form.validate_on_submit():
+    if form.validate_on_submit() and \
+            current_user.can(Permission.WRITE):
         post = Post(title=form.title.data,
                     body=form.body.data,
                     author=current_user._get_current_object())
