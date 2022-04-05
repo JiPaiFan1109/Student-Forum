@@ -36,12 +36,6 @@ def user(username):
 @login_required
 def edit_profile():
     form = EditProfileForm()
-    print(form.validate_on_submit(), '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    print(form.username.errors)
-    print(form.birthday.errors)
-    print(form.institute.errors)
-    print(form.about_me.errors)
-    print(form.name.errors)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.birthday = form.birthday.data
