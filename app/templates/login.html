@@ -1,15 +1,34 @@
 <!--<!DOCTYPE html>-->
 
+{% extends "bootstrap/base.html" %}
+{% block content %}
+<style>
+    body{
+        background-position: center 0;
+        background-repeat: no-repeat;
+        background-image: url('../static/img/8.jpg');
+        /*background-size: 100%;*/
+        background-attachment:fixed;
+        background-size: cover;
+        -webkit-background-size: cover;/* 兼容Webkit内核浏览器如Chrome和Safari */
+        -o-background-size: cover;/* 兼容Opera */
+        zoom: 1;
+
+        /*对8*/
+        /*background-size: 104%;*/
+    }
+</style>
 <head>
+    {% import "bootstrap/wtf.html" as wtf %}
+
     <link rel="stylesheet" href="../static/css/text.css" type="text/css">
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
 
     <title>Login WeTalk</title>
 
 </head>
 
 <body>
-
 
 <div class="container">
 {% for message in get_flashed_messages() %}
@@ -27,7 +46,7 @@
 
 
 
-<video src="../static/img/beauty.mp4" class="cloud" autoplay loop muted></video>
+<!--<video src="../static/img/beauty.mp4" class="cloud" autoplay loop muted></video>-->
 
 <!--background-color: white;-->
 <!--        opacity:0.1-->
@@ -102,5 +121,4 @@
 <!--<p class="aaa" >0</p>-->
 </body>
 
-
-                <script type='text/javascript' src='../static/bootstrap/js/bootstrap.min.js'></script>
+{% endblock %}

@@ -80,7 +80,7 @@
 									</h3>
 									<div class="post-meta clearfix">
 											<span class="date">
-                                                {{post.timestamp}}
+                                                {{post.moment}}
                                             </span>
 											<span class="category">
 												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
@@ -115,19 +115,21 @@
     {{ form.csrf_token }}
 
 
-			<div class="postOne"><label class="control-label" for="body"><font size="4" >Post whatever you want</font></label>
+			<div class="postOne"><label class="postThree" for="body"><font size="5" >Post whatever you want:</font></label>
                             <br>
+                <br>
 <!--        <input style="border:0;border-bottom:1px solid black;">-->
 
-                    <input class="postThree" name="title" required></input>
+                    <input class="postThree" name="title" placeholder="Subject" required></input>
                 <br>
                 <br>
-          <textarea class="postTwo" id="body" name="body" required></textarea>
+          <textarea class="postTwo" id="body" name="body" placeholder="Post whatever you want" required></textarea>
 
   </div>
 <br>
 			<br>
-    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+    <input class="submit_one sub_one" id="submit" name="submit" type="submit" value="Submit">
+
                         </div>
 </form>
 
