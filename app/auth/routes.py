@@ -41,8 +41,9 @@ def register():
     if form.validate_on_submit():
         user = User(email=form.email.data,
                     username=form.username.data,
-                    password=form.password.data
-)
+                    password=form.password.data,
+                    role_id=1
+                    )
         db.session.add(user)
         db.session.commit()
         flash('You can now Login')
@@ -67,10 +68,9 @@ def confirm(token):
 
 @auth.before_app_request
 def before_request():
-
     if current_user.is_authenticated \
             and not current_user.confirmed \
-            and request.endpoint[:5] != 'auth.'\
+            and request.endpoint[:5] != 'auth.' \
             and request.endpoint != 'static':
         return redirect(url_for('auth.unconfirmed'))
 
