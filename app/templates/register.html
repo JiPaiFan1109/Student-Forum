@@ -38,7 +38,7 @@
     <p>
         <span style="color: red;">*</span>
         {{form.email.label}}<br>
-        {{form.email(style="
+        {{form.email(autocomplete='off',style="
         width: 100%;
         width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
         outline: none;
@@ -56,13 +56,13 @@
         <br>
         {% for error in form.email.errors %}
             <span style="color: red;">
-        {{form.email.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
     <p>
         <span style="color: red;">*</span>
         {{form.username.label}}<br>
-        {{form.username(style="
+        {{form.username(autocomplete='off',style="
         width: 100%;
         width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
         outline: none;
@@ -81,7 +81,7 @@
         <br>
         {% for error in form.username.errors %}
             <span style="color: red;">
-        {{form.username.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
     <p>
@@ -103,7 +103,7 @@
         <br>
         {% for error in form.password.errors %}
             <span style="color: red;">
-        {{form.password.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
     <p>
@@ -125,7 +125,7 @@
         <br>
         {% for error in form.password2.errors %}
             <span style="color: red;">
-        {{form.password2.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
     <br>

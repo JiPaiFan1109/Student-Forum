@@ -10,8 +10,15 @@ form.formOne{
     left: 25%;
 }
 
+input.postThree{
+  border:0;
+  border-bottom: 1px solid black;
+
+  outline: none;
+}
+
 textarea.postTwo {
-  display: block;
+   display: block;
   width: 50%;
   height: 340px;
   padding: 6px 12px;
@@ -23,7 +30,9 @@ textarea.postTwo {
   border: 1px solid #ccc;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  /*box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
+
   -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
@@ -34,3 +43,4 @@ textarea.postTwo {
     position: relative;
 /*top: calc(50% - 270px);*/
 }
+
