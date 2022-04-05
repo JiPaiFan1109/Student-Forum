@@ -113,7 +113,7 @@ text-align:center;
 }
 
 div.user{
-	position: relative;
+	position: absolute;
 	left: calc(50% + 10px);
 }
 /*p{*/
