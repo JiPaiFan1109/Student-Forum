@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from markdown import markdown
 import bleach
 from flask_login import UserMixin, AnonymousUserMixin
@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from . import db
+import time
 
 
 @login_manager.user_loader
@@ -158,7 +159,8 @@ class Post(db.Model):
     title = db.Column(db.Text)
     body = db.Column(db.Text)
     body_html = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    moment = db.Column(db.String, index=True, default=datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
@@ -177,7 +179,8 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
     body_html = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    moment = db.Column(db.String, index=True, default=datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
     disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))

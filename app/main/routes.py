@@ -9,9 +9,8 @@ from ..models import User, Permission, Post
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = PostForm()
-    # if current_user.can(Permission.WRITE) and \
-    #         form.validate_on_submit():
-    if form.validate_on_submit():
+    if form.validate_on_submit() and \
+            current_user.can(Permission.WRITE):
         post = Post(title=form.title.data,
                     body=form.body.data,
                     author=current_user._get_current_object())
@@ -36,12 +35,6 @@ def user(username):
 @login_required
 def edit_profile():
     form = EditProfileForm()
-    print(form.validate_on_submit(), '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    print(form.username.errors)
-    print(form.birthday.errors)
-    print(form.institute.errors)
-    print(form.about_me.errors)
-    print(form.name.errors)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.birthday = form.birthday.data
