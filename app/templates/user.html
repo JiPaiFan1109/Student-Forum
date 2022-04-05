@@ -1,4 +1,5 @@
 {% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
 
 <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
 
@@ -42,13 +43,9 @@
 
 					</div>
 
-												<div id="pagination_New">
-						    <a href="#" class="btn active">1</a>
-						    <a href="#" class="btn">2</a>
-						    <a href="#" class="btn">3</a>
-						    <a href="#" class="btn">Next »</a>
-						    <a href="#" class="btn">Last »</a>
-						</div>
+												 <div class="pagination">
+                                                    {{ macros.pagination_widget(pagination, '.index') }}
+                                                </div>
 
 											</div>
 										</div>
