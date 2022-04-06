@@ -41,13 +41,14 @@ def register():
     if form.validate_on_submit():
         user = User(email=form.email.data,
                     username=form.username.data,
-                    password=form.password.data
-)
+                    password=form.password.data,
+                    role_id=1
+                    )
         db.session.add(user)
         db.session.commit()
         flash('You can now Login')
         token = user.generate_confirmation_token()
-        send_email(user.email, 'Confirm Your Account', 'confirm', user=user, token=token)
+        send_email(user.email, 'BJUT Forum Confirmation', 'confirm', user=user, token=token)
         return redirect(url_for('main.index'))
     return render_template('register.html', form=form)
 
@@ -59,7 +60,6 @@ def confirm(token):
         return redirect(url_for('main.index'))
     if current_user.confirm(token):
         db.session.commit()
-        flash('你已经确认了你的账户，谢谢')
     else:
         flash('这个确认链接不可用，或已超时')
     return redirect(url_for('main.index'))
@@ -67,10 +67,9 @@ def confirm(token):
 
 @auth.before_app_request
 def before_request():
-
     if current_user.is_authenticated \
             and not current_user.confirmed \
-            and request.endpoint[:5] != 'auth.'\
+            and request.endpoint[:5] != 'auth.' \
             and request.endpoint != 'static':
         return redirect(url_for('auth.unconfirmed'))
 
@@ -79,7 +78,7 @@ def before_request():
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
-    return render_template('auth/unconfirmed.html')
+    return render_template('unconfirmed.html')
 
 
 @auth.route('/confirm')

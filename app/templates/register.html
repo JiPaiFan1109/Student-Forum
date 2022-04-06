@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
+{% extends "bootstrap/base.html" %}
+{% block content %}
+
 <head>
 <link rel="stylesheet" href="../static/css/text.css" type="text/css">
 
@@ -22,6 +25,22 @@
 
 </head>
 <body>
+
+<div class="container">
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+{{ message }}
+
+</div>
+{% endfor %}
+{% block page_content %}{% endblock %}
+</div>
+
+
 <!--background-color: white;-->
 <!--        opacity:0.1-->
 <div class="box_register"></div>
@@ -32,13 +51,13 @@
         <p class="choose"><a class="back" href="{{url_for('auth.login')}}">Login</a></p>
         <p class="choose1"><a class="back" href="{{url_for('auth.register')}}"><u>Register</u></a></p>
         </div>
-
+<br>
 <form action="" method="post" novalidate>
      {{ form.csrf_token }}
     <p>
         <span style="color: red;">*</span>
         {{form.email.label}}<br>
-        {{form.email(style="
+        {{form.email(autocomplete='off',style="
         width: 100%;
         width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
         outline: none;
@@ -56,13 +75,13 @@
         <br>
         {% for error in form.email.errors %}
             <span style="color: red;">
-        {{form.email.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
     <p>
         <span style="color: red;">*</span>
         {{form.username.label}}<br>
-        {{form.username(style="
+        {{form.username(autocomplete='off',style="
         width: 100%;
         width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
         outline: none;
@@ -81,7 +100,7 @@
         <br>
         {% for error in form.username.errors %}
             <span style="color: red;">
-        {{form.username.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
     <p>
@@ -103,7 +122,7 @@
         <br>
         {% for error in form.password.errors %}
             <span style="color: red;">
-        {{form.password.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
     <p>
@@ -125,7 +144,7 @@
         <br>
         {% for error in form.password2.errors %}
             <span style="color: red;">
-        {{form.password2.errors}}</span>
+        {{error}}</span>
             {% endfor %}
     </p>
     <br>
@@ -133,3 +152,5 @@
 </form>
 </div>
 </body>
+
+{% endblock %}
