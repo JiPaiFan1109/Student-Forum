@@ -6,6 +6,7 @@
 		<meta charset="utf-8" />
 		<title>MySpace</title>
 		    {% import "bootstrap/wtf.html" as wtf %}
+		<link rel="stylesheet" href="../static/css_b/bootstrap_lib.css" type="text/css"/>
 
 		<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../static/css_userinfo/font-awesome.css" type="text/css"/>
@@ -16,17 +17,19 @@
 	 <div>
         {% include 'base.html' %}
     </div>
-	<div class="contain flash" >
+
+	 <div class="contain flash" >
 	{% for message in get_flashed_messages() %}
-	<div class="alert alert-warningUser">
-    <button type="button" class="close xxx" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
+	<div class="alert alert-info">
+    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">Close</span>
   </button>
-{{ message }}
+
+		<strong>{{ message }}</strong>
 </div>
 {% endfor %}
 	</div>
-
+<script>window.setTimeout(function() { $(".alert").fadeTo(500, 0)}, 3000);</script>
 
         <div class="c1">
     <img src="../static/img/logo.jpeg" alt="">
@@ -201,12 +204,7 @@
 
 	<p>{{form.submit(class="Submit a")}}</p>
 		</div>
-
-
 </form>
-
-
-
 	</body>
 </html>
 {% endblock %}
