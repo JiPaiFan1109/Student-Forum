@@ -1,18 +1,33 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
+{% extends "bootstrap/base.html" %}
+{% block content %}
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
 		<title>MySpace</title>
+		    {% import "bootstrap/wtf.html" as wtf %}
+
 		<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../static/css_userinfo/font-awesome.css" type="text/css"/>
         <link rel="shortcut icon" href="../static/img/logo.jpeg" />
         <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 	</head>
 	<body>
-    <div>
+	 <div>
         {% include 'base.html' %}
     </div>
-    {% import "bootstrap/wtf.html" as wtf %}
+	<div class="contain flash" >
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-warningUser">
+    <button type="button" class="close xxx" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+{{ message }}
+</div>
+{% endfor %}
+	</div>
+
+
         <div class="c1">
     <img src="../static/img/logo.jpeg" alt="">
     </div>
@@ -194,3 +209,4 @@
 
 	</body>
 </html>
+{% endblock %}

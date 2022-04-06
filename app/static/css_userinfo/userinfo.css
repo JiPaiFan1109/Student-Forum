@@ -168,3 +168,24 @@ input.Upload{
 input.ha:hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
+
+div.contain.flash{
+	z-index: 999;
+	position: absolute;
+	width: 50%;
+	text-align: center;
+	left: 25%;
+
+}
+
+.xxx{
+	position: absolute;
+	left: -50px;
+}
+
+
+.alert-warningUser {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
