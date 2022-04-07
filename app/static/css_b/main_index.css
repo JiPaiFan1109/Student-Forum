@@ -222,7 +222,7 @@ form.search-form input.search-btn:hover {
   width: 100%;
 }
 .page-container > .container {
-  padding: 40px 35px;
+  padding: 40px 75px;
   background-color: #fff;
 }
 
@@ -886,6 +886,8 @@ input[type=text].error,
 
 /* Footer ------------------------------------------------------------------------------------------------------------*/
 #footer-wrapper {
+    background-color: #353c41;
+
   width: 100%;
 }
 #footer-wrapper > #footer {
@@ -973,6 +975,7 @@ input[type=text].error,
 
 #footer-bottom .copyright {
   margin: 5px 0 10px;
+  color: white;
 }
 #footer-bottom .social-nav {
   list-style: none;
@@ -1296,7 +1299,7 @@ a#scroll-top:hover {
     display: block;
     width: 85%;
     margin: 10px auto;
-    padding: auto;
+    /*padding: auto;*/
     border-radius: 0;
     border: none;
   }

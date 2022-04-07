@@ -6,8 +6,8 @@ from ..models import User
 
 
 class LoginForm(FlaskForm):
-    email = StringField('', validators=[DataRequired(message='username please')])
-    password = PasswordField('', validators=[DataRequired(message='password please')])
+    email = StringField('', validators=[DataRequired(message='Username please')])
+    password = PasswordField('', validators=[DataRequired(message='Password please')])
     remember_me = BooleanField('remember me')
     submit = SubmitField('submit')
 
@@ -17,8 +17,8 @@ class RegistrationForm(FlaskForm):
                                              Email()])
     username = StringField('Username', validators=[
         DataRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
-                                               'Usernames must have only letters,'
-                                               ' dots or underscores')])
+                                              'Usernames must have only letters,'
+                                              ' dots or underscores')])
     password = PasswordField('Password', validators=[
         DataRequired(), EqualTo('password2', message='Password must match.')])
     password2 = PasswordField('Confirm Password', validators=[DataRequired()])
@@ -33,7 +33,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Username already in use')
 
 
-class UserInformationForm(FlaskForm):
+'''class UserInformationForm(FlaskForm):
     username = StringField('Username', render_kw={'placeholder': 'Username'}, validators=[
         DataRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                                               'Usernames must have only letters,'
@@ -45,4 +45,4 @@ class UserInformationForm(FlaskForm):
     PersonalizedSignature = TextAreaField('PersonalizedSignature', render_kw={'placeholder': 'Good'},
                                           validators=[DataRequired(), Length(0, 500)])
     submit = SubmitField('save changes')
-    UploadPortrait = SubmitField('change portrait')
+    UploadPortrait = SubmitField('change portrait')'''

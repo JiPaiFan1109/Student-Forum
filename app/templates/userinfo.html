@@ -1,30 +1,50 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
+{% extends "bootstrap/base.html" %}
+{% block content %}
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
 		<title>MySpace</title>
+		    {% import "bootstrap/wtf.html" as wtf %}
+		<link rel="stylesheet" href="../static/css_b/bootstrap_lib.css" type="text/css"/>
+
 		<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../static/css_userinfo/font-awesome.css" type="text/css"/>
         <link rel="shortcut icon" href="../static/img/logo.jpeg" />
         <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 	</head>
 	<body>
-    <div>
+	 <div>
         {% include 'base.html' %}
     </div>
-    {% import "bootstrap/wtf.html" as wtf %}
+
+	 <div class="contain flash" >
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info">
+    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">Close</span>
+  </button>
+
+		<strong>{{ message }}</strong>
+</div>
+{% endfor %}
+	</div>
+<script>window.setTimeout(function() { $(".alert").fadeTo(500, 0)}, 3000);</script>
+
         <div class="c1">
     <img src="../static/img/logo.jpeg" alt="">
     </div>
-		<div class="navbar">
+		<div class="sidebar">
 			<input type="checkbox" id="checkbox" />
 			<label for="checkbox">
 				<i class="fa fa-toggle-right"></i>
 			</label>
 			<ul>
 				<li>
+
 					<img src="../static/img/logo.jpeg" alt="" />
 					<span>User Name</span>
+
 				</li>
 				<li>
 					<a href="{{url_for('auth.register')}}">
@@ -33,7 +53,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="{{url_for('auth.register')}}">
+					<a href="{{ url_for('.user', username=form.username.data ) }}">
 						<i class="fa fa-keyboard-o"></i>
 						<span>My Posts</span>
 					</a>
@@ -70,34 +90,121 @@
 				</li>
 			</ul>
 		</div>
-<form action="" method="get" novalidate>
-	{{ form.csrf_token }}
+
+
+<form action="" method="post" novalidate>
+		<div class="user">
+			{{ form.csrf_token }}
+
     <p>
-        {{form.username.label}}<br>
-        {{form.username(size=32)}}
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+		<span>User Name</span><br>
+<!--		{{form.username.label}}<br>-->
+        {{form.username(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+        <br>
     </p>
 
     <p>
-        {{form.Firstname.label}}<br>
-        {{form.Firstname(size=32)}}
+        {{form.name.label}}<br>
+        {{form.name(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
+    </p>
+
+			<p>
+        {{form.institute.label}}<br>
+        {{form.institute(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
     </p>
     <p>
-        {{form.Lastname.label}}<br>
-        {{form.Lastname(size=32)}}
+        {{form.birthday.label}}<br>
+        {{form.birthday(style="
+        width: 100%;
+		height:40px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
     </p>
     <p>
-        {{form.Birthday.label}}<br>
-        {{form.Birthday(size=32)}}
+        {{form.about_me.label}}<br>
+        {{form.about_me(style="
+        width: 100%;
+		height:260px;
+        width:360px;
+		box-sizing: border-box;
+		border:4px solid #1f6377;
+		border-radius: 7px;
+        outline: none;
+        background-color: white;
+<!--        opacity:0.8;-->
+        font-size: 20px;
+<!--         background-image: url('../static/img/password.png');-->
+        background-size: 27px;
+
+        background-repeat: no-repeat;
+        padding: 5px 20px 5px 40px;
+        ")}}
     </p>
-    <p>
-        {{form.PersonalizedSignature.label}}<br>
-        {{form.PersonalizedSignature(size=500)}}
-    </p>
-    <p>{{form.submit()}}</p>
-    <p class="c2">{{form.UploadPortrait()}}</p>
+
+	<p>{{form.submit(class="Submit a")}}</p>
+		</div>
 </form>
-
-
-
 	</body>
 </html>
+{% endblock %}
