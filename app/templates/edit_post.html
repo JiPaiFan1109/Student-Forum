@@ -1,0 +1,36 @@
+
+<link rel="stylesheet" href="../static/css/text.css" type="text/css">
+
+<div>
+    {% include 'base.html' %}
+</div>
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% block page_content %}
+<div class="page-header">
+    <p class="textOne"><font size="7" >Edit Your Post</font></p>
+</div>
+
+<form action="" method="post"
+  class="form" role="form">
+      {{ form.csrf_token }}
+
+<div class="form-group  required"><label class="control-label" for="title">Change your title here:</label>
+
+          <textarea class="form-control" id="title" name="title" required>{{ form.title.data }}</textarea>
+
+  </div>
+
+<div class="form-group  required"><label class="control-label" for="body">Change your post here:</label>
+
+          <textarea class="form-control" id="body" name="body" required>{{ form.body.data }}</textarea>
+
+  </div>
+
+    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+
+</form>
+
+{% endblock %}
+
+
