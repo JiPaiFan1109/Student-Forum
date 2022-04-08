@@ -49,7 +49,10 @@ def register():
         flash('You can now Login')
         token = user.generate_confirmation_token()
         send_email(user.email, 'BJUT Forum Confirmation', 'confirm', user=user, token=token)
-        return redirect(url_for('main.index'))
+        # flash('Register successfully')   #判断邮件是否成功发送
+
+        return redirect(url_for('auth.login'))
+        # return redirect(url_for('main.index'))
     return render_template('register.html', form=form)
 
 
@@ -78,6 +81,7 @@ def before_request():
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
+    flash('Invalid email, please try it again')
     return render_template('unconfirmed.html')
 
 

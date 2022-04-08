@@ -14,8 +14,6 @@
         -o-background-size: cover;/* 兼容Opera */
         zoom: 1;
 
-        /*对8*/
-        /*background-size: 104%;*/
     }
 </style>
 <head>
@@ -23,6 +21,7 @@
 
     <link rel="stylesheet" href="../static/css/text.css" type="text/css">
 <!--    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 
     <title>Login WeTalk</title>
 
@@ -30,22 +29,16 @@
 
 <body>
 
-<div class="container">
-{% for message in get_flashed_messages() %}
-<div class="alert alert-warning">
-<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
+<div class="contain flash" >
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info">
+    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">Close</span>
   </button>
 {{ message }}
-
 </div>
 {% endfor %}
-{% block page_content %}{% endblock %}
-</div>
-
-
-
+	</div>
 <!--<video src="../static/img/beauty.mp4" class="cloud" autoplay loop muted></video>-->
 
 <!--background-color: white;-->
@@ -108,17 +101,13 @@
         {{error}}</span>
             {% endfor %}
     </p>
-<!--        style="-->
-<!--        zoom: 180%-->
-<!--        "-->
 
     <p class="rem">{{form.remember_me()}}{{form.remember_me.label}}
     </p>
     <p >{{form.submit(class="submit sub")}}</p>
 </form>
 </div>
-<!--    <hr size=10000 width="1" color="#999999">-->
-<!--<p class="aaa" >0</p>-->
 </body>
+<script type='text/javascript' src='../static/js/text.js'></script>
 
 {% endblock %}
