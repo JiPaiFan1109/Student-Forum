@@ -17,7 +17,7 @@ class EditProfileForm(FlaskForm):
                              validators=[DataRequired(), Length(0, 500)])
     institute = StringField('Institute', render_kw={'placeholder': 'None'}, validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('Save Changes')
-
+    Upload = SubmitField('Change Portrait')
 
 '''
     PersonalizedSignature = TextAreaField('PersonalizedSignature', render_kw={'placeholder': 'Good'},

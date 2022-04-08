@@ -2,19 +2,22 @@ div.postOne{
     margin-bottom: 15px;
     /*position: relative;*/
     /*  left: 25%;*/
-
 }
 
 form.formOne{
     position: relative;
     left: 25%;
+
 }
 
 input.postThree{
+    outline: none;
   border:0;
-  border-bottom: 1px solid black;
 
-  outline: none;
+  border-bottom: 2px solid #7e7e7e;
+  width: 50%;
+    font-size: 20px;
+
 }
 
 textarea.postTwo {
@@ -44,3 +47,29 @@ textarea.postTwo {
 /*top: calc(50% - 270px);*/
 }
 
+input.submit_one{
+  background-color: #3b95ff;
+
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    font-family: 'Arial Rounded MT Bold';
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: -40px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+  border-radius: 8px;
+}
+
+input.sub_one:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+
+label.postThree{
+text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+
+}

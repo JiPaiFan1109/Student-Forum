@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
+{% extends "bootstrap/base.html" %}
+{% block content %}
+
 <head>
 <link rel="stylesheet" href="../static/css/text.css" type="text/css">
 
@@ -22,6 +25,22 @@
 
 </head>
 <body>
+
+<div class="container">
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+{{ message }}
+
+</div>
+{% endfor %}
+{% block page_content %}{% endblock %}
+</div>
+
+
 <!--background-color: white;-->
 <!--        opacity:0.1-->
 <div class="box_register"></div>
@@ -32,7 +51,7 @@
         <p class="choose"><a class="back" href="{{url_for('auth.login')}}">Login</a></p>
         <p class="choose1"><a class="back" href="{{url_for('auth.register')}}"><u>Register</u></a></p>
         </div>
-
+<br>
 <form action="" method="post" novalidate>
      {{ form.csrf_token }}
     <p>
@@ -133,3 +152,5 @@
 </form>
 </div>
 </body>
+
+{% endblock %}
