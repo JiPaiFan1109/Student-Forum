@@ -154,3 +154,36 @@ p.textOne{
     font-weight:bold;
     text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
 }
+
+div.box_one{
+    position: relative;
+    width: 60%;
+    height: 25%;
+    margin-left: 20%;
+    border: 1px solid #a7ffff;
+    margin-top: 50px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+div.form-group.required.cen{
+    text-align: center;
+    color: #0d90d1;
+    border-bottom: 1px solid #979d9d;
+    margin-top: 2%;
+    text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+
+}
+
+div.flask-pagedown-preview.box_pre{
+    margin: 3% 5%;
+    /*margin-left: 5%;*/
+    /*margin-right: 5%;*/
+    /*margin-bottom: 3%;*/
+    /*margin-top: 3%;*/
+}
+
+input.but_one{
+      background-color: #3b95ff;
+
+}

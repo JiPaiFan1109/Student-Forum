@@ -72,7 +72,7 @@ input.sub_one:hover {
 
 input.submit_two{
   background-color: #0baabe;
-
+  position: absolute;
     border: none;
     color: white;
     padding: 5px 14px;
