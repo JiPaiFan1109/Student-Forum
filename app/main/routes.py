@@ -62,6 +62,24 @@ def edit_profile():
     return render_template('userinfo.html', form=form, username=username)
 
 
+@main.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    post = Post.query.get_or_404(id)
+    if current_user != post.author and \
+            not current_user.can(Permission.ADMINISTER):
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        db.session.add(post)
+        flash('The post has been updated.')
+        return redirect(url_for('main.index'))
+        # return redirect(url_for('post', id=post.id))
+    form.title.data = post.title
+    form.body.data = post.body
+    return render_template('edit_post.html', form=form)
 
 
 
