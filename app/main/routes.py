@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app
 from flask_login import login_required, current_user
 from . import main
-from .forms import EditProfileForm, PostForm, CommentForm
+from .forms import EditProfileForm, PostForm
 from .. import db
 from ..models import User, Permission, Post, Comment
 
