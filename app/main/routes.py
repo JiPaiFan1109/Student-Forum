@@ -1,9 +1,9 @@
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app
 from flask_login import login_required, current_user
 from . import main
-from .forms import EditProfileForm, PostForm
+from .forms import EditProfileForm, PostForm, AnnouncementForm, CommentForm
 from .. import db
-from ..models import User, Permission, Post, Comment
+from ..models import User, Permission, Post, Comment, Announcement
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -22,6 +22,21 @@ def index():
         error_out=False)
     posts = pagination.items
     return render_template('index.html', form=form, posts=posts,
+                           pagination=pagination)
+
+
+def Announcement():
+    form = AnnouncementForm()
+    if form.validate_on_submit():
+        announcement = Announcement(title=form.title.data, body=form.body.data)
+        db.session.add(announcement)
+        return redirect(url_for('.announcement'))
+    page = request.args.get('page', 1, type=int)
+    pagination = Post.query.order_by(Announcement.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+        error_out=False)
+    announcements = pagination.items
+    return render_template('announcement.html', form=form, announcements=announcements,
                            pagination=pagination)
 
 

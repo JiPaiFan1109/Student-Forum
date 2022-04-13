@@ -190,7 +190,13 @@ class Comment(db.Model):
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'code', 'em', 'i', 'strong']
         target.body_html = bleach.linkify(bleach.clean(markdown(value, output_format='html'),
                                                       tags=allowed_tags,strip=True))
-
+class Announcement(db.Model):
+    __tablename__ = 'Announcement'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    body = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    moment = db.Column(db.String, index=True, default=datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)

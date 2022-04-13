@@ -32,3 +32,12 @@ class PostForm(FlaskForm):
     body = PageDownField('Change your post here:', validators=[InputRequired()])
     submit = SubmitField('Submit')
     '''index 的route处理这个表单然后把以前发布的博客列表传给模板'''
+
+class CommentForm(FlaskForm):
+    body = StringField('', validators=[InputRequired()])
+    submit = SubmitField('Submit')
+
+class AnnouncementForm(FlaskForm):
+    title = TextAreaField('Enter the title of the Announcement', validators=[InputRequired])
+    body = PageDownField('Enter the content of the Announcement', validators=[InputRequired])
+    submit = SubmitField('Submit')
