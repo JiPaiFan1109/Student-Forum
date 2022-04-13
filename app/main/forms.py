@@ -28,6 +28,7 @@ class EditProfileForm(FlaskForm):
 
 class SearchForm(FlaskForm):
     text = TextAreaField('What are u looking for?', validators=[DataRequired()])
+    submit = SubmitField('Search')
 
 
 class PostForm(FlaskForm):
