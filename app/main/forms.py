@@ -33,7 +33,6 @@ class SearchForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = TextAreaField('Change your title here:', validators=[DataRequired()])
-    # body = TextAreaField('Change your post here:', validators=[InputRequired()])
     body = PageDownField('Change your post here:', validators=[DataRequired()])
     submit = SubmitField('Submit')
 

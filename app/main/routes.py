@@ -9,6 +9,7 @@ from ..models import User, Permission, Post, Comment, Announcement
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = PostForm()
+    content = ''
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
         post = Post(title=form.title.data,
@@ -19,20 +20,12 @@ def index():
     sform = SearchForm()
     if sform.validate_on_submit():
         content = sform.text.data
-        page = request.args.get('page', 1, type=int)
-        pagination = Post.query.filter(Post.title.like('%'+content+'%')).paginate(
-            page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
-            error_out=False)
-        posts = pagination.items
-        return render_template('index.html', form=form, sform=sform, posts=posts,
-                               pagination=pagination)
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
+    pagination = Post.query.filter(Post.title.like('%' + content + '%')).order_by(Comment.timestamp.asc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
-    return render_template('index.html', form=form, sform=sform, posts=posts,
-                           pagination=pagination)
+    return render_template('index.html', form=form, sform=sform, posts=posts, pagination=pagination)
 
 
 @main.route('/announcement', methods=['GET', 'POST'])
