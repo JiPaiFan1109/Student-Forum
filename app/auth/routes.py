@@ -46,7 +46,7 @@ def register():
                     )
         db.session.add(user)
         db.session.commit()
-        flash('You can now Login')
+        flash('You can now check your email')
         token = user.generate_confirmation_token()
         send_email(user.email, 'BJUT Forum Confirmation', 'confirm', user=user, token=token)
         # flash('Register successfully')   #判断邮件是否成功发送

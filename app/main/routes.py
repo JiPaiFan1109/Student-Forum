@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app
 from flask_login import login_required, current_user
 from . import main
-from .forms import EditProfileForm, PostForm, AnnouncementForm, CommentForm
+from .forms import EditProfileForm, PostForm, AnnouncementForm, CommentForm, SearchForm
 from .. import db
 from ..models import User, Permission, Post, Comment, Announcement
 
@@ -15,7 +15,8 @@ def index():
                     body=form.body.data,
                     author=current_user._get_current_object())
         db.session.add(post)
-        return redirect(url_for('.index'))
+        '''return redirect(url_for('.index'))
+    sform = SearchForm()'''
     page = request.args.get('page', 1, type=int)
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
@@ -25,22 +26,26 @@ def index():
                            pagination=pagination)
 
 
-def Announcement():
+@main.route('/announcement', methods=['GET', 'POST'])
+@login_required
+def announcement():
     form = AnnouncementForm()
     if form.validate_on_submit():
-        announcement = Announcement(title=form.title.data, body=form.body.data)
-        db.session.add(announcement)
+        ann = Announcement(title=form.title.data,
+                           body=form.body.data,
+                           author=current_user._get_current_object())
+        db.session.add(ann)
         return redirect(url_for('.announcement'))
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.order_by(Announcement.timestamp.desc()).paginate(
-        page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+    pagination = Announcement.query.order_by(Announcement.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASK_ANNOUNCEMENT_PER_PAGE'],
         error_out=False)
     announcements = pagination.items
     return render_template('announcement.html', form=form, announcements=announcements,
                            pagination=pagination)
 
 
-@main.route('/user/<username>')
+@main.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
@@ -76,6 +81,7 @@ def edit_profile():
     username = current_user.username
     return render_template('userinfo.html', form=form, username=username)
 
+
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
     post = Post.query.get_or_404(id)
@@ -88,6 +94,16 @@ def post(id):
         db.session.commit()
         flash('Your comment has been published')
         return redirect(url_for('.post', id=post.id, page=-1))
+    page = request.args.get('page', 1, type=int)
+    if page == -1:
+        page = (post.comments.count() - 1) // \
+            current_app.config['FLASKY_COMMENTS_PER_PAGE'] + 1
+    pagination = post.comments.order_by(Comment.timestamp.asc()).paginate(
+        page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
+        error_out=False)
+    comments = pagination.items
+    return render_template('post.html', posts=[post], form=form,
+                           comments=comments, pagination=pagination)
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -108,15 +124,4 @@ def edit(id):
     form.title.data = post.title
     form.body.data = post.body
     return render_template('edit_post.html', form=form)
-
-
-
-
-
-
-
-
-
-
-
 
