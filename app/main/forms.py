@@ -26,8 +26,24 @@ class EditProfileForm(FlaskForm):
     UploadPortrait = SubmitField('change portrait')'''
 
 
+class SearchForm(FlaskForm):
+    text = TextAreaField('What are u looking for?', validators=[DataRequired()])
+    submit = SubmitField('Search')
+
+
 class PostForm(FlaskForm):
-    title = TextAreaField('Add a title here', validators=[InputRequired()])
-    body = TextAreaField('Post whatever you want?', validators=[InputRequired()])
+    title = TextAreaField('Change your title here:', validators=[DataRequired()])
+    body = PageDownField('Change your post here:', validators=[DataRequired()])
     submit = SubmitField('Submit')
-    '''index 的route处理这个表单然后把以前发布的博客列表传给模板'''
+
+
+class CommentForm(FlaskForm):
+    body = StringField('', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+class AnnouncementForm(FlaskForm):
+    title = TextAreaField('Enter the title of the Announcement', validators=[DataRequired()])
+    body = PageDownField('Enter the content of the Announcement', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
