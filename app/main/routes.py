@@ -1,7 +1,8 @@
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app
 from flask_login import login_required, current_user
 from . import main
-from .forms import EditProfileForm, PostForm, AnnouncementForm, CommentForm, SearchForm
+from .forms import EditProfileForm, PostForm, AnnouncementForm, \
+    CommentForm, SearchForm, ChangeAvatarForm
 from .. import db
 from ..models import User, Permission, Post, Comment, Announcement
 
@@ -21,7 +22,7 @@ def index():
     if sform.validate_on_submit():
         content = sform.text.data
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.filter(Post.title.like('%' + content + '%')).order_by(Post.timestamp.asc()).paginate(
+    pagination = Post.query.filter(Post.title.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
@@ -126,4 +127,29 @@ def edit(id):
     form.title.data = post.title
     form.body.data = post.body
     return render_template('edit_post.html', form=form)
+
+
+@main.route('/change-avatar', methods=['GET', 'POST'])
+@login_required
+def change_avatar():
+    form = ChangeAvatarForm()
+    if form.validate_on_submit():
+        avatar = request.files['avatar']
+        fname = avatar.filename
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        allowed_extensions = ['png', 'jpg', 'jpeg', 'gif']
+        fext = fname.rsplit('.', 1)[-1] if '.' in fname else ''
+        if fext not in allowed_extensions:
+            flash('Please check if its one of png, '
+                  'jpg, jpeg and gif')
+            return redirect(url_for('.user',
+                                    username=current_user.username))
+        target = '{}{}.{}'.format(upload_folder, current_user.username, fext)
+        avatar.save(target)
+        current_user.real_avatar = '/static/avatars/{}.{}'.format(current_user.username, fext)
+        db.session.add(current_user)
+        flash('Your avatar has been updated.')
+        return redirect(url_for('.user', username=current_user.username))
+    return render_template('change_avatar.html', form=form)
+
 
