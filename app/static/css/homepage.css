@@ -92,6 +92,47 @@ label.postThree{
 text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
 }
 
-div.post-footer{
+button.searchBtn{
+  background-color: #3b95ff;
 
+    border: none;
+    color: white;
+    padding: 8px 10px;
+  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: -40px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+  border-radius: 3px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+button.searchBtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button.searchBtn span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+button.searchBtn:hover span {
+  padding-right: 25px;
+}
+
+button.searchBtn:hover span:after {
+  opacity: 1;
+  right: 0;
 }

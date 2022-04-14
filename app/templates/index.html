@@ -48,11 +48,24 @@
                                 <h3 class="search-header">Forum of Beijing University of Technology</h3>
                                 <p class="search-tag-line">Persistent Pursuit of Truth as Aim, Persistent Innovation as Way</p>
 
-                                <form id="search-form" class="search-form clearfix" method="get" action="#" autocomplete="off">
-                                        <input class="search-term required" type="text" id="s" name="s" placeholder="Type your search terms here" title="* Please enter a search term!" />
-                                        <input class="search-btn" type="submit" value="Search" />
-                                        <div id="search-error-container"></div>
-                                </form>
+<!--                                <form id="search-form" class="search-form clearfix" method="get" action="#" autocomplete="off">-->
+
+
+                             <form action=""  class="search-form clearfix" method="post" novalidate autocomplete="off">
+                                 {{ form.csrf_token }}
+
+                            <p>
+                            <input id="text" class="search-term required" type="text" name="text" placeholder="Search whatever you want" title="Please enter a search term">
+                                <button class="searchBtn" name="submit" type="submit" ><span>Search</span></button>
+                                 <div id="search-error-container"></div>
+                            </form>
+
+<!--                                <form id="search-form" class="search-form clearfix" method="get"  autocomplete="off">-->
+
+<!--                                        <input class="search-term required" type="text" id="s" name="s" placeholder="Type your search terms here" title="* Please enter a search term!" />-->
+<!--                                        <input class="search-btn" type="submit" value="Search" />-->
+<!--                                        <div id="search-error-container"></div>-->
+<!--                                </form>-->
                         </div>
                 </div>
                 <!-- End of Search Wrapper -->
@@ -75,7 +88,7 @@
 							<article class="format-standard type-post hentry clearfix">
 								<header class="clearfix">
 									<h3 class="post-title">
-										<a href="#">{{ post.title }}</a>
+										<a href="{{ url_for('.post', id=post.id) }}">{{ post.title }}</a>
 									</h3>
 									<div class="post-meta clearfix">
 											<span class="date">
