@@ -75,11 +75,12 @@ class Role(db.Model):
             db.session.add(role)
         db.session.commit()
 
+
 class Follow(db.Model):
     __tablename__ = 'follows'
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
     followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
-    timestamp = db.Column(db.DateTime, default = datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 class User(UserMixin, db.Model):
