@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import login_user, login_required, logout_user, current_user
 from .password import PasswordTool
 from app.auth.email import send_email
@@ -37,7 +37,7 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    password = form.password.data
+    password = str(form.password.data)
     check = PasswordTool(password)
     check.process_password()
     if form.validate_on_submit():
