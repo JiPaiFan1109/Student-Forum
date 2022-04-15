@@ -37,7 +37,7 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    password = form.password.data
+    password = str(form.password.data)
     check = PasswordTool(password)
     check.process_password()
     if form.validate_on_submit():
