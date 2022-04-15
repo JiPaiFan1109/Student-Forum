@@ -1,0 +1,31 @@
+
+<link rel="stylesheet" href="../static/css/post.css" type="text/css">
+<link rel="stylesheet" href="../static/css/text.css" type="text/css">
+<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+
+
+
+<body class="color">
+    <div>
+        {% include 'base.html' %}
+    </div>
+
+
+{% for post in posts %}
+
+     <div class="box_two">
+    <div class="tit"> {{post.title}} </div>
+         </div>
+<br>
+<div class="box_three">
+    <div class="post-body">
+    {% if post.body_html %}
+        {{ post.body_html | safe }}
+    {% else %}
+        {{ post.body }}
+    {% endif %}
+    </div>
+</div>
+{% endfor %}
+
+</body>
