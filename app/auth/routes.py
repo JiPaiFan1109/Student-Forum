@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import login_user, login_required, logout_user, current_user
-
+from .password import PasswordTool
 from app.auth.email import send_email
 from . import auth
 from .forms import LoginForm, RegistrationForm
@@ -15,7 +15,6 @@ def login():
     print(form.validate_on_submit())
     if form.validate_on_submit():
         passw_hash = generate_password_hash(form.password.data)
-        '''user = User(username=form.username.data, email=form.email.data, password_hash=passw_hash)'''
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
@@ -38,6 +37,9 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    password = form.password.data
+    check = PasswordTool(password)
+    check.process_password()
     if form.validate_on_submit():
         user = User(email=form.email.data,
                     username=form.username.data,
@@ -46,11 +48,14 @@ def register():
                     )
         db.session.add(user)
         db.session.commit()
-        flash('You can now Login')
+        flash('You can now check your email')
         token = user.generate_confirmation_token()
         send_email(user.email, 'BJUT Forum Confirmation', 'confirm', user=user, token=token)
-        return redirect(url_for('main.index'))
-    return render_template('register.html', form=form)
+        # flash('Register successfully')   #判断邮件是否成功发送
+
+        return redirect(url_for('auth.login'))
+        # return redirect(url_for('main.index'))
+    return render_template('register.html', form=form, level=check.strength_level)
 
 
 @auth.route('/confirm/<token>')
@@ -78,6 +83,7 @@ def before_request():
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
+    flash('Invalid email, please try it again')
     return render_template('unconfirmed.html')
 
 
