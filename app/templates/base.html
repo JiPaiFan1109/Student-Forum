@@ -40,7 +40,7 @@
 <!--                                                            <li><button type="button" class="btn btn-primary" ><a href="{{url_for('main.index')}}">Home</a></button></li>-->
 
                                                             {% if current_user.is_authenticated %}
-                                                                <li><a href="{{url_for('main.index')}}"><font size="4" color="#ffffff">Hi, {{ current_user.username }}</font></a>
+                                                                <li><a href="{{url_for('main.edit_profile')}}"><font size="4" color="#ffffff">Hi, {{ current_user.username }}</font></a>
                                                                             <ul class="sub-menu">
                                                                                     <li><a href="{{url_for('auth.logout')}}"><font color="#ffffff">Logout</font></a>
                                                                                     <li><a href="{{url_for('main.edit_profile')}}"><font color="#ffffff">Account</font></a></li>
