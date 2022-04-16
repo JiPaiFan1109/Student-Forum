@@ -103,31 +103,33 @@
             {% endfor %}
     </p>
     <p>
+        <div>
         <span style="color: red;">*</span>
         {{form.password.label}}<br>
-        {{form.password(style="
+        {{form.password(maxlength="20", autocomplete='off', oninput="passValidate(this)", style="
         width: 100%;
         width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
         outline: none;
         background-color: white;
         opacity:0.8;
         font-size: 18px;
-         background-image: url('../static/img/password.png');
+        background-image: url('../static/img/password.png');
         background-size: 27px;
 
         background-repeat: no-repeat;
         padding: 5px 20px 5px 40px;
         ")}}
         <br>
+           <div class="conceal" id='conceal'></div>
+</div>
         {% for error in form.password.errors %}
             <span style="color: red;">
         {{error}}</span>
-            {% endfor %}
-    </p>
-    <p>
+    {% endfor %}
+    <p style="position: relative; top: 14px;">
         <span style="color: red;">*</span>
         {{form.password2.label}}<br>
-        {{form.password2(style="
+        {{form.password2(maxlength="20", autocomplete='off', style="
         width: 100%;
         width:392px;  box-sizing: border-box; border: 2px; border-radius: 7px;
         outline: none;
@@ -136,11 +138,22 @@
         font-size: 18px;
          background-image: url('../static/img/password.png');
         background-size: 27px;
-
         background-repeat: no-repeat;
         padding: 5px 20px 5px 40px;
         ")}}
         <br>
+
+        <div class="conceal2" id='conceal2'></div>
+<br>
+<!--    <p style="position: relative;left:1px; top: -20px;font-weight: 500;">Password containing at least two of 6-20 numbers, letters, special symbols</p>-->
+        <ul class="pwdStrength">
+            <li class="weak"></li>
+            <li class="middle"></li>
+            <li class="strong"></li>
+            <li class="result"></li>
+        </ul>
+
+
         {% for error in form.password2.errors %}
             <span style="color: red;">
         {{error}}</span>
@@ -151,6 +164,37 @@
 </form>
 </div>
 </body>
-<script type='text/javascript' src='../static/js/text.js'></script>
+
+<script>
+       var password = document.getElementById('password');
+       var anniu = document.getElementById('conceal');
+       var password2 = document.getElementById('password2');
+       var anniu2 = document.getElementById('conceal2');
+
+       anniu.addEventListener('click',function(){
+           if(password.type==='password')
+           {
+               password.setAttribute('type','text');
+               anniu.classList.add('close');
+           }else{
+            password.setAttribute('type','password');
+               anniu.classList.remove('close');
+           }
+
+       })
+       anniu2.addEventListener('click',function(){
+           if(password2.type==='password')
+           {
+               password2.setAttribute('type','text');
+               anniu2.classList.add('close');
+           }else{
+            password2.setAttribute('type','password');
+               anniu2.classList.remove('close');
+           }
+
+       })
+   </script>
+    <script type='text/javascript' src='../static/js/text.js'></script>
+
 {% endblock %}
 
