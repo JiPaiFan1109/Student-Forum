@@ -51,19 +51,19 @@ class PasswordTool():
       判断是否符合规则
     """
         # 规则1：长度至少8位
-        if len(self.password) >= 8:
-            self.strength_level += 1
-
-        # 规则2：必须包含数字
-        if self.check_number_exist():
-            self.strength_level += 1
-
-        # 规则3：必须包含大小写字母
-        if self.check_letter_exist():
-            self.strength_level += 1
-
-        # 规则4：需要包含特殊字符
-        if self.check_specialchar_exist():
-            self.strength_level += 1
+        # if len(self.password) >= 8:
+        #     self.strength_level += 1
+        #
+        # # 规则2：必须包含数字
+        # if self.check_number_exist():
+        #     self.strength_level += 1
+        #
+        # # 规则3：必须包含大小写字母
+        # if self.check_letter_exist():
+        #     self.strength_level += 1
+        #
+        # # 规则4：需要包含特殊字符
+        # if self.check_specialchar_exist():
+        #     self.strength_level += 1
 
 

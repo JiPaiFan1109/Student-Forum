@@ -2,6 +2,8 @@
 <link rel="stylesheet" href="../static/css/post.css" type="text/css">
 <link rel="stylesheet" href="../static/css/text.css" type="text/css">
 <link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+<link rel="stylesheet" href="../static/css_b/main_index.css" type="text/css">
+
 
 
 
@@ -13,19 +15,79 @@
 
 {% for post in posts %}
 
-     <div class="box_two">
-    <div class="tit"> {{post.title}} </div>
+     <div class="boxOne">
+<!--         <div ><label for="body" class="tit"> {{post.title}} </label></div>-->
+         <div class="tit"> {{post.title}} </div>
+         <div>
+         <button class="jumpBtn"><span><label class="size" for="body">Comment</label></span></button>
          </div>
+     </div>
 <br>
-<div class="box_three">
-    <div class="post-body">
+<div class="boxTwo">
+    <div class="post_body">
+
     {% if post.body_html %}
         {{ post.body_html | safe }}
     {% else %}
         {{ post.body }}
     {% endif %}
     </div>
-</div>
-{% endfor %}
+    <div class="boxThree">
+    <div class="com">Comments</div>
+        <p class="line"></p>
 
+        <div class="comment-area">
+<!--        <div class="page-container">-->
+                        <div class="container">
+                                <div class="row">
+
+                                        <!-- start of page content -->
+                                        <div class="span8 page-content">
+
+                                            <div class="page-section" id="projects_New">
+                    <div class="row">
+						<ul class="posts">
+						{% for comment in comments %}
+						<div class="col-md-12 main-listing">
+							<article class="format-standard type-post hentry clearfix">
+								<header class="clearfix">
+									<div class="post-meta clearfix">
+											<span class="category">
+												<a href="{{ url_for('.user', username=post.author.username) }}">{{ comment.author.username }}</a>
+											</span>
+									</div><!-- end of post meta -->
+								</header>
+								<div class="post-body">{{ comment.body }}</div>
+							</article>
+						</div>
+
+						{% endfor %}
+						</ul>
+
+
+					</div>
+
+                                                 </div>
+                        </div>
+        </div>
+    </div>
+</div>
+
+    <p class="line"></p>
+        <form action="" method="post" class="search-form clearfix comment" novalidate autocomplete="off">
+            {{ form.csrf_token }}
+            <label for="body"></label><br>
+            <input id="body" name="body" class="search-term required" required type="text" value="" placeholder="Enter your comment...">
+            <button class="searchBtn" name="submit" type="submit" ><span>Submit</span></button>
+        </form>
+
+    </div>
+</div>
+
+
+
+{% endfor %}
+<br>
+<br>
+<br>
 </body>
