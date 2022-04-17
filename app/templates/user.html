@@ -2,8 +2,17 @@
 {% import "_macros.html" as macros %}
 {% include 'base.html' %}
 <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
-<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+
+                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../static/css_b/follow.css" type="text/css">
+
+<div class="avatar">
+	 <img src="../static/img/logo.jpeg" alt="">
+</div>
+<div class="username">
+        <span>{{ user.username }}</span>
+</div>
+
 
 
 
@@ -29,41 +38,10 @@
 											<span class="category">
 												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
 											</span>
-										{% if current_user.can(Permission.FOLLOW) and user != current_user %}
-											{% if not current_user.is_following(user) %}
-											<a href="{{ url_for('.follow', username=user.username) }}" class="btn btn-primary">Follow</a>
-											{% else %}
-											<a href="{{ url_for('.unfollow', username=user.username) }}" class="btn btn-default">Unfollow</a>
-											{% endif %}
-										{% endif %}
-										<a href="{{ url_for('.followers', username=user.username) }}">
-											Followers: <span class="badge">{{ user.followers.count() }}</span>
-										</a>
-										<a href="{{ url_for('.followed_by', username=user.username) }}">
-                                            Following: <span class="badge">{{ user.followed.count() }}</span>
-										</a>
-										{% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
-										| <span class="label label-default">Follows you</span>
-										{% endif %}
 									</div><!-- end of post meta -->
 								</header>
 								<div class="post-body">{{ post.body }}</div>
 							</article>
-
-							<div class="post-footer">
-                            {% if current_user == post.author %}
-                                <a href="{{ url_for('.edit', id=post.id) }}">
-                                        <input class="submit_two sub_one" name="submit" type="submit" value="Edit">
-
-<!--                                <span class="submit_one sub_one">Edit</span>-->
-                                </a>
-                            {% elif current_user.is_administrator() %}
-                                <a href="{{ url_for('.edit', id=post.id) }}">
-                                    <span class="label label-danger">Edit [Admin]</span>
-                                </a>
-                                {% endif %}
-                            </div>
-
 						</div>
 
 						{% endfor %}
