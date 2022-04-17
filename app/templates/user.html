@@ -22,10 +22,10 @@
 							<article class="format-standard type-post hentry clearfix">
 								<header class="clearfix">
 									<h3 class="post-title">
-										<a href="#">Latest vaccination policy</a>
+										<a href="{{ url_for('.post', id=post.id) }}">{{ post.title }}</a>
 									</h3>
 									<div class="post-meta clearfix">
-											<span class="date">2022-03-14</span>
+											<span class="date">{{ post.moment }}</span>
 											<span class="category">
 												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
 											</span>
