@@ -68,6 +68,18 @@
 					</a>
 				</li>
 				<li>
+					<a href="{{url_for('.followers', username=form.username.data )}}">
+						<i class="fa fa-id-card-o" aria-hidden="true"></i>
+						<span>Followed</span>
+					</a>
+				</li>
+				<li>
+					<a href="{{url_for('.followed_by', username=form.username.data )}}">
+						<i class="fa fa-id-card-o" aria-hidden="true"></i>
+						<span>Following</span>
+					</a>
+				</li>
+				<li>
 					<a href="{{ url_for('.user', username=form.username.data ) }}">
 						<i class="fa fa-keyboard-o"></i>
 						<span>My Posts</span>
@@ -217,7 +229,7 @@
         ")}}
     </p>
 
-	<p>{{form.submit(class="Submit a")}}</p>
+			<p>{{form.submit(class="Submit a")}}</p>
 			<p>{{form.Upload(class="Upload portrait")}}</p>
 
 		</div>
