@@ -4,8 +4,8 @@
 	box-sizing: border-box;
 }
 div.c1{
-    width: 150px;
-    height: 150px;
+    width: 350px;
+    height: 350px;
     border: 3px solid white;
     border-radius: 50%;
     overflow: hidden;
@@ -151,8 +151,8 @@ input.a:hover {
 input.Upload{
   background-color: #19BCBD; /* Green */
 	position:absolute;
-	left:calc(50% - 680px);
-	top:200px;
+	margin-left:calc(50% - 690px);
+	margin-top:-85%;
     border: none;
     color: white;
     padding: 10px 15px;
@@ -161,7 +161,7 @@ input.Upload{
     text-decoration: none;
     display: inline-block;
     font-size: 20px;
-    margin: 4px 2px;
+    /*margin: 4px 2px;*/
     cursor: pointer;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
@@ -185,39 +185,6 @@ div.contain.flash{
 	position: absolute;
 	left: 85%;
 }
-
-/*.alertUser{*/
-/*	padding: 8px 35px 8px 14px;*/
-/*  margin-bottom: 22px;*/
-/*  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);*/
-/*  background-color: #19a3c2;*/
-/*  border: 1px solid #eeece9;*/
-/*  -webkit-border-radius: 4px;*/
-/*  -moz-border-radius: 4px;*/
-/*  border-radius: 4px;*/
-/*}*/
-
-/*.alertUser,*/
-/*.alert h4 {*/
-/*  color: #c09853;*/
-/*}*/
-
-/*.alertUser h4 {*/
-/*  margin: 0;*/
-/*}*/
-
-/*.alertUser .close {*/
-/*  position: relative;*/
-/*  top: -2px;*/
-/*  right: -21px;*/
-/*  line-height: 22px;*/
-/*}*/
-
-/*.alert-warningUser {*/
-/*  color: #090808;*/
-/*  background-color: #e8e8e4;*/
-/*  border-color: #f8f8f8;*/
-/*}*/
 
 .alert-info{
 	font-size: 18px;
@@ -252,4 +219,41 @@ button.closeU {
   cursor: pointer;
   background: transparent;
   border: 0;
+}
+
+img.avatar{
+	position: absolute;
+	margin-left: 25%;
+	margin-right: 75%;
+	margin-top: 50px;
+	height: 160px;
+	width: 160px;
+	border-radius: 6px;
+}
+
+form.avForm{
+	position: absolute;
+
+}
+
+input.saveBtn {
+	position:absolute;
+	margin-top: 250px;
+	margin-left:434px;
+	/*margin-top:-85%;*/
+    border: none;
+    color: white;
+    padding: 10px 38px;
+	background-color: #19BCBD; /* Green */
+	/*padding: 10px 15px;*/
+    /*font-family: 'Arial Rounded MT Bold';*/
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    /*margin: 4px 2px;*/
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+  border-radius: 12px;
 }
