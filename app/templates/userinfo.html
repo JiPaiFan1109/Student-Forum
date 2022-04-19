@@ -22,7 +22,8 @@
 		<meta charset="utf-8" />
 		<title>MySpace</title>
 		    {% import "bootstrap/wtf.html" as wtf %}
-		<link rel="stylesheet" href="../static/css_b/bootstrap_lib.css" type="text/css"/>
+<!--		<link rel="stylesheet" href="../static/css_b/bootstrap_lib.css" type="text/css"/>-->
+<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 		<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../static/css_userinfo/font-awesome.css" type="text/css"/>
@@ -46,9 +47,7 @@
 {% endfor %}
 	</div>
 
-        <div class="c1">
-    <img src="../static/img/logo.jpeg" alt="">
-    </div>
+
 		<div class="sidebar">
 			<input type="checkbox" id="checkbox" />
 			<label for="checkbox">
@@ -65,18 +64,6 @@
 					<a href="{{url_for('auth.register')}}">
 						<i class="fa fa-id-card-o" aria-hidden="true"></i>
 						<span>Profile</span>
-					</a>
-				</li>
-				<li>
-					<a href="{{url_for('.followers', username=form.username.data )}}">
-						<i class="fa fa-toggle-off" aria-hidden="true"></i>
-						<span>Followed</span>
-					</a>
-				</li>
-				<li>
-					<a href="{{url_for('.followed_by', username=form.username.data )}}">
-						<i class="fa fa-toggle-on" aria-hidden="true"></i>
-						<span>Following</span>
 					</a>
 				</li>
 				<li>
@@ -119,7 +106,35 @@
 		</div>
 
 
-<form action="" method="post" novalidate>
+
+<form action="" method="post" class="form" enctype="multipart/form-data" role="aform">
+
+<div class="form-group "><label class="control-label" for="avatar"></label>
+        			{{ form.csrf_token }}
+
+<!--             <label for="avatar" type="image">Choose images to upload (PNG, JPG)</label>-->
+
+<!--          <input id="avatar" class="hh" name="avatar" type="file">-->
+	<input id="avatar" type="file" name="avatar" style=" opacity: 0; background-color: white; position: absolute; margin-left: 25%; margin-right: 75%; margin-top: 120px; width: 160px;height:160px; overflow:hidden;z-index: 990" />
+
+
+  </div>
+
+    <input class="saveBtn" id="submit" name="submit" type="submit" value="Save Avatar">
+
+</form>
+	 <!-- templates/user.html -->
+{% if user == current_user or current_user.is_administrator() %}
+
+    <img class="avatar profile-thumbnail" src="{{ user.real_avatar }}" >
+<!--如下是初始背景图-->
+	 <img class="avatar profile-thumbnail" src="../static/img/one.jpeg" style="z-index: -10000" >
+
+    {% endif %}
+    </a>
+
+
+	 <form action="" method="post" novalidate>
 		<div class="user">
 			{{ form.csrf_token }}
 
@@ -229,8 +244,7 @@
         ")}}
     </p>
 
-			<p>{{form.submit(class="Submit a")}}</p>
-			<p>{{form.Upload(class="Upload portrait")}}</p>
+	<p>{{form.submit(class="Submit a")}}</p>
 
 		</div>
 </form>
