@@ -90,21 +90,96 @@ img.avatarPost.avatarComment{
 
 img.avatarPost.avatarList{
     position: absolute;
-    margin-left: 320px;
+    margin-left: 360px;
 	margin-top: 1px;
     height: 130px;
     width: 130px;
 }
 
 img.avatarPost.avatarList.plus{
-    height: 150px;
+    height: 130px;
 }
 
 span.name{
     font-size: 23px;
-    font-family: 'Arial Rounded MT Bold';
+    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
     position: absolute;
-    margin-left: 480px;
+    margin-left: 510px;
     margin-top: 20px;
+}
 
+div.foll{
+    position: absolute;
+    margin-left: 510px;
+    margin-top: 20px;
+    z-index: 1;
+}
+
+a.follBtn{
+  position: relative;
+  margin-top: 55px;
+  margin-left: 4px;
+    /*height: 30px;*/
+  /*margin-bottom: 80%;*/
+  background-color: #2081fc;
+  border: none;
+  color: white;
+  padding: 7px 23px;
+  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 3px;
+  z-index: 1000;
+}
+
+a.follBtn:hover {
+  background-color: #046ee1;
+}
+
+a.follBtn.unfollow{
+    background-color: white;
+    border: 2px solid #2081fc;
+}
+
+a.follBtn.unfollow:hover {
+  background-color: #cee1f6;
+}
+
+label.fontColor{
+  font-size: 20px;
+  color: #2081fc;
+}
+
+div.follFont{
+
+}
+
+a.position{
+    position: absolute;
+    left: 58%;
+    top: 120px;
+}
+
+a.position.two{
+    position: absolute;
+    left: 58%;
+    top: 165px;
+}
+
+div.boxFour{
+    position: absolute;
+    margin-left: 1250px;
+    margin-top: 300px;
+    width: 450px;
+    /*height: 16%;*/
+    height: 450px;
+    border: 1px solid rgba(250, 250, 250, 0.67);
+    /*margin-top: 50px;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #fff;
 }
