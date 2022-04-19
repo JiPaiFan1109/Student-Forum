@@ -27,7 +27,14 @@ def index():
     if sform.validate_on_submit():
         content = sform.text.data
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.filter(Post.title.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
+    show_followed = False
+    if current_user.is_authenticated:
+        show_followed = bool(request.cookies.get('show_followed', ''))
+    if show_followed:
+        query = current_user.followed_posts
+    else:
+        query = Post.query
+    pagination = query.filter(Post.title.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
