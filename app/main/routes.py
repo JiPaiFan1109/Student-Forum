@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app, make_response
 from flask_login import login_required, current_user
 from . import main
@@ -17,7 +19,8 @@ def index():
             current_user.can(Permission.WRITE):
         post = Post(title=form.title.data,
                     body=form.body.data,
-                    author=current_user._get_current_object())
+                    author=current_user._get_current_object(),
+                    moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         db.session.add(post)
         return redirect(url_for('.index'))
     sform = SearchForm()
@@ -38,6 +41,7 @@ def announcement():
     if form.validate_on_submit():
         ann = Announcement(title=form.title.data,
                            body=form.body.data,
+                           moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                            # author=current_user._get_current_object()
                            )
         db.session.add(ann)
@@ -144,19 +148,20 @@ def unfollow(username):
 
 @main.route('/followers/<username>')
 def followers(username):
-    user = User.query.filter_by(username = username).first()
+    user = User.query.filter_by(username=username).first()
     if user is None:
         flash('Invalid user. ')
         return redirect(url_for(' .index'))
-    page = request.args.get('page', 1, type = int)
+    page = request.args.get('page', 1, type=int)
     pagination = user.followers.paginate(
-        page, per_page = current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
-        error_out= False)
-    follows = [{'user': item.follower, 'timestamp':item.timestamp}
+        page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
+        error_out=False)
+    follows = [{'user': item.follower, 'timestamp': item.timestamp}
                for item in pagination.items]
-    return render_template('followers.html', user = user, title = "Followers of",
-                           endpoint = '.followers', pagination = pagination,
-                           follows = follows)
+    return render_template('followers.html', user=user, title="Followers of",
+                           endpoint='.followers', pagination=pagination,
+                           follows=follows)
+
 
 @main.route('/followed_by/<username>')
 def followed_by(username):
@@ -171,16 +176,15 @@ def followed_by(username):
     follows = [{'user': item.followed, 'timestamp': item.timestamp}
                for item in pagination.items]
     return render_template('followers.html', user=user, title="Followed by",
-                           endpoint = '.followed_by', pagination=pagination,
-                           follows = follows)
-
+                           endpoint='.followed_by', pagination=pagination,
+                           follows=follows)
 
 
 @main.route('/all')
 @login_required
 def show_all():
     resp = make_response(redirect(url_for('.index')))
-    resp.set_cookie('show_followed', '', max_age = 30*24*60*60)
+    resp.set_cookie('show_followed', '', max_age=30 * 24 * 60 * 60)
     return resp
 
 
@@ -188,7 +192,7 @@ def show_all():
 @login_required
 def show_required():
     resp = make_response(redirect(url_for('.index')))
-    resp.set_cookies('show_followed', '1', max_age = 30*24*60*60)
+    resp.set_cookies('show_followed', '1', max_age=30 * 24 * 60 * 60)
     return resp
 
 
@@ -199,7 +203,8 @@ def post(id):
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
                           post=post,
-                          author=current_user._get_current_object())
+                          author=current_user._get_current_object(),
+                          moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been published')
@@ -207,7 +212,7 @@ def post(id):
     page = request.args.get('page', 1, type=int)
     if page == -1:
         page = (post.comments.count() - 1) // \
-            current_app.config['FLASKY_COMMENTS_PER_PAGE'] + 1
+               current_app.config['FLASKY_COMMENTS_PER_PAGE'] + 1
     pagination = post.comments.order_by(Comment.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
         error_out=False)
@@ -258,5 +263,3 @@ def edit(id):
 #         flash('Your avatar has been updated.')
 #         return redirect(url_for('main.edit_profile', username=current_user.username))
 #     return render_template('userinfo.html', form=form, username=current_user.username)
-
-
