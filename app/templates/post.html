@@ -1,6 +1,8 @@
 {% extends "bootstrap/base.html" %}
 {% import "_macros.html" as macros %}
+
 {% block content %}
+
 <link rel="stylesheet" href="../static/css/post.css" type="text/css">
 <link rel="stylesheet" href="../static/css/text.css" type="text/css">
 <link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
@@ -45,11 +47,23 @@
     <br>
 
     <div class="boxFour">
+        <p class="fon">About The Author</p>
+
+        <a href="{{ url_for('.user', username=post.author.username) }}"><img class="avatarPost boxF" src="{{ post.author.real_avatar }}" ><font style=" position: absolute; left: 184px; top: 76px; color: #000000;font-size: 20px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;" >{{ post.author.username }}</font> </a>
+        <font style=" position: absolute; left: 184px; top: 140px; color: #444343;font-size: 20px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;" >{{ post.author.about_me}}</font>
+        <p class="lineT"></p>
+        <a href="{{ url_for('.user', username=post.author.username) }}"><font class="showP">Posts</font></a>
+        <font class="showP com">Comments</font>
+        <a href="{{ url_for('.followers', username=user.username) }}"><font class="showP foll">Followers</font> </a>
+        <font class="showP foll cou">{{ post.author.followers.count() - 1 }}</font>
+        <font class="showP foll countP">{{ post.author.posts.count() }}</font>
+        <font class="showP foll countC">10</font>
+
 
     </div>
 <div class="boxTwo">
     <div class="post_body">
-        <a href="{{ url_for('.user', username=post.author.username) }}"><img class="avatarPost" src="{{ user.real_avatar }}" ><font style=" position: absolute; right: 74%; color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;" >{{ current_user.username }}</font> </a> <font style=" position: absolute; right: 66%; top: 50px;color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;"> {{post.moment}}</font>
+        <a href="{{ url_for('.user', username=post.author.username) }}"><img class="avatarPost" src="{{ post.author.real_avatar }}" ><font style=" position: absolute; right: 74%; color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;" >{{ post.author.username }}</font> </a> <font style=" position: absolute; right: 66%; top: 50px;color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;"> {{post.moment}}</font>
         <p> </p>
         <p> </p>
         {% if post.body_html %}
@@ -90,6 +104,8 @@
 
 						{% endfor %}
 						</ul>
+
+
 					</div>
                                           <div class="pagination">
 													 {% for post in posts|sort(attribute='author_id', reverse=false) %}
@@ -98,6 +114,8 @@
                                                 	{% endif %}
 												 </div>
 												{% endfor %}
+
+
 
 
                                                  </div>
