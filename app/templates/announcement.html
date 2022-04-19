@@ -1,15 +1,20 @@
-                <link rel="shortcut icon" href="../static/img/logo.jpeg" />
+{% import "_macros.html" as macros %}
+
+				<link rel="shortcut icon" href="../static/img/logo.jpeg" />
 				<link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
-                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
                 <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
-				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+				<link rel="stylesheet" href="../static/css/announcement.css" type="text/css">
+
+
+
+				 <div>
+        {% include 'base.html' %}
+        </div>
 
   <div class="span8 page-content">
 
-                                            <div class="page-section" id="projects_New">
-                    <div class="row">
+                    <div class="rows">
 						<ul class="announcements">
 						{% for announcement in announcements %}
 						<div class="col-md-12 main-listing">
@@ -28,10 +33,15 @@
 								</header>
 								<div class="post-body">{{ announcement.body }}</div>
 							</article>
+						</div>
 					{% endfor %}
+						</ul>
+						 <div class="pagination">
+                                                    {{ macros.pagination_widget(pagination, '.index') }}
+                                                </div>
+
 
 				         </div>
-
 
 <form action="" method="post" class="formOne" role="form">
     {{ form.csrf_token }}
@@ -45,12 +55,13 @@
                     <input class="postThree" name="title" placeholder="Title" required></input>
                 <br>
                 <br>
-                <textarea class="postTwo" id="body" name="body" placeholder="Your Announcement" required></textarea>
+                <textarea class="announce" id="body" name="body" placeholder="Your Announcement" required></textarea>
 
             </div>
 <br>
 			<br>
-<!--    <input class="submit_one sub_one" id="submit" name="submit" type="submit" value="Submit">-->
+
 <p>{{form.submit(class="Submit a")}}</p>
 
 </form>
+  </div>

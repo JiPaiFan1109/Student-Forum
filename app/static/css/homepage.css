@@ -48,6 +48,17 @@ textarea.postTwo {
   /*top: calc(50% - 270px);*/
 }
 
+
+input.postFour{
+    outline: none;
+    border:0;
+
+  border-bottom: 2px solid #7e7e7e;
+  width: 70%;
+  font-size: 20px;
+
+}
+
 input.submit_one{
   background-color: #3b95ff;
 
