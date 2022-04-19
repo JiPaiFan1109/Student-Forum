@@ -42,6 +42,10 @@
      </div>
 <br>
     <br>
+
+    <div class="boxFour">
+
+    </div>
 <div class="boxTwo">
     <div class="post_body">
         <a href="{{ url_for('.user', username=post.author.username) }}"><img class="avatarPost" src="{{ user.real_avatar }}" ><font style=" position: absolute; right: 74%; color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;" >{{ current_user.username }}</font> </a> <font style=" position: absolute; right: 66%; top: 50px;color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;"> {{post.moment}}</font>
@@ -105,8 +109,6 @@
 
     </div>
 </div>
-
-
 
 {% endfor %}
 <br>
