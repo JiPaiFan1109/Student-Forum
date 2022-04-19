@@ -99,7 +99,13 @@
 											</span>
 									</div><!-- end of post meta -->
 								</header>
-								<div class="post-body">{{ post.body }}</div>
+								<div class="post-body">
+                                     {% if post.body_html %}
+                                        {{ post.body_html | safe }}
+                                    {% else %}
+                                        {{ post.body }}
+                                    {% endif %}
+                                </div>
 							</article>
 
 						</div>

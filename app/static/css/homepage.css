@@ -203,3 +203,7 @@ div.post-body{
   font-size: 16px;
   line-height: 170%;
 }
+
+textarea.form-control.flask-pagedown-input.tableSize{
+  height: 200px;
+}
