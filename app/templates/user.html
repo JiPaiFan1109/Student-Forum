@@ -96,9 +96,12 @@
 					</div>
 
 												 <div class="pagination">
-                                                    {{ macros.pagination_widget(pagination, '.index') }}
-                                                </div>
-
+													 {% for post in posts|sort(attribute='author_id', reverse=false) %}
+														{% if loop.first %}
+                                                    {{ macros.pagination_widget(pagination, '.user', username=post.author.username) }}
+                                                	{% endif %}
+												 </div>
+												{% endfor %}
 											</div>
 										</div>
 								</div>

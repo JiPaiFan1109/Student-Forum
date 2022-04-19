@@ -1,4 +1,5 @@
 {% extends "bootstrap/base.html" %}
+{% import "_macros.html" as macros %}
 {% block content %}
 <link rel="stylesheet" href="../static/css/post.css" type="text/css">
 <link rel="stylesheet" href="../static/css/text.css" type="text/css">
@@ -89,9 +90,15 @@
 
 						{% endfor %}
 						</ul>
-
-
 					</div>
+                                          <div class="pagination">
+													 {% for post in posts|sort(attribute='author_id', reverse=false) %}
+														{% if loop.first %}
+                                                    {{ macros.pagination_widget(pagination, '.post', id=post.id) }}
+                                                	{% endif %}
+												 </div>
+												{% endfor %}
+
 
                                                  </div>
                         </div>
