@@ -22,7 +22,6 @@ div.username p a.btn-primary{
     border: none;
     color: white;
     padding: 10px 15px;
-    /*font-family: 'Arial Rounded MT Bold';*/
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -49,7 +48,6 @@ div.username p a.btn-default{
     border: none;
     color: white;
     padding: 10px 15px;
-    /*font-family: 'Arial Rounded MT Bold';*/
     text-align: center;
     text-decoration: none;
     display: inline-block;
