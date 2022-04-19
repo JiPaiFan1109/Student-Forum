@@ -35,7 +35,8 @@ def announcement():
     if form.validate_on_submit():
         ann = Announcement(title=form.title.data,
                            body=form.body.data,
-                           author=current_user._get_current_object())
+                           # author=current_user._get_current_object()
+                           )
         db.session.add(ann)
         return redirect(url_for('.announcement'))
     page = request.args.get('page', 1, type=int)
