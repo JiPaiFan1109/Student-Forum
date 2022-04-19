@@ -73,6 +73,11 @@ p.line{
     border-bottom:  2px solid rgba(192, 191, 191, 0.67);
 }
 
+p.lineT{
+    margin-top: 20px;
+    border-bottom:  1px solid #e8e6e6;
+}
+
 img.avatarPost{
     position: relative;
 	/*margin-left: 25%;*/
@@ -99,6 +104,49 @@ img.avatarPost.avatarList{
 img.avatarPost.avatarList.plus{
     height: 130px;
 }
+
+img.avatarPost.boxF{
+    height: 110px;
+    width: 110px;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+font.showP{
+    color: #444343;
+    font-size: 20px;
+    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+    position: relative;
+    top: 17px;
+    left: 40px;
+}
+
+font.showP.com{
+    top: 17px;
+    left: 100px;
+}
+
+font.showP.foll{
+    top: 17px;
+    left: 160px;
+}
+
+font.showP.foll.cou{
+    left: 105px;
+    top: 60px;
+}
+
+font.showP.foll.countP{
+    left: -216px;
+    top: 60px;
+}
+
+font.showP.foll.countC{
+    left: -95px;
+    top: 60px;
+}
+
+
 
 span.name{
     font-size: 23px;
@@ -182,4 +230,13 @@ div.boxFour{
     /*margin-top: 50px;*/
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: #fff;
+}
+
+p.fon{
+    position: relative;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+    border-bottom: 1px solid #d7d5d5;
 }
