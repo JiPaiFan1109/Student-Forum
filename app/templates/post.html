@@ -107,7 +107,17 @@
 
 						{% endfor %}
 						</ul>
+
+
 					</div>
+                                          <div class="pagination">
+													 {% for post in posts|sort(attribute='author_id', reverse=false) %}
+														{% if loop.first %}
+                                                    {{ macros.pagination_widget(pagination, '.post', id=post.id) }}
+                                                	{% endif %}
+												 </div>
+												{% endfor %}
+
 
 
 

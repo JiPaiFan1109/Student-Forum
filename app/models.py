@@ -81,6 +81,7 @@ class Follow(db.Model):
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
     followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 
 class User(UserMixin, db.Model):
