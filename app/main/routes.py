@@ -62,6 +62,8 @@ def user(username):
     posts = pagination.items
     return render_template('user.html', user=user, posts=posts,
                            pagination=pagination)
+    # return render_template('user.html', user=user, post=post,
+    #                        pagination=pagination)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])

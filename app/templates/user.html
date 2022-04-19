@@ -1,16 +1,41 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 {% include 'base.html' %}
+{% extends "bootstrap/base.html" %}
+{% block content %}
 <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
-
-                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../static/css_b/follow.css" type="text/css">
+<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+<link rel="stylesheet" href="../static/css/post.css" type="text/css">
 
-<div class="avatar">
-	 <img src="../static/img/logo.jpeg" alt="">
+
+
+<div class="contain flash" >
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info">
+    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">Close</span>
+  </button>
+
+        <strong>{{ message }}</strong>
 </div>
+{% endfor %}
+	</div>
+
+<!--<div class="avatar">-->
+<!--	 <img src="../static/img/logo.jpeg" alt="">-->
+<!--</div>-->
+<img class="avatarPost avatarList plus" src="../static/img/one.jpeg" style="z-index: -10" >
+
+
+{% if 1==1 %}
+<img class="avatarPost avatarList" src="{{ user.real_avatar }}" >
+{% endif %}
+
+
 <div class="username">
-        <span>{{ user.username }}</span>
+        <span class="name">{{ user.username }}</span>
 	<p>
             {% if current_user.can(Permission.FOLLOW) and user != current_user %}
                 {% if not current_user.is_following(user) %}
@@ -73,3 +98,4 @@
 						</div>
 	</div>
 
+{% endblock %}

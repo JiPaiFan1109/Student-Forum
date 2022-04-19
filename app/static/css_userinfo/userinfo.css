@@ -14,10 +14,7 @@ div.c1{
     left:360px;
     top:150px;
 }
-body {
-	width: 100vm;
-	background-color: #f2f2f2;
-}
+
 .sidebar {
 	position: relative;
 	/*保证下滑菜单可以点击*/
@@ -178,7 +175,6 @@ div.contain.flash{
 	width: 50%;
 	text-align: center;
 	left: 25%;
-
 }
 
 .xxx{
