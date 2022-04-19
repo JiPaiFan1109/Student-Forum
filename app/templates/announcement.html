@@ -1,0 +1,56 @@
+                <link rel="shortcut icon" href="../static/img/logo.jpeg" />
+				<link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
+                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+                <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+
+  <div class="span8 page-content">
+
+                                            <div class="page-section" id="projects_New">
+                    <div class="row">
+						<ul class="announcements">
+						{% for announcement in announcements %}
+						<div class="col-md-12 main-listing">
+							<article class="format-standard type-post hentry clearfix">
+								<header class="clearfix">
+									<h3 class="announcement-title">
+										<i class="fa fa-bullhorn" aria-hidden="true"></i>
+										<a href="{{ url_for('.announcement', id=announcement.id) }}">{{ announcement.title }}</a>
+									</h3>
+									<div class="post-meta clearfix">
+											<span class="date">
+                                                {{announcement.moment}}
+                                            </span>
+
+									</div><!-- end of post meta -->
+								</header>
+								<div class="post-body">{{ announcement.body }}</div>
+							</article>
+					{% endfor %}
+
+				         </div>
+
+
+<form action="" method="post" class="formOne" role="form">
+    {{ form.csrf_token }}
+
+
+			<div class="postOne"><label class="postThree" for="body"><font size="5" >Announcement:</font></label>
+                            <br>
+                <br>
+<!--        <input style="border:0;border-bottom:1px solid black;">-->
+
+                    <input class="postThree" name="title" placeholder="Title" required></input>
+                <br>
+                <br>
+                <textarea class="postTwo" id="body" name="body" placeholder="Your Announcement" required></textarea>
+
+            </div>
+<br>
+			<br>
+<!--    <input class="submit_one sub_one" id="submit" name="submit" type="submit" value="Submit">-->
+<p>{{form.submit(class="Submit a")}}</p>
+
+</form>

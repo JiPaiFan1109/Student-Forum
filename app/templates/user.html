@@ -1,34 +1,66 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 {% include 'base.html' %}
+{% extends "bootstrap/base.html" %}
+{% block content %}
 <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
-
-                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../static/css_b/follow.css" type="text/css">
+<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+<link rel="stylesheet" href="../static/css/post.css" type="text/css">
 
-<div class="avatar">
-	 <img src="../static/img/logo.jpeg" alt="">
+
+
+<div class="contain flash" >
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info">
+    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">Close</span>
+  </button>
+
+        <strong>{{ message }}</strong>
 </div>
+{% endfor %}
+	</div>
+
+<!--<div class="avatar">-->
+<!--	 <img src="../static/img/logo.jpeg" alt="">-->
+<!--</div>-->
+
+<br>
+
+<img class="avatarPost avatarList plus" src="../static/img/one.jpeg" style="z-index: -10" >
+
+
+{% if 1==1 %}
+<img class="avatarPost avatarList" src="{{ user.real_avatar }}" >
+{% endif %}
+
+
 <div class="username">
-        <span>{{ user.username }}</span>
-	<p>
+        <span class="name">{{ user.username }}</span>
+		<div class="foll">
             {% if current_user.can(Permission.FOLLOW) and user != current_user %}
                 {% if not current_user.is_following(user) %}
-                <a href="{{ url_for('.follow', username=user.username) }}" class="btn btn-primary">Follow</a>
+                <a href="{{ url_for('.follow', username=user.username) }}" class="follBtn">Follow</a>
                 {% else %}
-                <a href="{{ url_for('.unfollow', username=user.username) }}" class="btn btn-default">Unfollow</a>
+			<a href="{{ url_for('.unfollow', username=user.username) }}" class="follBtn unfollow"><label class="fontColor">Unfollow</label></a>
                 {% endif %}
             {% endif %}
-            <br><a href="{{ url_for('.followers', username=user.username) }}">Followers: <span class="badge">{{ user.followers.count() - 1 }}</span></a>
-            <br><a href="{{ url_for('.followed_by', username=user.username) }}">Following: <span class="badge">{{ user.followed.count() - 1 }}</span></a>
+		</div>
+
+            <br><a href="{{ url_for('.followers', username=user.username) }}" class="position"><font style="font-family:'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 20px; color: #2081fc">Followers:</font> <span class="badge">{{ user.followers.count() - 1 }}</span></a>
+	<br><a href="{{ url_for('.followed_by', username=user.username) }}" class="position two"><font style="font-family:'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 20px; color: #2081fc">Following:</font> <span class="badge">{{ user.followed.count() - 1 }}</span></a>
             {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
-            <br> <span class="label label-default">Follows you</span>
+            	<br> <span class="label label-default">Follows you</span>
             {% endif %}
-        </p>
 </div>
 
 
-
+<br>
+<br>
+<br>
+<br>
 <div class="page-container">
                         <div class="container">
                                 <div class="row">
@@ -73,3 +105,4 @@
 						</div>
 	</div>
 
+{% endblock %}
