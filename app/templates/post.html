@@ -1,23 +1,116 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+<link rel="stylesheet" href="../static/css/post.css" type="text/css">
+<link rel="stylesheet" href="../static/css/text.css" type="text/css">
+<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+<link rel="stylesheet" href="../static/css_b/main_index.css" type="text/css">
+<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 
- <div>
+
+
+<body class="color">
+    <div>
         {% include 'base.html' %}
- </div>
+    </div>
 
 
 
+<div class="contain flash" >
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info">
+    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">Close</span>
+  </button>
 
-<ul class="posts">
+        <strong>{{ message }}</strong>
+</div>
+{% endfor %}
+	</div>
+
+
 {% for post in posts %}
-<li class="post">
-    <div class="post-body">
-    {% if post.body_html %}
+
+     <div class="boxOne">
+<!--         <div ><label for="body" class="tit"> {{post.title}} </label></div>-->
+         <div class="tit"> {{post.title}} </div>
+         <div>
+             <button class="jumpBtn"><span>Follow Post</span></button>
+
+             <button class="jumpBtn foll"><span><label class="size" for="body">Comment</label></span></button>
+
+         </div>
+     </div>
+<br>
+    <br>
+<div class="boxTwo">
+    <div class="post_body">
+        <a href="{{ url_for('.user', username=post.author.username) }}"><img class="avatarPost" src="{{ user.real_avatar }}" ><font style=" position: absolute; right: 74%; color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;" >{{ current_user.username }}</font> </a> <font style=" position: absolute; right: 66%; top: 50px;color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;"> {{post.moment}}</font>
+        <p> </p>
+        <p> </p>
+        {% if post.body_html %}
         {{ post.body_html | safe }}
     {% else %}
         {{ post.body }}
     {% endif %}
+    </div>
+    <div class="boxThree">
+    <div class="com">Comments</div>
+        <p class="line"></p>
+
+        <div class="comment-area">
+<!--        <div class="page-container">-->
+                        <div class="container">
+                                <div class="row">
+
+                                        <!-- start of page content -->
+                                        <div class="span8 page-content">
+
+                                            <div class="page-section" id="projects_New">
+                    <div class="row">
+						<ul class="posts">
+						{% for comment in comments %}
+						<div class="col-md-12 main-listing">
+							<article class="format-standard type-post hentry clearfix">
+								<header class="clearfix">
+									<div class="post-meta clearfix">
+												<a href="{{ url_for('.user', username=post.author.username) }}">
+                                                    <img class="avatarPost avatarComment" src="{{ user.real_avatar }}" ><font style=" position: absolute; right: 81%; top: 1px; color: #424242;font-size: 14px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;" >{{ comment.author.username }}</font> </a> <font style=" position: absolute; right: 77%; top: 24px;color: #424242;font-size: 11px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;"> {{comment.moment}}</font>
+
+                                    </div><!-- end of post meta -->
+								</header>
+<!--                                <img class="avatarPost" src="{{ user.real_avatar }}" ><font style=" position: absolute; right: 74%; color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;" >{{ current_user.username }}</font> <font style=" position: absolute; right: 66%; top: 50px;color: #424242;font-size: 18px; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;"> {{post.moment}}</font>-->
+								<div class="post-body">{{ comment.body }}</div>
+							</article>
+						</div>
+
+						{% endfor %}
+						</ul>
+
+
+					</div>
+
+                                                 </div>
+                        </div>
+        </div>
+    </div>
 </div>
-</li>
+
+    <p class="line"></p>
+        <form action="" method="post" class="search-form clearfix comment" novalidate autocomplete="off">
+            {{ form.csrf_token }}
+            <label for="body"></label><br>
+            <input id="body" name="body" class="search-term required" required type="text" value="" placeholder="Enter your comment...">
+            <button class="searchBtn" name="submit" type="submit" ><span>Submit</span></button>
+        </form>
+
+    </div>
+</div>
+
+
+
 {% endfor %}
-</ul>
-
-
+<br>
+<br>
+<br>
+</body>
+{% endblock %}

@@ -1,9 +1,56 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 {% include 'base.html' %}
+{% extends "bootstrap/base.html" %}
+{% block content %}
 <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
+<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../static/css_b/follow.css" type="text/css">
+<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+<link rel="stylesheet" href="../static/css/post.css" type="text/css">
 
-                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+<div class="contain flash" >
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info">
+    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">Close</span>
+  </button>
+
+        <strong>{{ message }}</strong>
+</div>
+{% endfor %}
+	</div>
+
+<!--<div class="avatar">-->
+<!--	 <img src="../static/img/logo.jpeg" alt="">-->
+<!--</div>-->
+<img class="avatarPost avatarList plus" src="../static/img/one.jpeg" style="z-index: -10" >
+
+
+{% if 1==1 %}
+<img class="avatarPost avatarList" src="{{ user.real_avatar }}" >
+{% endif %}
+
+
+<div class="username">
+        <span class="name">{{ user.username }}</span>
+	<p>
+            {% if current_user.can(Permission.FOLLOW) and user != current_user %}
+                {% if not current_user.is_following(user) %}
+                <a href="{{ url_for('.follow', username=user.username) }}" class="btn btn-primary">Follow</a>
+                {% else %}
+                <a href="{{ url_for('.unfollow', username=user.username) }}" class="btn btn-default">Unfollow</a>
+                {% endif %}
+            {% endif %}
+            <br><a href="{{ url_for('.followers', username=user.username) }}">Followers: <span class="badge">{{ user.followers.count() - 1 }}</span></a>
+            <br><a href="{{ url_for('.followed_by', username=user.username) }}">Following: <span class="badge">{{ user.followed.count() - 1 }}</span></a>
+            {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
+            <br> <span class="label label-default">Follows you</span>
+            {% endif %}
+        </p>
+</div>
 
 
 
@@ -22,10 +69,10 @@
 							<article class="format-standard type-post hentry clearfix">
 								<header class="clearfix">
 									<h3 class="post-title">
-										<a href="#">Latest vaccination policy</a>
+										<a href="{{ url_for('.post', id=post.id) }}">{{ post.title }}</a>
 									</h3>
 									<div class="post-meta clearfix">
-											<span class="date">2022-03-14</span>
+											<span class="date">{{ post.moment }}</span>
 											<span class="category">
 												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
 											</span>
@@ -51,3 +98,4 @@
 						</div>
 	</div>
 
+{% endblock %}

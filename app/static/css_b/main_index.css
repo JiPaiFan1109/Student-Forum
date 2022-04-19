@@ -210,6 +210,15 @@ form.search-form input.search-btn:hover {
   background-color: #4b5760;
 }
 
+form.search-form.clearfix.comment{
+  margin-top: 2px;
+  margin-bottom: 3%;
+}
+
+form.search-form input.search-term {
+  width: 82%;
+}
+
 #search-error-container label {
   color: #fff;
   padding: 5px;
@@ -224,6 +233,10 @@ form.search-form input.search-btn:hover {
 /* Page - Container --------------------------------------------------------------------------------------------------*/
 .page-container {
   width: 100%;
+}
+
+.comment-area{
+  width: 50%;
 }
 .page-container > .container {
   padding: 40px 75px;

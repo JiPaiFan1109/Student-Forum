@@ -136,3 +136,50 @@ button.searchBtn:hover span:after {
   opacity: 1;
   right: 0;
 }
+
+button.jumpBtn{
+  position: relative;
+  margin-top: 55px;
+  margin-left: 18%;
+  /*margin-bottom: 80%;*/
+  background-color: #2081fc;
+  border: none;
+  color: white;
+  padding: 9px 10px;
+  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 3px;
+  z-index: 1000;
+}
+
+button.jumpBtn:hover {
+  background-color: #046ee1;
+}
+
+button.jumpBtn.foll{
+  margin-left: 26px;
+  padding: 10px 10px;
+  background-color: white;
+  border: 2px solid #2081fc;
+
+}
+
+button.jumpBtn.foll:hover {
+  background-color: #cee1f6;
+}
+
+label.size{
+  font-size: 18px;
+  color: #2081fc;
+}
+
+div.post-body{
+  font-size: 16px;
+  line-height: 170%;
+}
