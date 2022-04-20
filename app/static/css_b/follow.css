@@ -10,13 +10,13 @@ div.avatar{
     top: calc(50% - 280px);
     /*top:100px;*/
 }
-.username{
-    position: absolute;
-    text-align: center;
-	left: calc(50% - 658px);
-    top: calc(50% - 120px);
-    font-size: 24px;
-}
+/*.username{*/
+/*    position: absolute;*/
+/*    text-align: center;*/
+/*	left: calc(50% - 658px);*/
+/*    top: calc(50% - 120px);*/
+/*    font-size: 24px;*/
+/*}*/
 div.username p a.btn-primary{
 	background-color: #5B98FB; /* Green */
     border: none;

@@ -3,11 +3,14 @@
 {% include 'base.html' %}
 {% extends "bootstrap/base.html" %}
 {% block content %}
+<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+
 <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
 <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../static/css_b/follow.css" type="text/css">
 <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 <link rel="stylesheet" href="../static/css/post.css" type="text/css">
+
 
 
 
@@ -87,8 +90,21 @@
 								</header>
 								<div class="post-body">{{ post.body }}</div>
 							</article>
-						</div>
 
+							<div class="post-footer">
+                            {% if current_user == post.author %}
+                                <a href="{{ url_for('.edit', id=post.id) }}">
+                                        <input class="submit_two sub_one" name="submit" type="submit" value="Edit">
+
+<!--                                <span class="submit_one sub_one">Edit</span>-->
+                                </a>
+                            {% elif current_user.is_administrator() %}
+                                <a href="{{ url_for('.edit', id=post.id) }}">
+                                    <span class="label label-danger">Edit [Admin]</span>
+                                </a>
+                                {% endif %}
+                            </div>
+						</div>
 						{% endfor %}
 						</ul>
 
