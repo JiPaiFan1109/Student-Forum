@@ -66,7 +66,7 @@ box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
 div.box_register{
   position: absolute;
 width: 490px;
-height: 560px;
+height: 580px;
   opacity:0.7;
 
 background: #FFFFFF;
@@ -185,5 +185,118 @@ div.flask-pagedown-preview.box_pre{
 
 input.but_one{
       background-color: #3b95ff;
-
 }
+
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            width: 500px;
+            height: 200px;
+            border: 1px solid #eee;
+            margin: 100px auto;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        .input_box{
+            width: 80%;
+            display: flex;
+            align-items: center;
+        }
+        .input_box input {
+            width: 82%;
+            height: 30px;
+            border: none;
+            outline: none;
+            border: 1px solid #D2B48C;
+            border-radius: 12px;
+            margin: 10px 0px;
+            padding-left: 15px;
+        }
+
+        .conceal{
+            position: relative;
+            margin-top: -32px;
+            right: -85%;
+            width: 30px;
+            height: 30px;
+            background-image: url(../img/e.png);
+            background-size: 100% 100%;
+            cursor: pointer;
+        }
+        .conceal.close{
+            position: relative;
+            margin-top: -34px;
+            right: 32px;
+            width: 30px;
+            height: 30px;
+            background-image: url(../img/biy.png);
+            background-size: 100% 100%;
+        }
+
+        .conceal2{
+            position: relative;
+            margin-top: -28px;
+            right: -85%;
+            width: 30px;
+            height: 30px;
+            background-image: url(../img/e.png);
+            background-size: 100% 100%;
+            cursor: pointer;
+        }
+        .conceal2.close{
+            position: relative;
+            margin-top: -28px;
+            right: 32px;
+            width: 30px;
+            height: 30px;
+            background-image: url(../img/biy.png);
+            background-size: 100% 100%;
+        }
+
+        .wrapper p {
+            width: 80%;
+            height: 60px;
+            line-height: 26px;
+            font-size: 14px;
+            color: #339999;
+        }
+
+        .pwdStrength {
+            width: 80%;
+            list-style: none;
+            height: 1px;
+            display: none;
+            flex: 1;
+        }
+
+        .weak,
+        .middle,
+        .strong {
+            height: 15px;
+            width: 125px;
+            /*border: 1px solid black;*/
+            background: rgb(238, 238, 238);
+            border-radius: 8px;
+        }
+
+        .middle {
+            border-left: 0;
+            border-right: 0;
+        }
+
+        .result {
+            width: 30px;
+            height: 15px;
+            font-size: 14px;
+            line-height: 14px;
+            text-align: center;
+            margin-left: 10px;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+
+        }
+

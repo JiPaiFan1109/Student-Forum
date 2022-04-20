@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, FileField
 from wtforms.validators import InputRequired, Length
 from flask_pagedown.fields import PageDownField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
@@ -38,7 +38,7 @@ class PostForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    body = StringField('', validators=[DataRequired()])
+    body = StringField('hhhh', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -47,3 +47,7 @@ class AnnouncementForm(FlaskForm):
     body = PageDownField('Enter the content of the Announcement', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+
+class ChangeAvatarForm(FlaskForm):
+    avatar = FileField('')
+    submit = SubmitField('Submit')

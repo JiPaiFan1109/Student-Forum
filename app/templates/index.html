@@ -1,7 +1,6 @@
 {% extends "bootstrap/base.html" %}
 {% block content %}
-
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 <!--<!Doctype html>-->
         <head>
@@ -73,6 +72,7 @@
 
                 <!-- Start of Page Container -->
 
+
 	<div class="page-container">
                         <div class="container">
                                 <div class="row">
@@ -82,6 +82,21 @@
 
                                             <div class="page-section" id="projects_New">
                     <div class="row">
+
+                        <ul class="nav nav-tabs">
+                            <li {% if not show_followed %} class="active" {% endif %}>
+
+                                <a href="{{ url_for('.show_all') }}">All</a>
+
+                            </li>
+                            {% if current_user.is_authenticated %}
+                            <li {% if show_followed %} class="active" {% endif %}>
+
+                                <a href="{{ url_for('.show_followed') }}">Followed</a>
+                            </li>
+                                {% endif %}
+                        </ul>
+
 						<ul class="posts">
 						{% for post in posts %}
 						<div class="col-md-12 main-listing">
@@ -99,21 +114,15 @@
 											</span>
 									</div><!-- end of post meta -->
 								</header>
-								<div class="post-body">{{ post.body }}</div>
+								<div class="post-body">
+                                     {% if post.body_html %}
+                                        {{ post.body_html | safe }}
+                                    {% else %}
+                                        {{ post.body }}
+                                    {% endif %}
+                                </div>
 							</article>
-                            <div class="post-footer">
-                            {% if current_user == post.author %}
-                                <a href="{{ url_for('.edit', id=post.id) }}">
-                                        <input class="submit_two sub_one" name="submit" type="submit" value="Edit">
 
-<!--                                <span class="submit_one sub_one">Edit</span>-->
-                                </a>
-                            {% elif current_user.is_administrator() %}
-                                <a href="{{ url_for('.edit', id=post.id) }}">
-                                    <span class="label label-danger">Edit [Admin]</span>
-                                </a>
-                                {% endif %}
-                            </div>
 						</div>
 
 						{% endfor %}

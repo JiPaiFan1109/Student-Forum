@@ -48,6 +48,17 @@ textarea.postTwo {
   /*top: calc(50% - 270px);*/
 }
 
+
+input.postFour{
+    outline: none;
+    border:0;
+
+  border-bottom: 2px solid #7e7e7e;
+  width: 70%;
+  font-size: 20px;
+
+}
+
 input.submit_one{
   background-color: #3b95ff;
 
@@ -135,4 +146,64 @@ button.searchBtn:hover span {
 button.searchBtn:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+button.jumpBtn{
+  position: relative;
+  margin-top: 55px;
+  margin-left: 18%;
+  /*margin-bottom: 80%;*/
+  background-color: #2081fc;
+  border: none;
+  color: white;
+  padding: 9px 10px;
+  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 3px;
+  z-index: 1000;
+}
+
+button.jumpBtn:hover {
+  background-color: #046ee1;
+}
+
+button.jumpBtn.a{
+  left: -40px;
+  top: 45px;
+}
+
+button.jumpBtn.foll.f{
+  top: 45px;
+}
+
+button.jumpBtn.foll{
+  margin-left: 26px;
+  padding: 10px 10px;
+  background-color: white;
+  border: 2px solid #2081fc;
+
+}
+
+button.jumpBtn.foll:hover {
+  background-color: #cee1f6;
+}
+
+label.size{
+  font-size: 18px;
+  color: #2081fc;
+}
+
+div.post-body{
+  font-size: 16px;
+  line-height: 170%;
+}
+
+textarea.form-control.flask-pagedown-input.tableSize{
+  height: 200px;
 }

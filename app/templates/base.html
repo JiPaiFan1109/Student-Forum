@@ -40,7 +40,7 @@
 <!--                                                            <li><button type="button" class="btn btn-primary" ><a href="{{url_for('main.index')}}">Home</a></button></li>-->
 
                                                             {% if current_user.is_authenticated %}
-                                                                <li><a href="{{url_for('main.index')}}"><font size="4" color="#ffffff">Hi, {{ current_user.username }}</font></a>
+                                                                <li><a href="{{url_for('main.edit_profile')}}"><font size="4" color="#ffffff">Hi, {{ current_user.username }}</font></a>
                                                                             <ul class="sub-menu">
                                                                                     <li><a href="{{url_for('auth.logout')}}"><font color="#ffffff">Logout</font></a>
                                                                                     <li><a href="{{url_for('main.edit_profile')}}"><font color="#ffffff">Account</font></a></li>
@@ -60,8 +60,14 @@
                                                                                 <li><a href="#"><font color="#ffffff">Contact us</font></a></li>
                                                                                 <li><a href="#"><font color="#ffffff">Email</font></a></li>
                                                                                 <li><a href="#"><font color="#ffffff">Parties</font></a></li>
+
                                                                         </ul>
                                                                 </li>
+                                                            </li><a href="{{url_for('main.announcement')}}"><font size="4" color="#ffffff">Administrator</font></a>
+                                                                    <ul class="sub-menu">
+                                                                            <li><a href="{{url_for('main.announcement')}}"><font color="#ffffff">Announcement</font></a></li>
+                                                                    </ul>
+                                                            </li>
                                                         </ul>
                                                 </div>
                                         </nav>
