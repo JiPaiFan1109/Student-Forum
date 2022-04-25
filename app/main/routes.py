@@ -79,8 +79,20 @@ def user(username):
     posts = pagination.items
     return render_template('user.html', user=user, posts=posts,
                            pagination=pagination)
-    # return render_template('user.html', user=user, post=post,
-    #                        pagination=pagination)
+
+
+@main.route('/ucomments/<username>', method=['GET', 'POST'])
+def ucomments(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        abort(404)
+    page = request.args.get('page', 1, type=int)
+    pagination = user.comments.order_by(Comment.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASK_COMMENTS_PER_PAGE'],
+        error_out=False)
+    comments = pagination.items
+    return render_template('ucomments.html', user=user, comments=comments,
+                           pagination=pagination)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
