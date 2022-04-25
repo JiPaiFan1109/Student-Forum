@@ -81,7 +81,7 @@ def user(username):
                            pagination=pagination)
 
 
-@main.route('/ucomments/<username>', method=['GET', 'POST'])
+@main.route('/ucomments/<username>', methods=['GET', 'POST'])
 def ucomments(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
