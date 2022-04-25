@@ -219,6 +219,7 @@ class Post(db.Model):
     moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    read_count = db.Column(db.Integer, default=0)
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
     categories = db.relationship('Category', secondary=registrations, backref=db.backref('post', lazy='dynamic'),
                                  lazy='dynamic')
