@@ -78,8 +78,8 @@ class Role(db.Model):
 
 class Follow(db.Model):
     __tablename__ = 'follows'
-    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
-    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -194,6 +194,7 @@ class User(UserMixin, db.Model):
                 db.session.add(user)
                 db.session.commit()
 
+
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
         return False
@@ -203,6 +204,9 @@ class AnonymousUser(AnonymousUserMixin):
 
 
 login_manager.anonymous_user = AnonymousUser
+registrations = db.Table('registrations',
+                         db.Column('post_id', db.Integer, db.ForeignKey('posts.id')),
+                         db.Column('category_id', db.Integer, db.ForeignKey('categories.id')))
 
 
 class Post(db.Model):
@@ -214,7 +218,10 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    categories = db.relationship('Category', secondary=registrations, backref=db.backref('post', lazy='dynamic'),
+                                 lazy='dynamic')
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):
@@ -224,6 +231,16 @@ class Post(db.Model):
         target.body_html = bleach.linkify(bleach.clean(
             markdown(value, output_format='html'),
             tags=allowed_tags, strip=True))
+
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Unicode(32), unique=True, index=True,
+                     nullable=False)
+
+    def __repr__(self):
+        return '<Category %r>' % self.name
 
 
 class Comment(db.Model):
