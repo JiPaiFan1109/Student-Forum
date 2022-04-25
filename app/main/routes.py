@@ -7,7 +7,7 @@ from .forms import EditProfileForm, PostForm, AnnouncementForm, \
     CommentForm, SearchForm, ChangeAvatarForm
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Permission, Post
+from ..models import User, Permission, Post, Category
 from ..models import User, Permission, Post, Comment, Announcement
 
 
@@ -17,8 +17,13 @@ def index():
     content = ''
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
+        category_id = form.category_id.data
+        categories = Category.query.get(category_id)
+        if not categories:
+            flash('There is no such category, please check the number.')
         post = Post(title=form.title.data,
                     body=form.body.data,
+                    categories=categories,
                     author=current_user._get_current_object(),
                     moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         db.session.add(post)

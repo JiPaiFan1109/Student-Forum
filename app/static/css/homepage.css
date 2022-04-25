@@ -173,6 +173,15 @@ button.jumpBtn:hover {
   background-color: #046ee1;
 }
 
+button.jumpBtn.a{
+  left: -40px;
+  top: 45px;
+}
+
+button.jumpBtn.foll.f{
+  top: 45px;
+}
+
 button.jumpBtn.foll{
   margin-left: 26px;
   padding: 10px 10px;
@@ -193,4 +202,8 @@ label.size{
 div.post-body{
   font-size: 16px;
   line-height: 170%;
+}
+
+textarea.form-control.flask-pagedown-input.tableSize{
+  height: 200px;
 }

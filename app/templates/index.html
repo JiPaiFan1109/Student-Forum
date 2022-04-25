@@ -1,7 +1,6 @@
 {% extends "bootstrap/base.html" %}
 {% block content %}
-
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 <!--<!Doctype html>-->
         <head>
@@ -83,20 +82,20 @@
 
                                             <div class="page-section" id="projects_New">
                     <div class="row">
-<!--                        <ul class="nav nav-tabs">-->
-<!--                            <li class="active">-->
-<!--                                {% if not show_followed %}-->
-<!--                                <a href="{{ url_for('.show_all') }}">All</a>-->
-<!--                                {% endif %}-->
-<!--                            </li>-->
-<!--                            <li class="active">-->
-<!--                                {% if current_user.is_authenticated %}-->
-<!--                                    {% if show_followed %}-->
-<!--                                    <a href="{{ url_for('.show_followed') }}">Followed</a>-->
-<!--                                    {% endif %}-->
-<!--                                {% endif %}-->
-<!--                            </li>-->
-<!--                        </ul>-->
+
+                        <ul class="nav nav-tabs">
+                            <li {% if not show_followed %} class="active" {% endif %}>
+
+                                <a href="{{ url_for('.show_all') }}">All</a>
+
+                            </li>
+                            {% if current_user.is_authenticated %}
+                            <li {% if show_followed %} class="active" {% endif %}>
+
+                                <a href="{{ url_for('.show_followed') }}">Followed</a>
+                            </li>
+                                {% endif %}
+                        </ul>
 
 						<ul class="posts">
 						{% for post in posts %}
@@ -115,7 +114,13 @@
 											</span>
 									</div><!-- end of post meta -->
 								</header>
-								<div class="post-body">{{ post.body }}</div>
+								<div class="post-body">
+                                     {% if post.body_html %}
+                                        {{ post.body_html | safe }}
+                                    {% else %}
+                                        {{ post.body }}
+                                    {% endif %}
+                                </div>
 							</article>
 
 						</div>
