@@ -40,7 +40,7 @@ def index():
         query = current_user.followed_posts
     else:
         query = Post.query
-    pagination = query.filter(Post.title.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
+    pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
