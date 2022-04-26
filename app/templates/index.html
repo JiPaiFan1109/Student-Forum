@@ -106,6 +106,9 @@
 										<a href="{{ url_for('.post', id=post.id) }}">{{ post.title }}</a>
 									</h3>
 									<div class="post-meta clearfix">
+                                        <span class="tag">
+                                                {{post.categories}}
+                                            </span>
 											<span class="date">
                                                 {{post.moment}}
                                             </span>
@@ -122,7 +125,6 @@
                                     {% endif %}
                                 </div>
                                 {{ post.read_count }}
-                                {{ post.categories }}
 							</article>
 
 						</div>
@@ -151,7 +153,23 @@
                             <br>
                 <br>
 <!--        <input style="border:0;border-bottom:1px solid black;">-->
-                <input class="postThree" name="category_id" placeholder="category_id" required/>
+                <label style="font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 19px" for="lang">Category</label>
+                <select style="outline: none" name="category_id" id="lang">
+                    <option value="1">Entertainment</option>
+                    <option value="2">Science and Technology</option>
+                    <option value="3">Movie</option>
+                    <option value="4">Teleplay</option>
+                    <option value="5">Games</option>
+                    <option value="6">Sports</option>
+                    <option value="7">Knowledge</option>
+                    <option value="8">News</option>
+                    <option value="9">Daily Life</option>
+                    <option value="10">Fashion</option>
+                    <option value="13">BJUT</option>
+                </select>
+                <br>
+                <br>
+<!--                <input class="postThree" name="category_id" placeholder="category_id" required/>-->
 
                 <input class="postThree" name="title" placeholder="Subject" required/>
                 <br>
