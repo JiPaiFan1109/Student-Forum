@@ -70,9 +70,9 @@ def check(mail_):
 
 if __name__ == '__main__':
     conn = get_conn_init()
-    email_list = ["148@qq.com"]
-
-    for email in email_list:
-        print(email, check(email))
+    check_list = ['23123@qq.com', '236546123@qq.com', 'fdsdf@qq.com', 'njfd@qq.com', 'mfgg@qq.com',
+                  '1538236552@qq.com']  # 待检测列表
+    for mail in check_list:
+        print(mail, check(mail))
     else:
         conn.close()
