@@ -255,6 +255,10 @@ class Comment(db.Model):
     disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    parent_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
+    replies = db.relationship(
+        'Comment', backref=db.backref('parent', remote_side=[id]), lazy='dynamic'
+    )
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):
