@@ -23,7 +23,7 @@ def index():
             flash('There is no such category, please check the number.')
         post = Post(title=form.title.data,
                     body=form.body.data,
-                    categoriy_id=form.category_id.data,
+                    category_id=form.category_id.data,
                     author=current_user._get_current_object(),
                     moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         post.categories = categories.name
@@ -40,7 +40,7 @@ def index():
         query = current_user.followed_posts
     else:
         query = Post.query
-    pagination = query.filter(Post.title.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
+    pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
@@ -224,8 +224,8 @@ def show_followed():
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
     post = Post.query.get_or_404(id)
-    # post.read_count += 1
-    # comment_count = post.comments.count()
+    post.read_count += 1
+    comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
@@ -245,7 +245,7 @@ def post(id):
         error_out=False)
     comments = pagination.items
     return render_template('post.html', posts=[post], form=form,
-                           comments=comments, pagination=pagination, user=current_user)
+                           comments=comments, pagination=pagination, user=current_user, comment_count=comment_count)
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
