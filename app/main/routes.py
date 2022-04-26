@@ -224,8 +224,8 @@ def show_followed():
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
     post = Post.query.get_or_404(id)
-    # post.read_count += 1
-    # comment_count = post.comments.count()
+    post.read_count += 1
+    comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
@@ -245,7 +245,7 @@ def post(id):
         error_out=False)
     comments = pagination.items
     return render_template('post.html', posts=[post], form=form,
-                           comments=comments, pagination=pagination, user=current_user)
+                           comments=comments, pagination=pagination, user=current_user, comment_count=comment_count)
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
