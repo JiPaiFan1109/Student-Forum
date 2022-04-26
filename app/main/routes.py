@@ -7,7 +7,7 @@ from .forms import EditProfileForm, PostForm, AnnouncementForm, \
     CommentForm, SearchForm, ChangeAvatarForm
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Permission, Post
+from ..models import User, Permission, Post, Category
 from ..models import User, Permission, Post, Comment, Announcement
 
 
@@ -17,10 +17,16 @@ def index():
     content = ''
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
+        category_id = form.category_id.data
+        categories = Category.query.get(category_id)
+        if not categories:
+            flash('There is no such category, please check the number.')
         post = Post(title=form.title.data,
                     body=form.body.data,
+                    category_id=form.category_id.data,
                     author=current_user._get_current_object(),
                     moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        post.categories = categories.name
         db.session.add(post)
         return redirect(url_for('.index'))
     sform = SearchForm()
@@ -34,7 +40,7 @@ def index():
         query = current_user.followed_posts
     else:
         query = Post.query
-    pagination = query.filter(Post.title.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
+    pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
@@ -74,8 +80,20 @@ def user(username):
     posts = pagination.items
     return render_template('user.html', user=user, posts=posts,
                            pagination=pagination)
-    # return render_template('user.html', user=user, post=post,
-    #                        pagination=pagination)
+
+
+@main.route('/ucomments/<username>', methods=['GET', 'POST'])
+def ucomments(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        abort(404)
+    page = request.args.get('page', 1, type=int)
+    pagination = user.comments.order_by(Comment.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASK_COMMENTS_PER_PAGE'],
+        error_out=False)
+    comments = pagination.items
+    return render_template('ucomments.html', user=user, comments=comments,
+                           pagination=pagination)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -206,6 +224,8 @@ def show_followed():
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
     post = Post.query.get_or_404(id)
+    post.read_count += 1
+    comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
@@ -225,7 +245,7 @@ def post(id):
         error_out=False)
     comments = pagination.items
     return render_template('post.html', posts=[post], form=form,
-                           comments=comments, pagination=pagination, user=current_user)
+                           comments=comments, pagination=pagination, user=current_user, comment_count=comment_count)
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
