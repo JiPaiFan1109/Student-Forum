@@ -121,6 +121,8 @@
                                         {{ post.body }}
                                     {% endif %}
                                 </div>
+                                {{ post.read_count }}
+                                {{ post.categories }}
 							</article>
 
 						</div>
@@ -149,8 +151,9 @@
                             <br>
                 <br>
 <!--        <input style="border:0;border-bottom:1px solid black;">-->
+                <input class="postThree" name="category_id" placeholder="category_id" required/>
 
-                    <input class="postThree" name="title" placeholder="Subject" required></input>
+                <input class="postThree" name="title" placeholder="Subject" required/>
                 <br>
                 <br>
                 <textarea class="postTwo" id="body" name="body" placeholder="Post whatever you want" required></textarea>

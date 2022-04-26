@@ -23,9 +23,10 @@ def index():
             flash('There is no such category, please check the number.')
         post = Post(title=form.title.data,
                     body=form.body.data,
-                    categories=categories,
+                    categoriy_id=form.category_id.data,
                     author=current_user._get_current_object(),
                     moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        post.categories = categories.name
         db.session.add(post)
         return redirect(url_for('.index'))
     sform = SearchForm()
@@ -81,7 +82,7 @@ def user(username):
                            pagination=pagination)
 
 
-@main.route('/ucomments/<username>', method=['GET', 'POST'])
+@main.route('/ucomments/<username>', methods=['GET', 'POST'])
 def ucomments(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
@@ -223,6 +224,8 @@ def show_followed():
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
     post = Post.query.get_or_404(id)
+    # post.read_count += 1
+    # comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
