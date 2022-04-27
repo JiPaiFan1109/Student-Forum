@@ -47,9 +47,11 @@ def register():
                     )
         db.session.add(user)
         db.session.commit()
-        flash('You can now check your email')
         token = user.generate_confirmation_token()
-        send_email(user.email, 'BJUT Forum Confirmation', 'confirm', user=user, token=token)
+        if send_email(user.email, 'BJUT Forum Confirmation', 'confirm', user=user, token=token):
+            flash('The email address is not existed or the network is not connected')
+        else:
+            flash('You can now check your email')
         # flash('Register successfully')   #判断邮件是否成功发送
 
         return redirect(url_for('auth.login'))
