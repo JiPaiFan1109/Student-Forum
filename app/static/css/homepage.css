@@ -11,6 +11,8 @@ form.formOne{
 }
 
 input.postThree{
+  position: relative;
+  margin-top: -18px;
     outline: none;
     border:0;
 

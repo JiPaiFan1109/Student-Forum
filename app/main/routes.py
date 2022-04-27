@@ -43,6 +43,10 @@ def index():
         query = current_user.followed_posts
     else:
         query = Post.query
+    categories = Category.query.all()
+    category_id = request.args.get('category_id', type=int, default=None)
+    if category_id:
+        query = Post.filter(Post.category_id == category_id)
     pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
@@ -55,6 +59,11 @@ def index():
     return render_template('index.html', form=form, sform=sform, posts=posts, pagination=pagination,
                            Cloud_options = wordCloud.dump_options()
                            )
+    return render_template('index.html', form=form, sform=sform,
+                           posts=posts, categories=categories,
+                           category_id=category_id,
+                           pagination=pagination)
+
 
 @main.route('/announcement', methods=['GET', 'POST'])
 @login_required
