@@ -243,6 +243,8 @@ def show_followed():
 def post(id):
     post = Post.query.get_or_404(id)
     post.read_count += 1
+    category = Category.query.get(post.category_id)
+    category.hot += 1
     comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():
