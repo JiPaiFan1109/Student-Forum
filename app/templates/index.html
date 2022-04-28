@@ -18,7 +18,9 @@
 
 				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
-
+                <script src="/static/js_cloud/echarts.min.js"></script>
+    <script type="text/javascript" src="/static/js_cloud/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js_cloud/echarts-wordcloud.js"></script>
         </head>
 
         <body>
@@ -71,7 +73,6 @@
 
 
                 <!-- Start of Page Container -->
-
 
 	<div class="page-container">
                         <div class="container">
@@ -144,6 +145,10 @@
 								</div>
 						</div>
 	</div>
+
+        <div id="Cloud" style="width:250px; height:200px; left: 1200px;"></div>
+
+
 
 		<form action="" method="post" class="formOne" role="form">
     {{ form.csrf_token }}
@@ -259,6 +264,12 @@
 
                 <a href="#top" id="scroll-top"></a>
 
+    <script type="text/javascript">
+            var myChart_Cloud = echarts.init(document.getElementById('Cloud'));
+            var option_Cloud = {{ Cloud_options | safe }};
+            myChart_Cloud.setOption(option_Cloud);
+
+        </script>
 
         </body>
 {% endblock %}
