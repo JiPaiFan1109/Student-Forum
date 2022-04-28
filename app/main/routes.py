@@ -46,11 +46,14 @@ def index():
         query = Post.query
     categories = Category.query.all()
     category_id = request.args.get('category_id', type=int, default=None)
-    if category_id:
-        query = Post.filter(Post.category_id == category_id)
+
     pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
+    if category_id:
+        pagination = query.filter(Post.category_id == category_id).order_by(Post.timestamp.desc()).paginate(
+            page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+            error_out=False)
     posts = pagination.items
     all_categories = []
     for i in Category.query.with_entities(Category.name).all():
@@ -240,6 +243,8 @@ def show_followed():
 def post(id):
     post = Post.query.get_or_404(id)
     post.read_count += 1
+    category = Category.query.get(post.category_id)
+    category.hot += 1
     comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():
@@ -310,7 +315,7 @@ def getWordCloud(words_pair) -> WordCloud:
     WordCloud()
         .add(series_name = "Category", data_pair = words_pair, shape = SymbolType.DIAMOND)
         .set_global_opts(
-        title_opts=opts.TitleOpts(title="Category Heat", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
+        title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
         tooltip_opts=opts.TooltipOpts(is_show=True)
                         )
             )

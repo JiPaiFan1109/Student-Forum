@@ -240,6 +240,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode(32), unique=True, index=True,
                      nullable=False)
+    hot = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Category %r>' % self.name
