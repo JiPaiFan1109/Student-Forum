@@ -13,12 +13,7 @@ from ..models import User, Permission, Post, Comment, Announcement
 from pyecharts.globals import CurrentConfig
 from pyecharts import options as opts
 from pyecharts.charts import WordCloud
-
-
-from jinja2 import Environment, FileSystemLoader
-CurrentConfig.GLOBAL_ENV = Environment(loader=FileSystemLoader("./templates"))
-
-
+from pyecharts.globals import SymbolType
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -51,23 +46,23 @@ def index():
         query = Post.query
     categories = Category.query.all()
     category_id = request.args.get('category_id', type=int, default=None)
-    if category_id:
-        query = Post.filter(Post.category_id == category_id)
+
     pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
+    if category_id:
+        pagination = query.filter(Post.category_id == category_id).order_by(Post.timestamp.desc()).paginate(
+            page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+            error_out=False)
     posts = pagination.items
     all_categories = []
     for i in Category.query.with_entities(Category.name).all():
         all_categories.append(i[0])
-    words_pair = [(i,500) for i in all_categories]
+    words_pair = [(i,50) for i in all_categories]
     wordCloud = getWordCloud(words_pair)
-    return render_template('index.html', form=form, sform=sform,
-                           posts=posts, categories=categories,
-                           category_id=category_id,
-                           pagination=pagination,
+    return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id, pagination=pagination,
                            Cloud_options = wordCloud.dump_options()
-    )
+                           )
 
 
 @main.route('/announcement', methods=['GET', 'POST'])
@@ -248,6 +243,8 @@ def show_followed():
 def post(id):
     post = Post.query.get_or_404(id)
     post.read_count += 1
+    category = Category.query.get(post.category_id)
+    category.hot += 1
     comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():
@@ -316,10 +313,10 @@ def edit(id):
 def getWordCloud(words_pair) -> WordCloud:
     cloud = (
     WordCloud()
-        .add(series_name="关键词分析", data_pair=words_pair)
+        .add(series_name = "Category", data_pair = words_pair, shape = SymbolType.DIAMOND)
         .set_global_opts(
-        title_opts=opts.TitleOpts(title="关键词-热点分布", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
+        title_opts=opts.TitleOpts(title="Category Heat", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
         tooltip_opts=opts.TooltipOpts(is_show=True)
                         )
-           )
+            )
     return cloud

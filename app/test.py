@@ -76,3 +76,5 @@
 #         print(mail, check(mail))
 #     else:
 #         conn.close()
+list_1 = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865, 847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
+print(sorted(list_1, reverse = True))
