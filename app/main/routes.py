@@ -46,11 +46,14 @@ def index():
         query = Post.query
     categories = Category.query.all()
     category_id = request.args.get('category_id', type=int, default=None)
-    if category_id:
-        query = Post.filter(Post.category_id == category_id)
+
     pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
+    if category_id:
+        pagination = query.filter(Post.category_id == category_id).order_by(Post.timestamp.desc()).paginate(
+            page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+            error_out=False)
     posts = pagination.items
     all_categories = []
     for i in Category.query.with_entities(Category.name).all():
