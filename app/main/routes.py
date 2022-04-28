@@ -55,11 +55,20 @@ def index():
             page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
             error_out=False)
     posts = pagination.items
+
     all_categories = []
+    all_heat = []
+    words_pair = []
+    font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865, 847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
     for i in Category.query.with_entities(Category.name).all():
         all_categories.append(i[0])
-    words_pair = [(i,50) for i in all_categories]
+    for i in Category.query.with_entities(Category.heat).all():
+        all_heat.append(i[0])
+    for i in range(len(all_categories)):
+        words_pair.append([all_categories[all_heat.index(max(all_heat))], font[i]])
+        all_heat[i] = -1
     wordCloud = getWordCloud(words_pair)
+
     return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id, pagination=pagination,
                            Cloud_options = wordCloud.dump_options()
                            )
@@ -244,7 +253,7 @@ def post(id):
     post = Post.query.get_or_404(id)
     post.read_count += 1
     category = Category.query.get(post.category_id)
-    category.hot += 1
+    category.heat += 1
     comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():

@@ -240,11 +240,30 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode(32), unique=True, index=True,
                      nullable=False)
-    hot = db.Column(db.Integer)
+    heat = db.Column(db.Integer, default = 0)
 
     def __repr__(self):
         return '<Category %r>' % self.name
 
+    @staticmethod
+    def insert_categories():
+        category1 = Category(id=1, name="Entertainment")
+        category2 = Category(id=2, name="Science and Technology")
+        category3 = Category(id=3, name="Movie")
+        category4 = Category(id=4, name="Teleplay")
+        category5 = Category(id=5, name="Games")
+        category6 = Category(id=6, name="Sports")
+        category7 = Category(id=7, name="Knowledge")
+        category8 = Category(id=8, name="News")
+        category9 = Category(id=9, name="Daily-Life")
+        category10 = Category(id=10, name="Fashion")
+        category11 = Category(id=11, name="Lost and Found")
+        category12 = Category(id=12, name="Second Hand Transactions")
+        category13 = Category(id=13, name="BJUT")
+        category14 = Category(id=14, name="Others")
+        db.session.add_all([category1, category2, category3, category4, category5, category6, category7,
+                            category8, category9, category10, category11, category12, category13, category14])
+        db.session.commit()
 
 class Comment(db.Model):
     __tablename__ = 'comments'
