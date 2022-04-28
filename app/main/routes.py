@@ -315,3 +315,6 @@ def getWordCloud(words_pair) -> WordCloud:
                         )
             )
     return cloud
+
+# @main.route("/getDynamicWordCloud")
+# def update_word_cloud()
