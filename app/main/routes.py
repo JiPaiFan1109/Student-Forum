@@ -10,6 +10,10 @@ from ..decorators import permission_required
 from ..models import User, Permission, Post, Category
 from ..models import User, Permission, Post, Comment, Announcement
 
+from pyecharts.globals import CurrentConfig
+from pyecharts import options as opts
+from pyecharts.charts import WordCloud
+from pyecharts.globals import SymbolType
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -48,10 +52,14 @@ def index():
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
-    return render_template('index.html', form=form, sform=sform,
-                           posts=posts, categories=categories,
-                           category_id=category_id,
-                           pagination=pagination)
+    all_categories = []
+    for i in Category.query.with_entities(Category.name).all():
+        all_categories.append(i[0])
+    words_pair = [(i,50) for i in all_categories]
+    wordCloud = getWordCloud(words_pair)
+    return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id, pagination=pagination,
+                           Cloud_options = wordCloud.dump_options()
+                           )
 
 
 @main.route('/announcement', methods=['GET', 'POST'])
@@ -297,3 +305,13 @@ def edit(id):
 #         flash('Your avatar has been updated.')
 #         return redirect(url_for('main.edit_profile', username=current_user.username))
 #     return render_template('userinfo.html', form=form, username=current_user.username)
+def getWordCloud(words_pair) -> WordCloud:
+    cloud = (
+    WordCloud()
+        .add(series_name = "Category", data_pair = words_pair, shape = SymbolType.DIAMOND)
+        .set_global_opts(
+        title_opts=opts.TitleOpts(title="Category Heat", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
+        tooltip_opts=opts.TooltipOpts(is_show=True)
+                        )
+            )
+    return cloud
