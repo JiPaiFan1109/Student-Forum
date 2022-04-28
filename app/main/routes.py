@@ -315,7 +315,7 @@ def getWordCloud(words_pair) -> WordCloud:
     WordCloud()
         .add(series_name = "Category", data_pair = words_pair, shape = SymbolType.DIAMOND)
         .set_global_opts(
-        title_opts=opts.TitleOpts(title="Category Heat", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
+        title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
         tooltip_opts=opts.TooltipOpts(is_show=True)
                         )
             )

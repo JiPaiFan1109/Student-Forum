@@ -18,6 +18,9 @@
 
 				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+                <script src="/static/js_wordCloud/echarts.min.js"></script>
+                <script type="text/javascript" src="/static/js_wordCloud/jquery.min.js"></script>
+                <script type="text/javascript" src="/static/js_wordCloud/echarts-wordcloud.js"></script>
 
         </head>
 
@@ -150,7 +153,6 @@
 						{% endfor %}
 						</ul>
 
-
 					</div>
 
                                                 <div class="pagination">
@@ -162,7 +164,7 @@
 								</div>
 						</div>
 	</div>
-
+<div id="Cloud" style="float:left; width:400px; height:400px;"></div>
 		<form action="" method="post" class="formOne" role="form">
     {{ form.csrf_token }}
 
@@ -200,6 +202,9 @@
     <input class="submit_one sub_one" id="submit" name="submit" type="submit" value="Submit">
 
                         </div>
+
+
+
 </form>
 
 
@@ -276,6 +281,19 @@
 <!--                    </div>-->
 
                 <a href="#top" id="scroll-top"></a>
+
+        <script type="text/javascript">
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart_Cloud = echarts.init(document.getElementById('Cloud'));
+    // 指定图表的配置项和数据
+    var option_Cloud = {{ Cloud_options | safe }};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart_Cloud.setOption(option_Cloud);
+
+</script>
+
 
 
         </body>
