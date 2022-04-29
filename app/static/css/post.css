@@ -219,6 +219,12 @@ a.position.two{
     top: 165px;
 }
 
+span.label.label-default.po{
+    position: absolute;
+    margin-top: 70px;
+    margin-left: 520px;
+}
+
 div.boxFour{
     position: absolute;
     margin-left: 1250px;
@@ -239,4 +245,9 @@ p.fon{
     font-size: 25px;
     font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
     border-bottom: 1px solid #d7d5d5;
+}
+
+td.positionF{
+    position: absolute;
+    left: 1100px;
 }

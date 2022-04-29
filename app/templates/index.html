@@ -56,14 +56,7 @@
                              <form action=""  class="search-form clearfix" method="post" novalidate autocomplete="off">
                                  {{ form.csrf_token }}
 
-                            <input id="text" list="hh" class="search-term required" type="text" name="text" placeholder="Search whatever you want" title="Please enter a search term">
-                                  <datalist id="hh">
-                <option>WeChat(微信)</option>
-				<option>QQ</option>
-				<option>Google Talk</option>
-				<option>Twitter</option>
-                <option>Facekbook</option>
-            </datalist>
+                            <input id="text" class="search-term required" type="text" name="text" placeholder="Search whatever you want" title="Please enter a search term">
 
                                 <button class="searchBtn" name="submit" type="submit" ><span>Search</span></button>
                                  <div id="search-error-container"></div>
@@ -81,17 +74,18 @@
 
 
                 <!-- Start of Page Container -->
-
+<select onchange="location.href = this.options[this.selectedIndex].value" name="category" style="outline: none" class="selectPosition">
         {% for category in categories %}
                     <!--         注意这里的current_board_id数据类型是int，才能与board.id相比较           -->
                     {% if category_id == category.id %}
                         <!--    url_for('front.index', board_id=board.id)每次点击跳转到front_index.html页面，即当前界面，且传输给一个board_id的参数值，由board.id赋值            -->
-                        <a href="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}" class="list-group-item active">{{ category.name }}</a>
+    <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>
                     {% else %}
                         <!--  没被选中，即没有被传输相同的board.id，图标样式是class="list-group-item">    -->
-                        <a href="{{ url_for('main.index', category_id=category.id, st=current_sort  ) }}" class="list-group-item">{{ category.name }}</a>
+    <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>
                     {% endif %}
                 {% endfor %}
+ </select>
 
 
 	<div class="page-container">
@@ -105,13 +99,13 @@
                     <div class="row">
 
                         <ul class="nav nav-tabs">
-                            <li {% if not show_followed %} class="active" {% endif %}>
+                            <li  class="{% if not show_followed %}active{% endif %}" >
 
                                 <a href="{{ url_for('.show_all') }}">All</a>
 
                             </li>
                             {% if current_user.is_authenticated %}
-                            <li {% if show_followed %} class="active" {% endif %}>
+                            <li  class="{% if show_followed %}active{% endif %}">
 
                                 <a href="{{ url_for('.show_followed') }}">Followed</a>
                             </li>

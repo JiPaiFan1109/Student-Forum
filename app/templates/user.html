@@ -52,10 +52,10 @@
             {% endif %}
 		</div>
 
-            <br><a href="{{ url_for('.followers', username=user.username) }}" class="position"><font style="font-family:'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 20px; color: #2081fc">Followers:</font> <span class="badge">{{ user.followers.count() - 1 }}</span></a>
-	<br><a href="{{ url_for('.followed_by', username=user.username) }}" class="position two"><font style="font-family:'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 20px; color: #2081fc">Following:</font> <span class="badge">{{ user.followed.count() - 1 }}</span></a>
+            <br><a href="{{ url_for('.followers', username=user.username) }}" class="position"><font style="font-family:'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 20px; color: #2081fc">Followers:</font> <span class="badge">{{ user.followers.count() }}</span></a>
+	<br><a href="{{ url_for('.followed_by', username=user.username) }}" class="position two"><font style="font-family:'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 20px; color: #2081fc">Following:</font> <span class="badge">{{ user.followed.count() }}</span></a>
             {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
-            	<br> <span class="label label-default">Follows you</span>
+	<br> <span class="label label-default po">Follows you</span>
             {% endif %}
 </div>
 

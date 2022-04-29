@@ -85,9 +85,11 @@ def index():
     if current_user.is_authenticated:
         show_followed = bool(request.cookies.get('show_followed', ''))
     if show_followed:
-        query = current_user.followed_posts
+        query = current_user.followed_posts.filter(Post.author_id != current_user.id)
+        show_followed = True
     else:
         query = Post.query
+        show_followed = False
     categories = Category.query.all()
     category_id = request.args.get('category_id', type=int, default=None)
 
@@ -104,6 +106,7 @@ def index():
             847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
 
     return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id, pagination=pagination,
+                           show_followed=show_followed,
                            Cloud_options = getWordCloud(getWordPair(font))
                            )
 
@@ -242,7 +245,7 @@ def followers(username):
     pagination = user.followers.paginate(
         page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
         error_out=False)
-    follows = [{'user': item.follower, 'timestamp': item.timestamp}
+    follows = [{'user': item.follower, 'moment': item.moment}
                for item in pagination.items]
     return render_template('followers.html', user=user, title="Followers of",
                            endpoint='.followers', pagination=pagination,
@@ -259,7 +262,7 @@ def followed_by(username):
     pagination = user.followed.paginate(
         page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
         error_out=False)
-    follows = [{'user': item.followed, 'timestamp': item.timestamp}
+    follows = [{'user': item.followed, 'moment': item.moment}
                for item in pagination.items]
     return render_template('followers.html', user=user, title="Followed by",
                            endpoint='.followed_by', pagination=pagination,
