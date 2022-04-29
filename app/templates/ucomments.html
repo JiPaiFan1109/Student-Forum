@@ -73,38 +73,28 @@
 
                                             <div class="page-section" id="projects_New">
                     <div class="row">
-						<ul class="posts">
-						{% for post in posts %}
+						<ul class="comments">
+						{% for comment in comments %}
 						<div class="col-md-12 main-listing">
 							<article class="format-standard type-post hentry clearfix">
 								<header class="clearfix">
-									<h3 class="post-title">
-										<a href="{{ url_for('.post', id=post.id) }}">{{ post.title }}</a>
-									</h3>
+
 									<div class="post-meta clearfix">
-											<span class="date">{{ post.moment }}</span>
+											<span class="date">{{ comment.moment }}</span>
 											<span class="category">
-												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
+												<a href="{{ url_for('.user', username=comment.author.username) }}">{{ comment.author.username }}</a>
 											</span>
 									</div><!-- end of post meta -->
 								</header>
-								<div class="post-body">{{ post.body }}</div>
+								<div class="post-body">{{ comment.body }}
+									<a href="{{ url_for('.user', username= comment.author.username)}}"></a>
+								</div>
+
 							</article>
 
-							<div class="post-footer">
-                            {% if current_user == post.author %}
-                                <a href="{{ url_for('.edit', id=post.id) }}">
-                                        <input class="submit_two sub_one" name="submit" type="submit" value="Edit">
 
-<!--                                <span class="submit_one sub_one">Edit</span>-->
-                                </a>
-                            {% elif current_user.is_administrator() %}
-                                <a href="{{ url_for('.edit', id=post.id) }}">
-                                    <span class="label label-danger">Edit [Admin]</span>
-                                </a>
-                                {% endif %}
-                            </div>
 						</div>
+
 						{% endfor %}
 						</ul>
 
@@ -112,7 +102,7 @@
 												 <div class="pagination">
 													 {% for post in posts|sort(attribute='author_id', reverse=false) %}
 														{% if loop.first %}
-                                                    {{ macros.pagination_widget(pagination, '.user', username=post.author.username) }}
+                                                    {{ macros.pagination_widget(pagination, '.user', username=comment.author.username) }}
                                                 	{% endif %}
 												 </div>
 												{% endfor %}

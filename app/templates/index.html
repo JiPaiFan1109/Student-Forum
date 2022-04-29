@@ -18,6 +18,9 @@
 
 				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+                <script src="/static/js_wordCloud/echarts.min.js"></script>
+                <script type="text/javascript" src="/static/js_wordCloud/jquery.min.js"></script>
+                <script type="text/javascript" src="/static/js_wordCloud/echarts-wordcloud.js"></script>
 
         </head>
 
@@ -53,14 +56,7 @@
                              <form action=""  class="search-form clearfix" method="post" novalidate autocomplete="off">
                                  {{ form.csrf_token }}
 
-                            <input id="text" list="hh" class="search-term required" type="text" name="text" placeholder="Search whatever you want" title="Please enter a search term">
-                                  <datalist id="hh">
-                <option>WeChat(微信)</option>
-				<option>QQ</option>
-				<option>Google Talk</option>
-				<option>Twitter</option>
-                <option>Facekbook</option>
-            </datalist>
+                            <input id="text" class="search-term required" type="text" name="text" placeholder="Search whatever you want" title="Please enter a search term">
 
                                 <button class="searchBtn" name="submit" type="submit" ><span>Search</span></button>
                                  <div id="search-error-container"></div>
@@ -78,17 +74,18 @@
 
 
                 <!-- Start of Page Container -->
-
+<select onchange="location.href = this.options[this.selectedIndex].value" name="category" style="outline: none" class="selectPosition">
         {% for category in categories %}
                     <!--         注意这里的current_board_id数据类型是int，才能与board.id相比较           -->
                     {% if category_id == category.id %}
                         <!--    url_for('front.index', board_id=board.id)每次点击跳转到front_index.html页面，即当前界面，且传输给一个board_id的参数值，由board.id赋值            -->
-                        <a href="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}" class="list-group-item active">{{ category.name }}</a>
+    <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>
                     {% else %}
                         <!--  没被选中，即没有被传输相同的board.id，图标样式是class="list-group-item">    -->
-                        <a href="{{ url_for('main.index', category_id=category.id, st=current_sort  ) }}" class="list-group-item">{{ category.name }}</a>
+    <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>
                     {% endif %}
                 {% endfor %}
+ </select>
 
 
 	<div class="page-container">
@@ -102,13 +99,13 @@
                     <div class="row">
 
                         <ul class="nav nav-tabs">
-                            <li {% if not show_followed %} class="active" {% endif %}>
+                            <li  class="{% if not show_followed %}active{% endif %}" >
 
                                 <a href="{{ url_for('.show_all') }}">All</a>
 
                             </li>
                             {% if current_user.is_authenticated %}
-                            <li {% if show_followed %} class="active" {% endif %}>
+                            <li  class="{% if show_followed %}active{% endif %}">
 
                                 <a href="{{ url_for('.show_followed') }}">Followed</a>
                             </li>
@@ -150,7 +147,6 @@
 						{% endfor %}
 						</ul>
 
-
 					</div>
 
                                                 <div class="pagination">
@@ -162,7 +158,7 @@
 								</div>
 						</div>
 	</div>
-
+        <div id="Cloud" style="float:left; width:400px; height:400px;"></div>
 		<form action="" method="post" class="formOne" role="form">
     {{ form.csrf_token }}
 
@@ -183,6 +179,8 @@
                     <option value="8">News</option>
                     <option value="9">Daily Life</option>
                     <option value="10">Fashion</option>
+                    <option value="11">Lost and Found</option>
+                    <option value="12">Second Hand Transactions</option>
                     <option value="13">BJUT</option>
                 </select>
                 <br>
@@ -200,6 +198,9 @@
     <input class="submit_one sub_one" id="submit" name="submit" type="submit" value="Submit">
 
                         </div>
+
+
+
 </form>
 
 
@@ -276,6 +277,51 @@
 <!--                    </div>-->
 
                 <a href="#top" id="scroll-top"></a>
+
+        <script type="text/javascript">
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart_Cloud = echarts.init(document.getElementById('Cloud'));
+    $(
+        function () {
+            fetchData(myChart_Cloud);
+            setInterval(getDynamicData, 2000)
+        }
+    );
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/WordCloud"
+            dataType: "json",
+            success: function (result) {
+                myChart_Cloud.setOption(result);
+                old_data = myChart_Cloud.getOption().series[0].data
+            }
+        });
+    }
+
+    function getDynamicData() {
+        $.ajax({
+            type: "GET"
+            url: "http://127.0.0.1:5000/getDynamicWordCloud"
+            dataType: "json",
+            success: function (result) {
+                old_data.push
+                myChart_Cloud.setOption({
+
+                })
+            }
+        })
+    }
+    // 指定图表的配置项和数据
+    var option_Cloud = {{ Cloud_options | safe }};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart_Cloud.setOption(option_Cloud);
+
+</script>
+
 
 
         </body>

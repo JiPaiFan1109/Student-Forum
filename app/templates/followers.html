@@ -1,8 +1,8 @@
 {% extends "bootstrap/base.html" %}
 {% block content %}
-
-
 {% import "_macros.html" as macros %}
+<link rel="stylesheet" href="../static/css/post.css" type="text/css">
+
 <!--<!DOCTYPE html>-->
 <html lang="en">
 <head>
@@ -19,7 +19,7 @@
 </div>
 
 <table class="table table-hover followers">
-    <thead><tr><th>User</th><th>Since</th></tr></thead>
+    <thead><tr><th>User</th><th style="position: absolute; left: 1100px">Since</th></tr></thead>
     {% for follow in follows %}
     {% if follow.user != user %}
     <tr>
@@ -30,6 +30,7 @@
 
             </a>
         </td>
+        <td class="positionF">{{ follow.moment }}</td>
     </tr>
     {% endif %}
     {% endfor %}
