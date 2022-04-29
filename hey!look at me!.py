@@ -1,6 +1,7 @@
 """
 《数据库相关操作》
 
+#必须要在command prompt里进行下述操作
 #启动flask shell的必要三步骤
 >>> set FLASK_APP=manage.py
 >>> set FLASK_ENV=development

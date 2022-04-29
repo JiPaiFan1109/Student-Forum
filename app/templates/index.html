@@ -282,6 +282,38 @@
 
     // 基于准备好的dom，初始化echarts实例
     var myChart_Cloud = echarts.init(document.getElementById('Cloud'));
+    $(
+        function () {
+            fetchData(myChart_Cloud);
+            setInterval(getDynamicData, 2000)
+        }
+    );
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/WordCloud"
+            dataType: "json",
+            success: function (result) {
+                myChart_Cloud.setOption(result);
+                old_data = myChart_Cloud.getOption().series[0].data
+            }
+        });
+    }
+
+    function getDynamicData() {
+        $.ajax({
+            type: "GET"
+            url: "http://127.0.0.1:5000/getDynamicWordCloud"
+            dataType: "json",
+            success: function (result) {
+                old_data.push
+                myChart_Cloud.setOption({
+
+                })
+            }
+        })
+    }
     // 指定图表的配置项和数据
     var option_Cloud = {{ Cloud_options | safe }};
 
