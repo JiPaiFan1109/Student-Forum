@@ -55,7 +55,7 @@
         <a href="{{ url_for('.user', username=post.author.username) }}"><font class="showP">Posts</font></a>
         <font class="showP com">Comments</font>
         <a href="{{ url_for('.followers', username=user.username) }}"><font class="showP foll">Followers</font> </a>
-        <font class="showP foll cou">{{ post.author.followers.count() - 1 }}</font>
+        <font class="showP foll cou">{{ post.author.followers.count() }}</font>
         <font class="showP foll countP">{{ post.author.posts.count() }}</font>
         <font class="showP foll countC">{{ comment_count }}</font>
         <button class="jumpBtn a"><span>Follow The Author</span></button>
