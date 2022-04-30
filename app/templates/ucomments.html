@@ -78,7 +78,9 @@
 						<div class="col-md-12 main-listing">
 							<article class="format-standard type-post hentry clearfix">
 								<header class="clearfix">
-
+									<h3 class="post-title">
+										<a href="{{ url_for('.post', id=comment.post_id) }}">{{ comment.post.title }}</a>
+									</h3>
 									<div class="post-meta clearfix">
 											<span class="date">{{ comment.moment }}</span>
 											<span class="category">
