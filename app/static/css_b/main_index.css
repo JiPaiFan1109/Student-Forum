@@ -626,12 +626,24 @@ ul.articles li.article-entry:last-child {
   margin-right: 15px;
   line-height: 22px;
 }
+
+.hentry .post-meta .tag {
+  background: url("../img/tag.png") no-repeat left center;
+  background-size: 18px;
+  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+  font-size: 14px;
+  color: #000000;
+}
+
 .hentry .post-meta .date {
-  background: url("../img/date_logo.png") no-repeat left center;
+  background: url("../img/time.png") no-repeat left center;
+  background-size: 20px;
+
   /*background: no-repeat left center;*/
 }
 .hentry .post-meta .category {
-  background: url("../img/poster_logo.png") no-repeat left center;
+  background: url("../img/aut.png") no-repeat left center;
+  background-size: 21px;
   /*background: no-repeat left center;*/
 }
 .hentry .post-meta .author {
