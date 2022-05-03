@@ -307,7 +307,7 @@
             url: "http://127.0.0.1:5000/getDynamicWordCloud",
             dataType: "json",
             success: function (result) {
-                old_data.push
+                old_data.push([result.name, result.value]);
                 myChart_Cloud.setOption({
 
                 })
