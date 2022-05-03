@@ -75,14 +75,18 @@
 
                 <!-- Start of Page Container -->
 <select onchange="location.href = this.options[this.selectedIndex].value" name="category" style="outline: none" class="selectPosition">
+<!--            <option selected>Category</option>-->
+            <option value="none" selected disabled hidden>Category</option>
+            <option value="{{ url_for('.show_all') }}"> Show All </option>
+
         {% for category in categories %}
                     <!--         注意这里的current_board_id数据类型是int，才能与board.id相比较           -->
-                    {% if category_id == category.id %}
+                    {% if category_id != category.id %}
                         <!--    url_for('front.index', board_id=board.id)每次点击跳转到front_index.html页面，即当前界面，且传输给一个board_id的参数值，由board.id赋值            -->
     <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>
-                    {% else %}
+
                         <!--  没被选中，即没有被传输相同的board.id，图标样式是class="list-group-item">    -->
-    <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>
+<!--    <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>-->
                     {% endif %}
                 {% endfor %}
  </select>
