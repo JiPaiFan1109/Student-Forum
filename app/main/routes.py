@@ -2,13 +2,61 @@ from datetime import datetime
 
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app, make_response
 from flask_login import login_required, current_user
+from flask.json import jsonify
 from . import main
 from .forms import EditProfileForm, PostForm, AnnouncementForm, \
     CommentForm, SearchForm, ChangeAvatarForm
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Permission, Post
+from ..models import User, Permission, Post, Category
 from ..models import User, Permission, Post, Comment, Announcement
+
+from pyecharts import options as opts
+from pyecharts.charts import WordCloud
+from pyecharts.globals import SymbolType
+import random
+
+def wordCloud_base(wordPair) -> WordCloud:
+    cloud = (
+    WordCloud()
+        .add(series_name = "Category", data_pair = wordPair, shape = SymbolType.DIAMOND)
+        .set_global_opts(
+        title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
+        tooltip_opts=opts.TooltipOpts(is_show=True)
+                        )
+            )
+    return cloud
+
+@main.route('/WordCloud')
+def getWordCloud(wordPair):
+    wordCloud = wordCloud_base(wordPair)
+    return wordCloud.dump_options()
+
+def getWordPair(font):
+    all_categories = []
+    all_heat = []
+    word_pair = []
+    for i in Category.query.with_entities(Category.name).all():
+        all_categories.append(i[0])
+    for i in Category.query.with_entities(Category.heat).all():
+        all_heat.append(i[0])
+    for i in range(len(all_categories)):
+        word_pair.append([all_categories[all_heat.index(max(all_heat))], font[i]])
+        all_heat[i] = -1
+    return word_pair
+
+@main.route("/getDynamicWordCloud")
+def update_word_cloud():
+    font1 = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
+            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
+    wordpair1 = getWordPair(font1)
+
+    font2 = [6181, 10000, 4055, 4386, 2244, 2467, 1484, 1868, 865, 1112,
+            582, 847, 550, 555, 366, 462, 282, 360, 265, 273]
+    wordpair2 = getWordPair(font2)
+
+    luckyWordPair = random.choice(wordpair1, wordpair2)
+    return jsonify(luckyWordPair)
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -17,10 +65,16 @@ def index():
     content = ''
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
+        category_id = form.category_id.data
+        categories = Category.query.get(category_id)
+        if not categories:
+            flash('There is no such category, please check the number.')
         post = Post(title=form.title.data,
                     body=form.body.data,
+                    category_id=form.category_id.data,
                     author=current_user._get_current_object(),
                     moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        post.categories = categories.name
         db.session.add(post)
         return redirect(url_for('.index'))
     sform = SearchForm()
@@ -31,14 +85,30 @@ def index():
     if current_user.is_authenticated:
         show_followed = bool(request.cookies.get('show_followed', ''))
     if show_followed:
-        query = current_user.followed_posts
+        query = current_user.followed_posts.filter(Post.author_id != current_user.id)
+        show_followed = True
     else:
         query = Post.query
-    pagination = query.filter(Post.title.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
+        show_followed = False
+    categories = Category.query.all()
+    category_id = request.args.get('category_id', type=int, default=None)
+
+    pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
+    if category_id:
+        pagination = query.filter(Post.category_id == category_id).order_by(Post.timestamp.desc()).paginate(
+            page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+            error_out=False)
     posts = pagination.items
-    return render_template('index.html', form=form, sform=sform, posts=posts, pagination=pagination)
+
+    font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
+            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
+
+    return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id, pagination=pagination,
+                           show_followed=show_followed,
+                           Cloud_options = getWordCloud(getWordPair(font))
+                           )
 
 
 @main.route('/announcement', methods=['GET', 'POST'])
@@ -74,8 +144,20 @@ def user(username):
     posts = pagination.items
     return render_template('user.html', user=user, posts=posts,
                            pagination=pagination)
-    # return render_template('user.html', user=user, post=post,
-    #                        pagination=pagination)
+
+
+@main.route('/ucomments/<username>', methods=['GET', 'POST'])
+def ucomments(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        abort(404)
+    page = request.args.get('page', 1, type=int)
+    pagination = user.comments.order_by(Comment.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASK_COMMENTS_PER_PAGE'],
+        error_out=False)
+    comments = pagination.items
+    return render_template('ucomments.html', user=user, comments=comments,
+                           pagination=pagination)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -163,7 +245,7 @@ def followers(username):
     pagination = user.followers.paginate(
         page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
         error_out=False)
-    follows = [{'user': item.follower, 'timestamp': item.timestamp}
+    follows = [{'user': item.follower, 'moment': item.moment}
                for item in pagination.items]
     return render_template('followers.html', user=user, title="Followers of",
                            endpoint='.followers', pagination=pagination,
@@ -180,7 +262,7 @@ def followed_by(username):
     pagination = user.followed.paginate(
         page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
         error_out=False)
-    follows = [{'user': item.followed, 'timestamp': item.timestamp}
+    follows = [{'user': item.followed, 'moment': item.moment}
                for item in pagination.items]
     return render_template('followers.html', user=user, title="Followed by",
                            endpoint='.followed_by', pagination=pagination,
@@ -206,6 +288,10 @@ def show_followed():
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
     post = Post.query.get_or_404(id)
+    post.read_count += 1
+    category = Category.query.get(post.category_id)
+    category.heat += 1
+    comment_count = post.comments.count()
     form = CommentForm()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
@@ -225,7 +311,7 @@ def post(id):
         error_out=False)
     comments = pagination.items
     return render_template('post.html', posts=[post], form=form,
-                           comments=comments, pagination=pagination, user=current_user)
+                           comments=comments, pagination=pagination, user=current_user, comment_count=comment_count)
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -270,3 +356,5 @@ def edit(id):
 #         flash('Your avatar has been updated.')
 #         return redirect(url_for('main.edit_profile', username=current_user.username))
 #     return render_template('userinfo.html', form=form, username=current_user.username)
+
+

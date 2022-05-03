@@ -78,8 +78,8 @@ class Role(db.Model):
 
 class Follow(db.Model):
     __tablename__ = 'follows'
-    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
-    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -116,7 +116,9 @@ class User(UserMixin, db.Model):
         self.follow(self)
         super(User, self).__init__(**kwargs)
         if self.role is None:
-            if self.email == current_app.config['FLASKY_ADMIN']:
+            if self.email == current_app.config['FLASKY_ADMIN_A']:
+                self.role = Role.query.filter_by(name='Administrator').first()
+            if self.email == current_app.config['FLASKY_ADMIN_B']:
                 self.role = Role.query.filter_by(name='Administrator').first()
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
@@ -194,6 +196,7 @@ class User(UserMixin, db.Model):
                 db.session.add(user)
                 db.session.commit()
 
+
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
         return False
@@ -203,6 +206,9 @@ class AnonymousUser(AnonymousUserMixin):
 
 
 login_manager.anonymous_user = AnonymousUser
+registrations = db.Table('registrations',
+                         db.Column('post_id', db.Integer, db.ForeignKey('posts.id')),
+                         db.Column('category_id', db.Integer, db.ForeignKey('categories.id')))
 
 
 class Post(db.Model):
@@ -214,7 +220,10 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    read_count = db.Column(db.Integer, default=0)
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    categories = db.Column(db.String)
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):
@@ -226,6 +235,36 @@ class Post(db.Model):
             tags=allowed_tags, strip=True))
 
 
+class Category(db.Model):
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Unicode(32), unique=True, index=True,
+                     nullable=False)
+    heat = db.Column(db.Integer, default = 0)
+
+    def __repr__(self):
+        return '<Category %r>' % self.name
+
+    @staticmethod
+    def insert_categories():
+        category1 = Category(id=1, name="Entertainment")
+        category2 = Category(id=2, name="Science and Technology")
+        category3 = Category(id=3, name="Movie")
+        category4 = Category(id=4, name="Teleplay")
+        category5 = Category(id=5, name="Games")
+        category6 = Category(id=6, name="Sports")
+        category7 = Category(id=7, name="Knowledge")
+        category8 = Category(id=8, name="News")
+        category9 = Category(id=9, name="Daily-Life")
+        category10 = Category(id=10, name="Fashion")
+        category11 = Category(id=11, name="Lost and Found")
+        category12 = Category(id=12, name="Second Hand Transactions")
+        category13 = Category(id=13, name="BJUT")
+        category14 = Category(id=14, name="Others")
+        db.session.add_all([category1, category2, category3, category4, category5, category6, category7,
+                            category8, category9, category10, category11, category12, category13, category14])
+        db.session.commit()
+
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
@@ -236,6 +275,10 @@ class Comment(db.Model):
     disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    parent_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
+    replies = db.relationship(
+        'Comment', backref=db.backref('parent', remote_side=[id]), lazy='dynamic'
+    )
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):

@@ -11,6 +11,8 @@ form.formOne{
 }
 
 input.postThree{
+  position: relative;
+  margin-top: -18px;
     outline: none;
     border:0;
 
@@ -206,4 +208,14 @@ div.post-body{
 
 textarea.form-control.flask-pagedown-input.tableSize{
   height: 200px;
+}
+
+select.selectPosition{
+  position: absolute;
+  margin-left: 520px;
+  margin-top: 45px;
+  border: none;
+  width: 200px;
+  color: #046ee1;
+
 }
