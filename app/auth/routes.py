@@ -18,6 +18,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
+            current_user.statue = True
             next = request.args.get('next')
             if next is None or not next.startswith('/'):
                 next = url_for('main.index')
@@ -29,6 +30,7 @@ def login():
 @auth.route('/logout')
 @login_required
 def logout():
+    current_user.statue = False
     logout_user()
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
