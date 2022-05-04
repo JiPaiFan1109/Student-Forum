@@ -75,6 +75,8 @@ def index():
                     author=current_user._get_current_object(),
                     moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         post.categories = categories.name
+        category = Category.query.get(post.category_id)
+        category.heat += 1
         db.session.add(post)
         return redirect(url_for('.index'))
     sform = SearchForm()
