@@ -201,12 +201,12 @@ label.size{
   color: #2081fc;
 }
 
-label.size.count{
-  font-size: 18px;
-  color: #2081fc;
-  position: relative;
-  margin-left: 35px;
-  top: 32px
+label.count{
+  font-size: 10px;
+  color: #282828;
+  /*position: relative;*/
+  /*margin-left: 35px;*/
+  /*top: 32px*/
 }
 
 div.post-body{
