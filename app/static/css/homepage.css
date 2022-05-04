@@ -201,6 +201,14 @@ label.size{
   color: #2081fc;
 }
 
+label.count{
+  font-size: 10px;
+  color: #282828;
+  /*position: relative;*/
+  /*margin-left: 35px;*/
+  /*top: 32px*/
+}
+
 div.post-body{
   font-size: 16px;
   line-height: 170%;
