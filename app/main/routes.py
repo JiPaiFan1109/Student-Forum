@@ -21,8 +21,8 @@ def wordCloud_base(wordPair) -> WordCloud:
     WordCloud()
         .add(series_name = "Category", data_pair = wordPair, shape = SymbolType.DIAMOND)
         .set_global_opts(
-        title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=23)),
-        tooltip_opts=opts.TooltipOpts(is_show=True)
+        title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=30)),
+        tooltip_opts=opts.TooltipOpts(is_show=False)
                         )
             )
     return cloud
@@ -42,7 +42,7 @@ def getWordPair(font):
         all_heat.append(i[0])
     for i in range(len(all_categories)):
         word_pair.append([all_categories[all_heat.index(max(all_heat))], font[i]])
-        all_heat[i] = -1
+        all_heat[all_heat.index(max(all_heat))] = -1
     return word_pair
 
 @main.route("/getDynamicWordCloud")
