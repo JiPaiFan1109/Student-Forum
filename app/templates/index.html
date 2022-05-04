@@ -134,6 +134,7 @@
 											<span class="category">
 												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
 											</span>
+                                        <label class="count">Page View: {{ post.read_count }}</label>
 									</div><!-- end of post meta -->
 								</header>
 								<div class="post-body">
