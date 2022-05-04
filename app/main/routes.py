@@ -2,62 +2,13 @@ from datetime import datetime
 
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app, make_response
 from flask_login import login_required, current_user
-from flask.json import jsonify
 from . import main
 from .forms import EditProfileForm, PostForm, AnnouncementForm, \
     CommentForm, SearchForm, ChangeAvatarForm
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Permission, Post, Category
-from ..models import User, Permission, Post, Comment, Announcement
-
-from pyecharts import options as opts
-from pyecharts.charts import WordCloud
-from pyecharts.globals import SymbolType
-import random
-
-def wordCloud_base(wordPair) -> WordCloud:
-    cloud = (
-    WordCloud()
-        .add(series_name = "Category", data_pair = wordPair, shape = SymbolType.DIAMOND)
-        .set_global_opts(
-        title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=30)),
-        tooltip_opts=opts.TooltipOpts(is_show=False)
-                        )
-            )
-    return cloud
-
-@main.route('/WordCloud')
-def getWordCloud(wordPair):
-    wordCloud = wordCloud_base(wordPair)
-    return wordCloud.dump_options()
-
-def getWordPair(font):
-    all_categories = []
-    all_heat = []
-    word_pair = []
-    for i in Category.query.with_entities(Category.name).all():
-        all_categories.append(i[0])
-    for i in Category.query.with_entities(Category.heat).all():
-        all_heat.append(i[0])
-    for i in range(len(all_categories)):
-        word_pair.append([all_categories[all_heat.index(max(all_heat))], font[i]])
-        all_heat[all_heat.index(max(all_heat))] = -1
-    return word_pair
-
-@main.route("/getDynamicWordCloud")
-def update_word_cloud():
-    font1 = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
-            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
-    wordpair1 = getWordPair(font1)
-
-    font2 = [6181, 10000, 4055, 4386, 2244, 2467, 1484, 1868, 865, 1112,
-            582, 847, 550, 555, 366, 462, 282, 360, 265, 273]
-    wordpair2 = getWordPair(font2)
-
-    luckyWordPair = random.choice(wordpair1, wordpair2)
-    return jsonify(luckyWordPair)
-
+from ..models import User, Permission, Post, Comment, Announcement, Category
+from .echarts import *
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -104,12 +55,11 @@ def index():
             error_out=False)
     posts = pagination.items
 
-    font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
-            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
 
-    return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id, pagination=pagination,
-                           show_followed=show_followed,
-                           Cloud_options = getWordCloud(getWordPair(font))
+
+    return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id,
+                           pagination=pagination, show_followed=show_followed,
+                           Cloud_options = getWordCloud(), Ball_options = getLiquidBall()
                            )
 
 

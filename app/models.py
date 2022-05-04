@@ -111,6 +111,7 @@ class User(UserMixin, db.Model):
                                 backref=db.backref('followed', lazy='joined'),
                                 lazy='dynamic',
                                 cascade='all, delete-orphan')
+    statue = db.Column(db.Boolean, default = False)
 
     def __init__(self, **kwargs):
         self.follow(self)
