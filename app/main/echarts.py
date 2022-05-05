@@ -59,7 +59,7 @@ def update_word_cloud():
 def liquid_base(proportion) -> Liquid:
     liquidBall = (
         Liquid()
-        .add("Online Population", [proportion-0.1, proportion])
+        .add("Online Population", [proportion-0.05, proportion])
         .set_global_opts(title_opts=opts.TitleOpts(title="Online Population"))
     )
     return liquidBall
@@ -70,7 +70,7 @@ def getLiquidBall():
     return liquidball.dump_options_with_quotes()
 
 def getProportion():
-    online = User.query.filter_by(statue = 'True').count()
+    online = User.query.filter_by(statue = 1).count()
     userPopulation = User.query.count()
     proportion = online/userPopulation
     return proportion
