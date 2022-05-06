@@ -56,10 +56,9 @@ def index():
     posts = pagination.items
 
 
-
     return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options = getWordCloud(), Ball_options = getLiquidBall()
+                           Cloud_options = getWordCloud(), Ball_options = getLiquidBall(), proportion_range= [getProportion()-0.1, getProportion()]
                            )
 
 
