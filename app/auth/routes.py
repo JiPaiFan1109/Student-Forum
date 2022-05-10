@@ -55,7 +55,6 @@ def register():
         else:
             flash('You can now check your email')
         # flash('Register successfully')   #判断邮件是否成功发送
-
         return redirect(url_for('auth.login'))
         # return redirect(url_for('main.index'))
     return render_template('register.html', form=form, level=check.strength_level)
