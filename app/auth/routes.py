@@ -70,6 +70,7 @@ def confirm(token):
         db.session.commit()
     else:
         flash('这个确认链接不可用，或已超时')
+    current_user.statue = True
     return redirect(url_for('main.index'))
 
 

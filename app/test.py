@@ -116,3 +116,4 @@
 #     // // 使用刚指定的配置项和数据显示图表。
 #     // myChart_Cloud.setOption(option_Cloud);
 #     // 基于准备好的dom，初始化echarts实例
+print([i for i in range(10)])

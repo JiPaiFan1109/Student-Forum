@@ -2,6 +2,8 @@ from datetime import datetime, timezone, timedelta
 from markdown import markdown
 import bleach
 from flask_login import UserMixin, AnonymousUserMixin
+from sqlalchemy.ext.hybrid import hybrid_property
+
 from . import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -121,6 +123,8 @@ class User(UserMixin, db.Model):
                 self.role = Role.query.filter_by(name='Administrator').first()
             if self.email == current_app.config['FLASKY_ADMIN_B']:
                 self.role = Role.query.filter_by(name='Administrator').first()
+            if self.email == current_app.config['FLASKY_ADMIN_C']:
+                self.role = Role.query.filter_by(name='Administrator').first()
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
 
@@ -235,7 +239,6 @@ class Post(db.Model):
             markdown(value, output_format='html'),
             tags=allowed_tags, strip=True))
 
-
 class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
@@ -298,6 +301,7 @@ class Announcement(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     moment = db.Column(db.String, index=True, default=datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    Read = db.Column(db.Integer, default = 0)
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):

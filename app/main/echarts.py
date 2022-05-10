@@ -1,11 +1,10 @@
 from pyecharts import options as opts
-from pyecharts.charts import WordCloud, Liquid
+from pyecharts.charts import WordCloud, Liquid, Bar3D
 from pyecharts.globals import SymbolType
-from pyecharts.commons.utils import JsCode
 from flask.json import jsonify
 
 from . import main
-from ..models import Category, User
+from ..models import Category, User, Post
 
 import random
 
@@ -55,7 +54,6 @@ def update_word_cloud():
     return jsonify(luckyWordPair)
 
 
-
 #在线人数部分
 def getOnlinePopulation():
     onlinePopulation =User.query.filter_by(statue = 1).count()
@@ -64,6 +62,8 @@ def getOnlinePopulation():
 def getProportion():
     online = User.query.filter_by(statue = 1).count()
     userPopulation = User.query.count()
+    if userPopulation == 0:
+        userPopulation = 1
     proportion = online/userPopulation
     return proportion
 
@@ -85,4 +85,63 @@ def getLiquidBall():
     return liquidball.dump_options_with_quotes()
 
 
+#3D柱形图
+def getAllCategories():
+    all_categories = []
+    for i in Category.query.with_entities(Category.name).all():
+        all_categories.append(i[0])
+        return all_categories
 
+def getCategoryAmount():
+    category_amount = []
+    for i in range(len(getAllCategories())):
+        category_amount.append(Post.query.filter_by(category_id = i).count())
+    return category_amount
+
+def getCategoryHeat():
+    category_heat = []
+    for i in Category.query.with_entities(Category.heat).all():
+        category_heat.append(i[0])
+    return category_heat
+
+def get3D_points():
+    points = []
+    for i in range(len(getAllCategories())):
+        points.append([i, getCategoryAmount()[i], getCategoryHeat()[i]])
+    return points
+
+def bar3D_base() -> Bar3D:
+    bar3D = (
+        Bar3D(init_opts=opts.InitOpts(width="1600px", height="800px"))
+            .add(
+            series_name="",
+            data=get3D_points(),
+            xaxis3d_opts=opts.Axis3DOpts(type_="category", data=getAllCategories()),
+            yaxis3d_opts=opts.Axis3DOpts(type_="value"),
+            zaxis3d_opts=opts.Axis3DOpts(type_="value"),
+        )
+            .set_global_opts(
+            visualmap_opts=opts.VisualMapOpts(
+                max_=20,
+                range_color=[
+                    "#313695",
+                    "#4575b4",
+                    "#74add1",
+                    "#abd9e9",
+                    "#e0f3f8",
+                    "#ffffbf",
+                    "#fee090",
+                    "#fdae61",
+                    "#f46d43",
+                    "#d73027",
+                    "#a50026",
+                ],
+            )
+        )
+    )
+    return bar3D
+
+@main.route("/Bar3D")
+def getBar3D():
+    bar3D = getBar3D()
+    return bar3D.dump_options_with_quotes()
