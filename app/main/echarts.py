@@ -8,6 +8,7 @@ from ..models import Category, User, Post
 
 import random
 
+
 #词云图部分
 def getWordPair(font):
     all_categories = []
@@ -143,5 +144,5 @@ def bar3D_base() -> Bar3D:
 
 @main.route("/Bar3D")
 def getBar3D():
-    bar3D = getBar3D()
+    bar3D = bar3D_base()
     return bar3D.dump_options_with_quotes()
