@@ -102,6 +102,7 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)
     real_avatar = db.Column(db.String(128), default=None)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    lafposts = db.relationship('LAFPost', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
     followed = db.relationship('Follow',
                                foreign_keys=[Follow.follower_id],
@@ -239,6 +240,37 @@ class Post(db.Model):
             markdown(value, output_format='html'),
             tags=allowed_tags, strip=True))
 
+
+class LAFPost(db.Model):
+    __tablename__ = 'lafposts'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    details = db.Column(db.Text)
+    photo = db.Column(db.String(128), default=None)
+    lorf = db.Column(db.String)
+    statue = db.Column(db.Boolean, default=False)
+    location = db.Column(db.Text)
+    contact = db.Column(db.Text)
+    reward = db.Column(db.Text, default=0)
+    body_html = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, default=11)
+    read_count = db.Column(db.Integer, default=0)
+    comments = db.relationship('Comment', backref='lafpost', lazy='dynamic')
+    categories = db.Column(db.String, default='Lost and Found')
+
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em',
+                        'i', 'li', 'ol', 'pre', 'strong', 'ul', 'h1',
+                        'h2', 'h3', 'p']
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
 class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
@@ -269,6 +301,7 @@ class Category(db.Model):
                             category8, category9, category10, category11, category12, category13, category14])
         db.session.commit()
 
+
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
@@ -281,7 +314,8 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     parent_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
     replies = db.relationship(
-        'Comment', backref=db.backref('parent', remote_side=[id]), lazy='dynamic'
+        'Comment', backref=db.backref('parent', remote_side=[id]), lazy='dynamic'),
+    lafpost_id = db.Column(db.Integer, db.ForeignKey('lafposts.id')
     )
 
     @staticmethod

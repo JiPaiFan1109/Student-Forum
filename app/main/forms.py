@@ -45,7 +45,7 @@ class CommentForm(FlaskForm):
 
 class ReplyForm(FlaskForm):
     body = StringField('hhhh', validators=[DataRequired()])
-    parent = StringField(validators=[DataRequired()])
+    parent = StringField()
     submit = SubmitField('Submit')
 
 
@@ -57,4 +57,15 @@ class AnnouncementForm(FlaskForm):
 
 class ChangeAvatarForm(FlaskForm):
     avatar = FileField('')
+    submit = SubmitField('Submit')
+
+
+class LostAndFoundForm(FlaskForm):
+    title = TextAreaField('Change your title here:', validators=[DataRequired()])
+    details = PageDownField('Add some details here:', validators=[DataRequired()])
+    photo = FileField('',validators=[DataRequired()])
+    lorf = StringField('Did you "lose" or "find" something?', validators=[EqualTo('lose' or 'find')])
+    location = StringField('Where did you lose/find it?', validators=[DataRequired()])
+    contact = StringField('Leave your contact', validators=[DataRequired()])
+    reward = StringField('reward if u lost, or nothing add here will be o')
     submit = SubmitField('Submit')

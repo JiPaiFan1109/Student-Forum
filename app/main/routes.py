@@ -4,11 +4,73 @@ from flask import render_template, flash, redirect, url_for, session, abort, req
 from flask_login import login_required, current_user
 from . import main
 from .forms import EditProfileForm, PostForm, AnnouncementForm, \
-    CommentForm, SearchForm, ChangeAvatarForm, ReplyForm
+    CommentForm, SearchForm, ChangeAvatarForm, ReplyForm, LostAndFoundForm
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Permission, Post, Comment, Announcement, Category
+from ..models import User, Permission, Post, Comment, Announcement, Category, LAFPost
 from .echarts import *
+
+
+@main.route('/lost&found', methods=['GET', 'POST'])
+def lindex():
+    lform = LostAndFoundForm()
+    content = ''
+    if lform.validate_on_submit() and \
+            current_user.can(Permission.WRITE):
+        photo = request.files['photo']
+        fname = photo.filename
+        upload_folder = current_app.config['LAF_UPLOAD_FOLDER']
+        allowed_extensions = ['png', 'jpg', 'jpeg', 'gif']
+        fext = fname.rsplit('.', 1)[-1] if '.' in fname else ''
+        if fext not in allowed_extensions:
+            flash('Please check if its one of png, '
+                  'jpg, jpeg and gif')
+            return redirect(url_for('.lindex'))
+        target = '{}{}.{}'.format(upload_folder, current_user.username, fext)
+        photo.save(target)
+        if lform.lorf.data == 'lose':
+            lpost = LAFPost(title=lform.title.data,
+                            details=lform.details.data,
+                            author=current_user._get_current_object(),
+                            photo='/static/avatars/{}.{}'.format(lform.title, fext),
+                            contact=lform.contact.data,
+                            location=lform.location.data,
+                            reward=lform.reward.data,
+                            lorf=lform.lorf.data,
+                            loster=current_user._get_current_object(),
+                            moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        else:
+            lpost = LAFPost(title=lform.title.data,
+                            details=lform.details.data,
+                            author=current_user._get_current_object(),
+                            photo='/static/avatars/{}.{}'.format(lform.title, fext),
+                            contact=lform.contact.data,
+                            location=lform.location.data,
+                            reward=lform.reward.data,
+                            lorf=lform.lorf.data,
+                            finder=current_user._get_current_object(),
+                            moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        category = Category.query.get(lpost.categories)
+        category.heat += 1
+        db.session.add(lpost)
+        flash('Your post has been pushed.')
+        return redirect(url_for('.lindex'))
+    sform = SearchForm()
+    if sform.validate_on_submit():
+        content = sform.text.data
+    page = request.args.get('page', 1, type=int)
+    query = LAFPost.query
+    pagination = query.filter(
+        LAFPost.title.like('%' + content + '%')).order_by(
+        LAFPost.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+        error_out=False)
+    posts = pagination.items
+    return render_template('lindex.html', lform=lform, sform=sform, posts=posts,
+                           pagination=pagination, show_followed=show_followed,
+                           Cloud_options=getWordCloud(), Ball_options=getLiquidBall(),
+                           )
+
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -46,7 +108,9 @@ def index():
     categories = Category.query.all()
     category_id = request.args.get('category_id', type=int, default=None)
 
-    pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
+    pagination = query.filter(
+        Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(
+        Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     if category_id:
@@ -55,10 +119,10 @@ def index():
             error_out=False)
     posts = pagination.items
 
-
-    return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id,
+    return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
+                           catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options = getWordCloud(), Ball_options = getLiquidBall(),
+                           Cloud_options=getWordCloud(), Ball_options=getLiquidBall(),
                            )
 
 
@@ -236,6 +300,46 @@ def show_followed():
     return resp
 
 
+@main.route('/lpost/<int:id>', methods=['GET', 'Post'])
+def lpost(id):
+    lpost = LAFPost.query.get_or_404(id)
+    lpost.read_count += 1
+    category = Category.query.get(lpost.categories)
+    category.heat += 1
+    comment_count = lpost.comments.count()
+    form = CommentForm()
+    rform = ReplyForm()
+    if form.validate_on_submit():
+        comment = Comment(body=form.body.data,
+                          post=lpost,
+                          author=current_user._get_current_object(),
+                          moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been published')
+        return redirect(url_for('.lpost', id=lpost.id, page=-1, user=current_user))
+    if rform.validate_on_submit():
+        comment = Comment(body=rform.body.data,
+                          post=lpost,
+                          author=current_user._get_current_object(),
+                          moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                          parent=int(rform.parent))
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your reply has been published')
+        return redirect(url_for('.lpost', id=lpost.id, page=-1, user=current_user))
+    page = request.args.get('page', 1, type=int)
+    if page == -1:
+        page = (lpost.comments.count() - 1) // \
+               current_app.config['FLASKY_COMMENTS_PER_PAGE'] + 1
+    pagination = lpost.comments.order_by(Comment.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
+        error_out=False)
+    comments = pagination.items
+    return render_template('lpost.html', posts=[lpost], form=form,
+                           comments=comments, pagination=pagination, user=current_user, comment_count=comment_count)
+
+
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
     post = Post.query.get_or_404(id)
@@ -294,29 +398,3 @@ def edit(id):
     form.title.data = post.title
     form.body.data = post.body
     return render_template('edit_post.html', form=form)
-
-#
-# @main.route('/change-avatar', methods=['GET', 'POST'])
-# @login_required
-# def change_avatar():
-#     form = ChangeAvatarForm()
-#     if aform.avatar.data is not None:
-#         avatar = request.files['avatar']
-#         fname = avatar.filename
-#         upload_folder = current_app.config['UPLOAD_FOLDER']
-#         allowed_extensions = ['png', 'jpg', 'jpeg', 'gif']
-#         fext = fname.rsplit('.', 1)[-1] if '.' in fname else ''
-#         if fext not in allowed_extensions:
-#             flash('Please check if its one of png, '
-#                   'jpg, jpeg and gif')
-#             return redirect(url_for('main.edit_profile',
-#                                     username=current_user.username))
-#         target = '{}{}.{}'.format(upload_folder, current_user.username, fext)
-#         avatar.save(target)
-#         current_user.real_avatar = '/static/avatars/{}.{}'.format(current_user.username, fext)
-#         db.session.add(current_user)
-#         flash('Your avatar has been updated.')
-#         return redirect(url_for('main.edit_profile', username=current_user.username))
-#     return render_template('userinfo.html', form=form, username=current_user.username)
-
-
