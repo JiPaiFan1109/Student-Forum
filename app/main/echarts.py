@@ -91,7 +91,7 @@ def getAllCategories():
     all_categories = []
     for i in Category.query.with_entities(Category.name).all():
         all_categories.append(i[0])
-        return all_categories
+    return all_categories
 
 def getCategoryAmount():
     category_amount = []
