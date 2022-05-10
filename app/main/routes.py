@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect, url_for, session, abort, req
 from flask_login import login_required, current_user
 from . import main
 from .forms import EditProfileForm, PostForm, AnnouncementForm, \
-    CommentForm, SearchForm, ChangeAvatarForm
+    CommentForm, SearchForm, ChangeAvatarForm, ReplyForm
 from .. import db
 from ..decorators import permission_required
 from ..models import User, Permission, Post, Comment, Announcement, Category
@@ -244,6 +244,7 @@ def post(id):
     category.heat += 1
     comment_count = post.comments.count()
     form = CommentForm()
+    rform = ReplyForm()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
                           post=post,
@@ -252,6 +253,16 @@ def post(id):
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been published')
+        return redirect(url_for('.post', id=post.id, page=-1, user=current_user))
+    if rform.validate_on_submit():
+        comment = Comment(body=rform.body.data,
+                          post=post,
+                          author=current_user._get_current_object(),
+                          moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                          parent=int(rform.parent))
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your reply has been published')
         return redirect(url_for('.post', id=post.id, page=-1, user=current_user))
     page = request.args.get('page', 1, type=int)
     if page == -1:

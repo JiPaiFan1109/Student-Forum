@@ -43,6 +43,12 @@ class CommentForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class ReplyForm(FlaskForm):
+    body = StringField('hhhh', validators=[DataRequired()])
+    parent = StringField(validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
 class AnnouncementForm(FlaskForm):
     title = TextAreaField('Enter the title of the Announcement', validators=[DataRequired()])
     body = PageDownField('Enter the content of the Announcement', validators=[DataRequired()])
