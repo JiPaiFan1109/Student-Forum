@@ -58,7 +58,7 @@ def index():
 
     return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options = getWordCloud(), Ball_options = getLiquidBall(), Bar3D_options = getBar3D()
+                           Cloud_options = getWordCloud(), Ball_options = getLiquidBall()
                            )
 
 
@@ -80,7 +80,8 @@ def announcement():
         error_out=False)
     announcements = pagination.items
     return render_template('announcement.html', form=form, announcements=announcements,
-                           pagination=pagination)
+                           pagination=pagination,
+                           Bar3D_options = getBar3D())
 
 
 @main.route('/user/<username>', methods=['GET', 'POST'])
