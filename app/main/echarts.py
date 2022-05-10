@@ -8,6 +8,7 @@ from ..models import Category, User, Post
 
 import random
 
+
 #词云图部分
 def getWordPair(font):
     all_categories = []
