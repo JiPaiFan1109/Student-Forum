@@ -10,16 +10,14 @@ import random
 
 
 #词云图部分
-def getWordPair(font):
-    all_categories = []
-    all_heat = []
+def getWordPair():
+    font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
+            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
+    all_categories = getAllCategories()
+    all_heat = getCategoryHeat()
     word_pair = []
-    for i in Category.query.with_entities(Category.name).all():
-        all_categories.append(i[0])
-    for i in Category.query.with_entities(Category.heat).all():
-        all_heat.append(i[0])
     for i in range(len(all_categories)):
-        word_pair.append([all_categories[all_heat.index(max(all_heat))], font[i]])
+        word_pair.append((all_categories[all_heat.index(max(all_heat))], font[i]))
         all_heat[all_heat.index(max(all_heat))] = -1
     return word_pair
 
@@ -36,9 +34,7 @@ def wordCloud_base(wordPair) -> WordCloud:
 
 @main.route('/WordCloud')
 def getWordCloud():
-    font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
-            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
-    wordCloud = wordCloud_base(getWordPair(font))
+    wordCloud = wordCloud_base(getWordPair())
     return wordCloud.dump_options_with_quotes()
 
 @main.route("/getDynamicWordCloud")
@@ -89,7 +85,7 @@ def getLiquidBall():
 #3D柱形图
 def getAllCategories():
     all_categories = []
-    for i in Category.query.with_entities(Category.name).all():
+    for i in Category.query.with_entities(Category.name).order_by(Category.id).all():
         all_categories.append(i[0])
     return all_categories
 
