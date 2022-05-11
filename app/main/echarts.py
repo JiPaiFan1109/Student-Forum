@@ -5,12 +5,13 @@ from pyecharts.globals import SymbolType
 from flask.json import jsonify
 
 from . import main
+from .keyextract import testKey
 from ..models import Category, User, Post
 
 import random
+from collections import Counter
 
-
-#词云图部分
+#Category词云图部分
 def getWordPair():
     font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
             847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
@@ -22,10 +23,10 @@ def getWordPair():
         all_heat[all_heat.index(max(all_heat))] = -1
     return word_pair
 
-def wordCloud_base(wordPair) -> WordCloud:
+def wordCloud_base() -> WordCloud:
     cloud = (
          WordCloud()
-        .add(series_name = "Category", data_pair = wordPair, shape = SymbolType.DIAMOND, is_draw_out_of_bound = True)
+        .add(series_name = "Category", data_pair = getWordPair(), shape = SymbolType.DIAMOND, is_draw_out_of_bound = True)
         .set_global_opts(
         title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=30)),
         tooltip_opts=opts.TooltipOpts(is_show=True)
@@ -35,7 +36,7 @@ def wordCloud_base(wordPair) -> WordCloud:
 
 @main.route('/WordCloud')
 def getWordCloud():
-    wordCloud = wordCloud_base(getWordPair())
+    wordCloud = wordCloud_base()
     return wordCloud.dump_options_with_quotes()
 
 @main.route("/getDynamicWordCloud")
@@ -50,6 +51,49 @@ def update_word_cloud():
 
     luckyWordPair = random.choice(wordpair1, wordpair2)
     return jsonify(luckyWordPair)
+
+
+#关键词词云图部分
+def getKeyWord():
+    result = testKey()
+    keyList = result['key']
+    cloudKey = []
+    cloudKeys = []
+    for i in range(len(Post.query.all())):
+        k = keyList[i].split()
+        for i in k:
+            cloudKey.append(i)
+    word_counts = Counter(cloudKey)
+    cK = word_counts.most_common(20)
+    for i in cK:
+        cloudKeys.append(i[0])
+    return cloudKeys
+
+def getKeyWordPair():
+    font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
+            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
+    keyWord = getKeyWord()
+    keyWordPair = []
+    for i in range(len(keyWord)):
+        keyWordPair.append((keyWord[i],font[i]))
+    return keyWordPair
+
+def keyWordCloud_base():
+    cloud = (
+        WordCloud()
+            .add(series_name="Key Word", data_pair=getKeyWordPair(), shape=SymbolType.DIAMOND, is_draw_out_of_bound=True)
+            .set_global_opts(
+            title_opts=opts.TitleOpts(title="Key Word", pos_left="center", pos_right="center",
+                                      title_textstyle_opts=opts.TextStyleOpts(font_size=30)),
+            tooltip_opts=opts.TooltipOpts(is_show=True)
+        )
+    )
+    return cloud
+
+@main.route("/KeyWordCloud")
+def getKeyWordCloud():
+    keyWordCloud = keyWordCloud_base()
+    return keyWordCloud.dump_options_with_quotes()
 
 
 #在线人数部分
