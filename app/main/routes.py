@@ -9,6 +9,7 @@ from .. import db
 from ..decorators import permission_required
 from ..models import User, Permission, Post, Comment, Announcement, Category, LAFPost
 from .echarts import *
+from .keyextract import testKey
 
 
 @main.route('/lost&found', methods=['GET', 'POST'])
@@ -76,6 +77,7 @@ def lindex():
 def index():
     form = PostForm()
     content = ''
+    testKey()
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
         category_id = form.category_id.data
