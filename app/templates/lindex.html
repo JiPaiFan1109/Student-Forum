@@ -1,0 +1,43 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+<!--<!Doctype html>-->
+        <head>
+
+                <!-- META TAGS -->
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+                <title>BJUT Forum</title>
+
+                <link rel="shortcut icon" href="../static/img/logo.jpeg" />
+
+                <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
+                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+
+        </head>
+
+        <body>
+
+        <div>
+        {% include 'base.html' %}
+        </div>
+
+
+        <div class="contain flash" >
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info">
+    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">Close</span>
+  </button>
+
+        <strong>{{ message }}</strong>
+</div>
+{% endfor %}
+	</div>
+
+        {% endblock %}
