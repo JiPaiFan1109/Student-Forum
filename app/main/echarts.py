@@ -1,5 +1,6 @@
 from pyecharts import options as opts
 from pyecharts.charts import WordCloud, Liquid, Bar3D
+from pyecharts.commons.utils import JsCode
 from pyecharts.globals import SymbolType
 from flask.json import jsonify
 
@@ -92,7 +93,7 @@ def getAllCategories():
 def getCategoryAmount():
     category_amount = []
     for i in range(len(getAllCategories())):
-        category_amount.append(Post.query.filter_by(category_id = i).count())
+        category_amount.append(Post.query.filter_by(category_id = i+1).count())
     return category_amount
 
 def getCategoryHeat():
@@ -113,9 +114,10 @@ def bar3D_base() -> Bar3D:
             .add(
             series_name="",
             data=get3D_points(),
-            xaxis3d_opts=opts.Axis3DOpts(type_="category", data=getAllCategories()),
-            yaxis3d_opts=opts.Axis3DOpts(type_="value"),
-            zaxis3d_opts=opts.Axis3DOpts(type_="value"),
+            xaxis3d_opts=opts.Axis3DOpts(type_="category", data=getAllCategories(), name = "Category", interval = 0),
+            yaxis3d_opts=opts.Axis3DOpts(type_="value", name = "PostAmount"),
+            zaxis3d_opts=opts.Axis3DOpts(type_="value", name = "Heat"),
+
         )
             .set_global_opts(
             visualmap_opts=opts.VisualMapOpts(
@@ -132,8 +134,13 @@ def bar3D_base() -> Bar3D:
                     "#f46d43",
                     "#d73027",
                     "#a50026",
-                ],
+                ]
             )
+            ,tooltip_opts=opts.TooltipOpts(formatter=JsCode(
+                """function(params) {
+                        return params.name
+                }"""
+            ))
         )
     )
     return bar3D
