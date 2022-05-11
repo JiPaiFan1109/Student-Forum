@@ -2,26 +2,19 @@
 {% block content %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
-<!--<!Doctype html>-->
         <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>BJUT Forum</title>
+            <link rel="shortcut icon" href="../static/img/logo.jpeg" />
+            <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
+            <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+            <link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+            <link rel="stylesheet" href="../static/css/lostAndFound.css" type="text/css">
 
-                <!-- META TAGS -->
-                <meta charset="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-                <title>BJUT Forum</title>
-
-                <link rel="shortcut icon" href="../static/img/logo.jpeg" />
-
-                <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
-                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
-				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
 
         </head>
-
-        <body>
 
         <div>
         {% include 'base.html' %}
@@ -31,13 +24,44 @@
         <div class="contain flash" >
 	{% for message in get_flashed_messages() %}
 	<div class="alert alert-info">
-    <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
-		<span aria-hidden="true">Close</span>
-  </button>
-
+        <button type="button" class="closeU xxx" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">Close</span>
+        </button>
         <strong>{{ message }}</strong>
-</div>
-{% endfor %}
+    </div>
+            {% endfor %}
 	</div>
 
-        {% endblock %}
+        <div class="pic">
+            <p class="font">Lost and Found</p>
+        </div>
+
+        <div class="boxLF">
+           <form action="" method="post" class="formOne" role="lform">
+            {{ lform.csrf_token }}
+
+
+            <div class="postOne"><label class="postThree" for="details"><font size="5" >Post whatever you want:</font></label>
+                <br>
+                <br>
+                <input class="postThree" name="title" placeholder="Subject" required/>
+                <br>
+                <br>
+                <textarea class="postTwo" id="details" name="details" placeholder="Post whatever you want" required></textarea>
+
+                <input type="file" name="photo" style="  background-color: white; position: absolute; margin-left: 25%; margin-right: 75%; margin-top: 120px; width: 160px;height:160px; overflow:hidden;z-index: 990" />
+                <input name="lorf" placeholder="lost or found" required/>
+                <input name="location" placeholder="location" required/>
+                <input name="contact" placeholder="contact" required/>
+                <input name="reward" placeholder="contact" required/>
+
+            </div>
+            <br>
+            <br>
+            <input class="submit_one sub_one" id="submit" name="submit" type="submit" value="Submit">
+
+        </form>
+
+        </div>
+
+{% endblock %}

@@ -77,7 +77,6 @@ def lindex():
 def index():
     form = PostForm()
     content = ''
-    testKey()
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
         category_id = form.category_id.data
