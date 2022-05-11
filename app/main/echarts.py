@@ -24,7 +24,7 @@ def getWordPair():
 def wordCloud_base(wordPair) -> WordCloud:
     cloud = (
          WordCloud()
-        .add(series_name = "Category", data_pair = wordPair, shape = SymbolType.DIAMOND)
+        .add(series_name = "Category", data_pair = wordPair, shape = SymbolType.DIAMOND, is_draw_out_of_bound = True)
         .set_global_opts(
         title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=30)),
         tooltip_opts=opts.TooltipOpts(is_show=True)
