@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from collections import Counter
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app, make_response
 from flask_login import login_required, current_user
 from . import main
@@ -9,6 +9,7 @@ from .. import db
 from ..decorators import permission_required
 from ..models import User, Permission, Post, Comment, Announcement, Category, LAFPost
 from .echarts import *
+from .keyextract import testKey
 
 
 @main.route('/lost&found', methods=['GET', 'POST'])
@@ -76,6 +77,18 @@ def lindex():
 def index():
     form = PostForm()
     content = ''
+    result = testKey()
+    keyList = result['key']
+    cloudKey = []
+    for i in range(len(Post.query.all())):
+        k = keyList[i].split()
+        for i in k:
+            cloudKey.append(i)
+    word_counts = Counter(cloudKey)
+    cK = word_counts.most_common(10)
+    cloudKeys = []
+    for i in cK:
+        cloudKeys.append(i[0])
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
         category_id = form.category_id.data
@@ -122,7 +135,8 @@ def index():
     return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options = getWordCloud(), Ball_options = getLiquidBall()
+                           Cloud_options = getWordCloud(), Ball_options = getLiquidBall(),
+                           cloudKeys=cloudKeys
                            )
 
 
