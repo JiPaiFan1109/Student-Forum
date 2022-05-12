@@ -10,6 +10,7 @@ from ..decorators import permission_required
 from ..models import User, Permission, Post, Comment, Announcement, Category, LAFPost
 from .echarts import *
 from .keyextract import testKey
+from wtforms import ValidationError
 
 
 @main.route('/lost&found', methods=['GET', 'POST'])
@@ -38,7 +39,7 @@ def lindex():
                             location=lform.location.data,
                             reward=lform.reward.data,
                             lorf=lform.lorf.data,
-                            loster=current_user._get_current_object(),
+                            # loster=current_user._get_current_object(),
                             moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         else:
             lpost = LAFPost(title=lform.title.data,
@@ -49,10 +50,10 @@ def lindex():
                             location=lform.location.data,
                             reward=lform.reward.data,
                             lorf=lform.lorf.data,
-                            finder=current_user._get_current_object(),
+                            # finder=current_user._get_current_object(),
                             moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         category = Category.query.get(lpost.categories)
-        category.heat += 1
+        # category.heat += 1
         db.session.add(lpost)
         flash('Your post has been pushed.')
         return redirect(url_for('.lindex'))
@@ -67,7 +68,7 @@ def lindex():
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
-    return render_template('lindex.html', lform=lform, sform=sform, posts=posts,
+    return render_template('lindex.html', lform=lform, sform=sform, lposts=posts,
                            pagination=pagination, show_followed=show_followed,
                            Cloud_options=getWordCloud(), Ball_options=getLiquidBall(),
                            )
@@ -77,18 +78,18 @@ def lindex():
 def index():
     form = PostForm()
     content = ''
-    result = testKey()
-    keyList = result['key']
-    cloudKey = []
-    for i in range(len(Post.query.all())):
-        k = keyList[i].split()
-        for i in k:
-            cloudKey.append(i)
-    word_counts = Counter(cloudKey)
-    cK = word_counts.most_common(10)
-    cloudKeys = []
-    for i in cK:
-        cloudKeys.append(i[0])
+    # result = testKey()
+    # keyList = result['key']
+    # cloudKey = []
+    # for i in range(len(Post.query.all())):
+    #     k = keyList[i].split()
+    #     for i in k:
+    #         cloudKey.append(i)
+    # word_counts = Counter(cloudKey)
+    # cK = word_counts.most_common(10)
+    # cloudKeys = []
+    # for i in cK:
+    #     cloudKeys.append(i[0])
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
         category_id = form.category_id.data
@@ -135,8 +136,8 @@ def index():
     return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options = getWordCloud(), KeyWordCloud_options = getKeyWordCloud(), Ball_options = getLiquidBall(),
-                           cloudKeys=cloudKeys
+                           # Cloud_options = getWordCloud(), KeyWordCloud_options = getKeyWordCloud(), Ball_options = getLiquidBall(),
+                           # cloudKeys=cloudKeys
                            )
 
 

@@ -61,11 +61,16 @@ class ChangeAvatarForm(FlaskForm):
 
 
 class LostAndFoundForm(FlaskForm):
-    title = TextAreaField('Change your title here:', validators=[DataRequired()])
-    details = PageDownField('Add some details here:', validators=[DataRequired()])
+    title = TextAreaField('Add your title here:', validators=[DataRequired()])
+    details = TextAreaField('Add some details here:', validators=[DataRequired()])
+    # details = PageDownField('Add some details here:', validators=[DataRequired()])
     photo = FileField('',validators=[DataRequired()])
-    lorf = StringField('Did you "lose" or "find" something?', validators=[EqualTo('lose' or 'find')])
-    location = StringField('Where did you lose/find it?', validators=[DataRequired()])
+    lorf = TextAreaField('Did you "lose" or "find" something?')
+    location = TextAreaField('Where did you lose/find it?', validators=[DataRequired()])
     contact = StringField('Leave your contact', validators=[DataRequired()])
     reward = StringField('reward if u lost, or nothing add here will be o')
     submit = SubmitField('Submit')
+
+    def validate_lotf(self, field):
+        if field.data != "lose" and field.data != "find":
+            raise ValueError('Must be "lose" or "find"')
