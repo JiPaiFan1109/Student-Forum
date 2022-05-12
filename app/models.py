@@ -232,6 +232,11 @@ class Post(db.Model):
     read_count = db.Column(db.Integer, default=0)
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
     categories = db.Column(db.String)
+    keyA = db.Column(db.String)
+    keyB = db.Column(db.String)
+    keyC = db.Column(db.String)
+    keyD = db.Column(db.String)
+    keyE = db.Column(db.String)
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):
