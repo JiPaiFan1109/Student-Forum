@@ -18,6 +18,7 @@ def lindex():
     content = ''
     if lform.validate_on_submit() and \
             current_user.can(Permission.WRITE):
+        t = lform.title
         photo = request.files['photo']
         fname = photo.filename
         upload_folder = current_app.config['LAF_UPLOAD_FOLDER']
@@ -27,29 +28,29 @@ def lindex():
             flash('Please check if its one of png, '
                   'jpg, jpeg and gif')
             return redirect(url_for('.lindex'))
-        target = '{}{}.{}'.format(upload_folder, current_user.username, fext)
+        target = '{}{}.{}'.format(upload_folder, t, fext)
         photo.save(target)
         if lform.lorf.data == 'lose':
             lpost = LAFPost(title=lform.title.data,
                             details=lform.details.data,
                             author=current_user._get_current_object(),
-                            photo='/static/avatars/{}.{}'.format(lform.title, fext),
+                            photo='/static/lostAndFoundPhoto/{}.{}'.format(lform.title, fext),
                             contact=lform.contact.data,
                             location=lform.location.data,
                             reward=lform.reward.data,
                             lorf=lform.lorf.data,
-                            loster=current_user._get_current_object(),
+                            #loster=current_user._get_current_object(),
                             moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         else:
             lpost = LAFPost(title=lform.title.data,
                             details=lform.details.data,
                             author=current_user._get_current_object(),
-                            photo='/static/avatars/{}.{}'.format(lform.title, fext),
+                            photo='/static/lostAndFoundPhoto/{}.{}'.format(lform.title, fext),
                             contact=lform.contact.data,
                             location=lform.location.data,
                             reward=lform.reward.data,
                             lorf=lform.lorf.data,
-                            finder=current_user._get_current_object(),
+                            #finder=current_user._get_current_object(),
                             moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         category = Category.query.get(lpost.categories)
         category.heat += 1
@@ -357,10 +358,17 @@ def lpost(id):
 
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
+    result = testKey()
+    keyList = result['key']
+    keys = []
+    k = keyList[id - 1].split()
+    for i in k:
+        keys.append(i)
     post = Post.query.get_or_404(id)
     post.read_count += 1
     category = Category.query.get(post.category_id)
     category.heat += 1
+    post.keys = keys
     comment_count = post.comments.count()
     form = CommentForm()
     rform = ReplyForm()

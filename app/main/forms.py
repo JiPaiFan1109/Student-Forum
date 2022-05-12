@@ -3,6 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.validators import InputRequired, Length
 from flask_pagedown.fields import PageDownField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
+from wtforms import ValidationError
 
 
 class EditProfileForm(FlaskForm):
@@ -64,8 +65,12 @@ class LostAndFoundForm(FlaskForm):
     title = TextAreaField('Change your title here:', validators=[DataRequired()])
     details = PageDownField('Add some details here:', validators=[DataRequired()])
     photo = FileField('',validators=[DataRequired()])
-    lorf = StringField('Did you "lose" or "find" something?', validators=[EqualTo('lose' or 'find')])
+    lorf = StringField('Did you "lose" or "find" something?')
     location = StringField('Where did you lose/find it?', validators=[DataRequired()])
     contact = StringField('Leave your contact', validators=[DataRequired()])
     reward = StringField('reward if u lost, or nothing add here will be o')
     submit = SubmitField('Submit')
+
+    def validate_lorf(self, field):
+        if field.data != "lose" and field.data != "find":
+            raise ValidationError('Must be "lose" or "find"')
