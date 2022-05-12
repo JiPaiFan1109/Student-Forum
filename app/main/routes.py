@@ -368,7 +368,11 @@ def post(id):
     post.read_count += 1
     category = Category.query.get(post.category_id)
     category.heat += 1
-    post.keys = keys
+    post.keyA = keys[0]
+    post.keyB = keys[1]
+    post.keyC = keys[2]
+    post.keyD = keys[3]
+    post.keyE = keys[4]
     comment_count = post.comments.count()
     form = CommentForm()
     rform = ReplyForm()
