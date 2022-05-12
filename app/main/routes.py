@@ -19,7 +19,6 @@ def lindex():
     content = ''
     if lform.validate_on_submit() and \
             current_user.can(Permission.WRITE):
-        t = lform.title
         photo = request.files['photo']
         fname = photo.filename
         upload_folder = current_app.config['LAF_UPLOAD_FOLDER']
@@ -29,17 +28,19 @@ def lindex():
             flash('Please check if its one of png, '
                   'jpg, jpeg and gif')
             return redirect(url_for('.lindex'))
-        target = '{}{}.{}'.format(upload_folder, t, fext)
+        target = '{}{}.{}'.format(upload_folder, lform.title.data, fext)
         photo.save(target)
+        print(lform.title)
         if lform.lorf.data == 'lose':
             lpost = LAFPost(title=lform.title.data,
                             details=lform.details.data,
                             author=current_user._get_current_object(),
-                            photo='/static/lostAndFoundPhoto/{}.{}'.format(lform.title, fext),
+                            photo='/static/lostAndFoundPhoto/{}.{}'.format(lform.title.data, fext),
                             contact=lform.contact.data,
                             location=lform.location.data,
                             reward=lform.reward.data,
                             lorf=lform.lorf.data,
+                            categories='Lost and Found',
                             #loster=current_user._get_current_object(),
                             moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         else:
@@ -51,11 +52,15 @@ def lindex():
                             location=lform.location.data,
                             reward=lform.reward.data,
                             lorf=lform.lorf.data,
+                            categories='Lost and Found',
                             #finder=current_user._get_current_object(),
                             moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        category = Category.query.get(lpost.categories)
-        # category.heat += 1
+        categories = Category.query.get(11)
+        lpost.categories = categories
+        lpost.category_id = 11
         db.session.add(lpost)
+        category = Category.query.get(lpost.category_id)
+        category.heat += 1
         flash('Your post has been pushed.')
         return redirect(url_for('.lindex'))
     sform = SearchForm()
@@ -79,18 +84,18 @@ def lindex():
 def index():
     form = PostForm()
     content = ''
-    # result = testKey()
-    # keyList = result['key']
-    # cloudKey = []
-    # for i in range(len(Post.query.all())):
-    #     k = keyList[i].split()
-    #     for i in k:
-    #         cloudKey.append(i)
-    # word_counts = Counter(cloudKey)
-    # cK = word_counts.most_common(10)
-    # cloudKeys = []
-    # for i in cK:
-    #     cloudKeys.append(i[0])
+    result = testKey()
+    keyList = result['key']
+    cloudKey = []
+    for i in range(len(Post.query.all())):
+     k = keyList[i].split()
+     for i in k:
+            cloudKey.append(i)
+     word_counts = Counter(cloudKey)
+     cK = word_counts.most_common(10)
+     cloudKeys = []
+     for i in cK:
+         cloudKeys.append(i[0])
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
         category_id = form.category_id.data
@@ -139,8 +144,8 @@ def index():
     return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
-                           # Cloud_options = getWordCloud(), KeyWordCloud_options = getKeyWordCloud(), Ball_options = getLiquidBall(),
-                           # cloudKeys=cloudKeys
+                           Cloud_options = getWordCloud(), KeyWordCloud_options = getKeyWordCloud(), Ball_options = getLiquidBall(),
+                           cloudKeys=cloudKeys
                            )
 
 
