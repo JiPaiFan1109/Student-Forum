@@ -123,7 +123,9 @@ def index():
     category_id = request.args.get('category_id', type=int, default=None)
 
     pagination = query.filter(
-        Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(
+        Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%') +
+        Post.keyA.like('%' + content + '%') + Post.keyB.like('%' + content + '%') + Post.keyC.like('%' + content + '%') +
+        Post.keyD.like('%' + content + '%') + Post.keyE.like('%' + content + '%')).order_by(
         Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
