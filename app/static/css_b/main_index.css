@@ -1446,10 +1446,17 @@ a#scroll-top:hover {
     display: inline-block;
   }
 }
-div.chart-container{
-  position: relative;
-  left: 1000px;
-  top: 500px;
+span.chartOne{
+  position: absolute;
+  top: 900px;
+  width:400px;
+  height:500px;
+}
+
+span.chartTwo{
+  position: absolute;
+  right: 1px;
+  top: 900px;
   width:400px;
   height:500px;
 }
