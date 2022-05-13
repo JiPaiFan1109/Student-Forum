@@ -10,6 +10,7 @@ from ..decorators import permission_required
 from ..models import User, Permission, Post, Comment, Announcement, Category, LAFPost
 from .echarts import *
 from .keyextract import testKey
+from wtforms import ValidationError
 
 
 @main.route('/lost&found', methods=['GET', 'POST'])
@@ -18,6 +19,7 @@ def lindex():
     content = ''
     if lform.validate_on_submit() and \
             current_user.can(Permission.WRITE):
+        t = lform.title.data
         photo = request.files['photo']
         fname = photo.filename
         upload_folder = current_app.config['LAF_UPLOAD_FOLDER']
@@ -27,31 +29,18 @@ def lindex():
             flash('Please check if its one of png, '
                   'jpg, jpeg and gif')
             return redirect(url_for('.lindex'))
-        target = '{}{}.{}'.format(upload_folder, current_user.username, fext)
+        target = '{}{}.{}'.format(upload_folder, t, fext)
         photo.save(target)
-        if lform.lorf.data == 'lose':
-            lpost = LAFPost(title=lform.title.data,
-                            details=lform.details.data,
-                            author=current_user._get_current_object(),
-                            photo='/static/avatars/{}.{}'.format(lform.title, fext),
-                            contact=lform.contact.data,
-                            location=lform.location.data,
-                            reward=lform.reward.data,
-                            lorf=lform.lorf.data,
-                            loster=current_user._get_current_object(),
-                            moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        else:
-            lpost = LAFPost(title=lform.title.data,
-                            details=lform.details.data,
-                            author=current_user._get_current_object(),
-                            photo='/static/avatars/{}.{}'.format(lform.title, fext),
-                            contact=lform.contact.data,
-                            location=lform.location.data,
-                            reward=lform.reward.data,
-                            lorf=lform.lorf.data,
-                            finder=current_user._get_current_object(),
-                            moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        category = Category.query.get(lpost.categories)
+        lpost = LAFPost(title=lform.title.data,
+                        details=lform.details.data,
+                        author=current_user._get_current_object(),
+                        photo='/static/lostAndFoundPhoto/{}.{}'.format(t, fext),
+                        contact=lform.contact.data,
+                        location=lform.location.data,
+                        reward=lform.reward.data,
+                        lorf=lform.lorf.data,
+                        moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        category = Category.query.get(11)
         category.heat += 1
         db.session.add(lpost)
         flash('Your post has been pushed.')
@@ -67,7 +56,7 @@ def lindex():
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
-    return render_template('lindex.html', lform=lform, sform=sform, posts=posts,
+    return render_template('lindex.html', lform=lform, sform=sform, lposts=posts,
                            pagination=pagination, show_followed=show_followed,
                            Cloud_options=getWordCloud(), Ball_options=getLiquidBall(),
                            )
@@ -84,11 +73,11 @@ def index():
         k = keyList[i].split()
         for i in k:
             cloudKey.append(i)
-    word_counts = Counter(cloudKey)
-    cK = word_counts.most_common(10)
-    cloudKeys = []
-    for i in cK:
-        cloudKeys.append(i[0])
+        word_counts = Counter(cloudKey)
+        cK = word_counts.most_common(10)
+        cloudKeys = []
+        for i in cK:
+            cloudKeys.append(i[0])
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
         category_id = form.category_id.data
@@ -122,7 +111,10 @@ def index():
     category_id = request.args.get('category_id', type=int, default=None)
 
     pagination = query.filter(
-        Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(
+        Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%') +
+        Post.keyA.like('%' + content + '%') + Post.keyB.like('%' + content + '%') + Post.keyC.like(
+            '%' + content + '%') +
+        Post.keyD.like('%' + content + '%') + Post.keyE.like('%' + content + '%')).order_by(
         Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
@@ -135,7 +127,8 @@ def index():
     return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options = getWordCloud(), KeyWordCloud_options = getKeyWordCloud(), Ball_options = getLiquidBall(),
+                           Cloud_options=getWordCloud(), KeyWordCloud_options=getKeyWordCloud(),
+                           Ball_options=getLiquidBall(),
                            cloudKeys=cloudKeys
                            )
 
@@ -159,7 +152,7 @@ def announcement():
     announcements = pagination.items
     return render_template('announcement.html', form=form, announcements=announcements,
                            pagination=pagination,
-                           Bar3D_options = getBar3D())
+                           Bar3D_options=getBar3D())
 
 
 @main.route('/user/<username>', methods=['GET', 'POST'])
@@ -357,10 +350,21 @@ def lpost(id):
 
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
+    result = testKey()
+    keyList = result['key']
+    keys = []
+    k = keyList[id - 1].split()
+    for i in k:
+        keys.append(i)
     post = Post.query.get_or_404(id)
     post.read_count += 1
     category = Category.query.get(post.category_id)
     category.heat += 1
+    post.keyA = keys[0]
+    post.keyB = keys[1]
+    post.keyC = keys[2]
+    post.keyD = keys[3]
+    post.keyE = keys[4]
     comment_count = post.comments.count()
     form = CommentForm()
     rform = ReplyForm()

@@ -165,12 +165,13 @@
 
 
 
-        <div id="Cloud" class="chart-container" style="float:left; width:400px; height:500px;"></div>
-		<form action="" method="post" class="formOne" role="form">
-    {{ form.csrf_token }}
+        <span id="Cloud" class="chartOne" style="float:left; width:400px; height:500px;"></span>
+		<span id="keyCloud" class="chartTwo"></span>
 
+        <form action="" method="post" class="formOne" role="form">
+            {{ form.csrf_token }}
 
-			<div class="postOne"><label class="postThree" for="body"><font size="5" >Post whatever you want:</font></label>
+			<div class="postOne" style="float:none;"><label class="postThree" for="body"><font size="5" >Post whatever you want:</font></label>
                             <br>
                 <br>
 <!--        <input style="border:0;border-bottom:1px solid black;">-->
@@ -294,6 +295,13 @@
         var option_Cloud = {{ Cloud_options | safe }}
 
         chart_Cloud.setOption(option_Cloud);
+    </script>
+        <script>
+        var chart_keyCloud = echarts.init(
+            document.getElementById('keyCloud'), 'white', {renderer: 'canvas'});
+        var option_keyCloud = {{ KeyWordCloud_options | safe }}
+
+        chart_keyCloud.setOption(option_keyCloud);
     </script>
         <script src="/static/js_echarts/echarts.min.js"></script>
         <script type="text/javascript" src="/static/js_echarts/jquery.min.js"></script>

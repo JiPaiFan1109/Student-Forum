@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="data" uuid="3f8ab55a-038b-44d9-8438-cb8216cd31c6">
+    <data-source source="LOCAL" name="data [2]" uuid="ee3c0228-2c21-426a-9559-5f74f611ece7">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\Everything\Pycharm-Professional\2008jproject\data.sqlite</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\study\program\program大二下\COMP2008JCODE\data.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>
