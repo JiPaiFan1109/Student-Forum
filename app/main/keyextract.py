@@ -73,8 +73,6 @@ def getKeywords_tfidf(stopkey,topK):
 
 
 def testKey():
-    # 停用词表
-    print('testKey is running')
     encoding = "utf-8"
     stopkey = [w.strip() for w in codecs.open('app/static/stopWord.txt', 'r', encoding=encoding).readlines()]
 

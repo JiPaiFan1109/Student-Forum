@@ -256,10 +256,10 @@ class LAFPost(db.Model):
     photo = db.Column(db.String(128), default=None)
     lorf = db.Column(db.String)
     statue = db.Column(db.Boolean, default=False)
-    location = db.Column(db.Text)
-    contact = db.Column(db.Text)
-    reward = db.Column(db.Text, default=0)
-    body_html = db.Column(db.Text)
+    location = db.Column(db.String)
+    contact = db.Column(db.String)
+    reward = db.Column(db.String, default='0')
+    details_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -273,7 +273,7 @@ class LAFPost(db.Model):
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em',
                         'i', 'li', 'ol', 'pre', 'strong', 'ul', 'h1',
                         'h2', 'h3', 'p']
-        target.body_html = bleach.linkify(bleach.clean(
+        target.details_html = bleach.linkify(bleach.clean(
             markdown(value, output_format='html'),
             tags=allowed_tags, strip=True))
 
@@ -357,3 +357,4 @@ class Announcement(db.Model):
 db.event.listen(Post.body, 'set', Post.on_changed_body)
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)
 db.event.listen(Announcement.body, 'set', Comment.on_changed_body)
+db.event.listen(LAFPost.details, 'set', LAFPost.on_changed_body)
