@@ -44,7 +44,7 @@
 
 
 
-           <form action="" method="post" class="formOne" enctype="multipart/form-data" role="lform">
+           <form action="" method="post" class="lForm" enctype="multipart/form-data" role="lform">
                {{ lform.csrf_token }}
                <div class="postOne"><label class="lPostFont" for="title">Title:</label>
                    <input class="lInput" id="title" name="title" placeholder="Subject" required/>
@@ -57,19 +57,19 @@
                <div class="form-group  required"><label class="control-label" for="photo"></label>
                    <input id="photo" name="photo" required type="file">
                </div>
-               <div class="form-group  required"><label class="control-label" for="location">Where did you lose/find it?</label>
+               <div class="form-group  required"><label class="lPostFont" for="location">Location</label>
 
-                   <input class="lInput" id="location" name="location" required value="">
+                   <input class="lInput" id="location" name="location" placeholder="Location" required value="">
                </div>
-               <div class="form-group  required"><label class="control-label" for="contact">Leave your contact</label>
+               <div class="form-group  required"><label class="lPostFont" for="contact">Contact</label>
 
-                   <input class="form-control" id="contact" name="contact" required type="text" value="">
+                   <input class="lInput" id="contact" name="contact" placeholder="Contact" required value="">
                </div>
-               <div class="form-group "><label class="control-label" for="reward">reward if u lost, or nothing add here will be o</label>
-                   <input class="form-control" id="reward" name="reward" type="text" value="">
+               <div class="form-group "><label class="lPostFont" for="reward">Reward</label>
+                   <input class="lInput" id="reward" name="reward" placeholder="Reward" value="">
                </div>
 
-               <div class="form-group  required"><label class="control-label">Details:</label>
+               <div class="form-group  required"><label class="lPostFont">Details:</label>
                    <div class="flask-pagedown"><textarea class="postTwo flask-pagedown-input" id="flask-pagedown-details" name="details" placeholder="Enter some details" required></textarea></div>
                    <div class="flask-pagedown-preview" id="flask-pagedown-details-preview"></div>
                    <script type="text/javascript">
