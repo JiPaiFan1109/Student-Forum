@@ -180,11 +180,7 @@ def bar3D_base() -> Bar3D:
                     "#a50026",
                 ]
             )
-            ,tooltip_opts=opts.TooltipOpts(formatter=JsCode(
-                """function(params) {
-                        return params.name
-                }"""
-            ))
+            # ,tooltip_opts=opts.TooltipOpts(formatter=JsCode())
         )
     )
     return bar3D
