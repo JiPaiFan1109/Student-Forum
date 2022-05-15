@@ -35,4 +35,5 @@ div.span8.page-content.ann{
   width: 2050px;
   position: absolute;
   margin-left: -180px;
+  z-index: -100;
 }
