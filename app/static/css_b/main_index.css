@@ -1460,3 +1460,8 @@ span.chartTwo{
   width:400px;
   height:500px;
 }
+
+@font-face {
+  font-family: 'arlrdbd';
+  src: url("../font/arlrdbd.ttf");
+}

@@ -39,7 +39,23 @@
         <div class="boxLF">
 
             {% for lpost in lposts %}
-                {{lpost.details}}
+
+            <p class="lOne">{{ lpost.title }}</p>
+            <p class="details name">Details:</p>
+            <p class="leftLine"></p>
+            <p class="details">{{ lpost.details }}</p>
+            <img class="photo" src="{{ lpost.photo }}" >
+            <img class="avatar lAvatar" src="{{ lpost.author.real_avatar }}" >
+            <p class="lInfo">{{ lpost.author.username }}</p>
+            <p class="lInfo name">Location:</p>
+            <p class="lInfo">{{ lpost.location }}</p>
+            <p class="lInfo name">Reward:</p>
+            <p class="lInfo">{{ lpost.reward }}</p>
+            <p class="lInfo name">ConTact:</p>
+            <p class="lInfo">{{ lpost.contact }}</p>
+            <p class="lInfo name">Time:</p>
+            <p class="lInfo">{{ lpost.moment }}</p>
+            <p class="line"></p>
             {% endfor %}
 
 
@@ -55,7 +71,8 @@
                </div>
 
                <div class="form-group  required"><label class="control-label" for="photo"></label>
-                   <input id="photo" name="photo" required type="file">
+                   	<input id="photo" type="file" name="photo" style=" opacity: 1; background-color: white; width: 60px;height:60px; overflow:hidden;z-index: 990" />
+
                </div>
                <div class="form-group  required"><label class="lPostFont" for="location">Location</label>
 
@@ -70,7 +87,7 @@
                </div>
 
                <div class="form-group  required"><label class="lPostFont">Details:</label>
-                   <div class="flask-pagedown"><textarea class="postTwo flask-pagedown-input" id="flask-pagedown-details" name="details" placeholder="Enter some details" required></textarea></div>
+                   <div class="flask-pagedown"><textarea class="postTwo lNew flask-pagedown-input" id="flask-pagedown-details" name="details" maxlength="150" placeholder="Enter some details" required></textarea></div>
                    <div class="flask-pagedown-preview" id="flask-pagedown-details-preview"></div>
                    <script type="text/javascript">
                        f = function() {
@@ -95,6 +112,9 @@
 
                <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
            </form>
+
         </div>
+<br>
+<br>
 
 {% endblock %}

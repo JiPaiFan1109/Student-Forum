@@ -22,11 +22,10 @@ p.font {
 
 div.boxLF{
   position: absolute;
-  width: 65%;
+  width: 63%;
   left: 100px;
-  margin-top: 40px;
+  top: 380px;
   /*height: 16%;*/
-  height: 990px;
   border: 1px solid rgba(250, 250, 250, 0.67);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
   background-color: #fff;
@@ -41,7 +40,7 @@ input.lInput{
 }
 
 label.lPostFont{
-  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+  font-family: 'arlrdbd', 'Arial', sans-serif;
   font-size: 15px;
 }
 
@@ -56,5 +55,77 @@ input.lInputOne{
 form.lForm{
   position: relative;
   margin-left: 20%;
-  margin-top: 40%;
+  margin-top: 50px;
+}
+
+textarea.postTwo.lNew{
+  height: 100px;
+}
+
+img.photo{
+	position: absolute;
+	margin-left: 50px;
+	margin-top: 20px;
+	height: 140px;
+	width: 140px;
+	border-radius: 6px;
+}
+
+p.lOne{
+  position: relative;
+  margin-left: 90px;
+  top: 25px;
+  font-family: 'arlrdbd', sans-serif;
+  font-size: 23px;
+}
+
+@font-face {
+  font-family: 'arlrdbd';
+  src: url("../font/arlrdbd.ttf");
+}
+
+p.lInfo{
+  position: relative;
+  font-family: 'arlrdbd', sans-serif;
+  font-size: 21px;
+  margin-left: 860px;
+  margin-top: -40px;
+}
+
+p.lInfo.name{
+  position: relative;
+  font-family: 'arlrdbd', sans-serif;
+  font-size: 21px;
+  margin-left: 730px;
+  margin-top: 12px;
+}
+
+p.details{
+  position: absolute;
+  font-family: 'arlrdbd', sans-serif;
+  font-size: 21px;
+  margin-left: 280px;
+  margin-top: 25px;
+  width: 380px;
+  word-wrap:break-word;
+  word-break:break-all;
+  overflow: hidden;
+}
+
+p.details.name{
+  position: relative;
+  font-family: 'arlrdbd', sans-serif;
+  font-size: 21px;
+  margin-left: 300px;
+  margin-top: -15px;
+}
+
+p.line{
+  position: relative;
+  margin-top: 30px;
+  border-bottom: 2px solid #cfd4d9;
+}
+
+p.leftLine{
+  border-left: 2px solid #cfd4d9;
 }
