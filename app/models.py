@@ -259,7 +259,7 @@ class LAFPost(db.Model):
     location = db.Column(db.String)
     contact = db.Column(db.String)
     reward = db.Column(db.String, default='0')
-    details_html = db.Column(db.Text)
+    body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -273,7 +273,7 @@ class LAFPost(db.Model):
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em',
                         'i', 'li', 'ol', 'pre', 'strong', 'ul', 'h1',
                         'h2', 'h3', 'p']
-        target.details_html = bleach.linkify(bleach.clean(
+        target.body_html = bleach.linkify(bleach.clean(
             markdown(value, output_format='html'),
             tags=allowed_tags, strip=True))
 

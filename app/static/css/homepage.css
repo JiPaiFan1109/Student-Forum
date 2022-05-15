@@ -5,8 +5,9 @@ div.postOne{
 }
 
 form.formOne{
-    position: relative;
-    margin-left: 25%;
+  position: relative;
+  margin-left: 25%;
+  margin-top: 500px;
 }
 
 input.postThree{
@@ -18,11 +19,13 @@ input.postThree{
   border-bottom: 2px solid #7e7e7e;
   width: 70%;
   font-size: 20px;
+}
 
+input.postThree.line{
+  width: 800px;
 }
 
 textarea.postTwo {
-
   position: relative;
 
   display: block;
@@ -38,7 +41,7 @@ textarea.postTwo {
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   /*box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);*/
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
 
   -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
