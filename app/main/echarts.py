@@ -70,8 +70,8 @@ def getKeyWord():
     return cloudKeys
 
 def getKeyWordPair():
-    font = [200000, 8181, 6386, 6055, 4467, 3244, 2868, 2484, 2112, 1865,
-            1847, 1582, 1555, 1550, 1462, 1366, 1360, 1282, 1273, 1265]
+    font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
+            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
     keyWord = getKeyWord()
     keyWordPair = []
     for i in range(len(keyWord)):
