@@ -251,3 +251,29 @@ td.positionF{
     position: absolute;
     left: 1100px;
 }
+
+span.keyName{
+    font-family: 'arlrdbd', sans-serif;
+    font-size: 22px;
+    position: relative;
+    left: 25px;
+    top: 30px;
+}
+
+span.keys{
+    font-family: 'chineseThree', sans-serif;
+    font-size: 24px;
+    position: relative;
+    top: 30px;
+    left: 25px;
+}
+
+@font-face {
+  font-family: 'chineseThree';
+  src: url("../font/chineseThree.ttf");
+}
+
+@font-face {
+  font-family: 'arlrdbd';
+  src: url("../font/arlrdbd.ttf");
+}
