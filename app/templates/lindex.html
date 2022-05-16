@@ -36,9 +36,17 @@
             <p class="font">Lost and Found</p>
         </div>
 
-<div class="boxLFRight">
-    <p>放搜索与LandF的种类、图片</p>
-</div>
+
+<form action=""  class="search-form clearfix laf" method="post" novalidate autocomplete="off">
+    {{ sform.csrf_token }}
+    <input id="text" class="search-term required laf" type="text" name="text" placeholder="Search whatever you want" title="Please enter a search term">
+    <button class="searchBtn" name="submit" type="submit" ><span>Search</span></button>
+    <div id="search-error-container"></div>
+</form>
+
+<!--<div class="boxLFRight">-->
+<!--    <p>放搜索与LandF的种类、图片</p>-->
+<!--</div>-->
 
         <div class="boxLF">
 
@@ -62,7 +70,9 @@
             <p class="line"></p>
             {% endfor %}
 
-
+<div class="pagination alf">
+    {{ macros.pagination_widget(pagination, '.lindex') }}
+</div>
 
            <form action="" method="post" class="lForm" enctype="multipart/form-data" role="lform">
                {{ lform.csrf_token }}

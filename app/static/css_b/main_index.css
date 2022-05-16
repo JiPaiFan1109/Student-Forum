@@ -146,6 +146,7 @@ span.tag-line {
   min-height: 279px;
   height: auto !important;
   height: 279px;
+  z-index: -100;
 }
 .search-area-wrapper .search-area {
   padding: 50px 0;
