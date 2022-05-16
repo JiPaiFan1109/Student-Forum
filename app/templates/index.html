@@ -1,21 +1,16 @@
 {% extends "bootstrap/base.html" %}
-{% block content %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
-<!--<!Doctype html>-->
+{% block content %}
+
+
         <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>BJUT Forum</title>
 
-                <!-- META TAGS -->
-                <meta charset="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-                <title>BJUT Forum</title>
-
-                <link rel="shortcut icon" href="../static/img/logo.jpeg" />
-
-                <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
-                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+            <link rel="shortcut icon" href="../static/img/logo.jpeg" />
+            <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
             <link rel="stylesheet" href="../static/css/post.css" type="text/css">
             <link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
             <script src="/static/js_echarts/echarts.min.js"></script>
@@ -78,7 +73,7 @@
 <select onchange="location.href = this.options[this.selectedIndex].value" name="category" style="outline: none" class="selectPosition">
 <!--            <option selected>Category</option>-->
             <option value="none" selected disabled hidden>Category</option>
-            <option value="{{ url_for('.show_all') }}"> Show All </option>
+            <option value="{{ url_for('main.index') }}"> Show All </option>
 
         {% for category in categories %}
                     {% if category_id != category.id %}
@@ -146,12 +141,16 @@
                                         <label class="count">Page View: {{ post.read_count }}</label>
 									</div><!-- end of post meta -->
 								</header>
+                                <div>
+                                    <input type="checkbox" id='exp' style="opacity: 0; position:absolute; left: 657px; top: 107px; width: 83px; height: 38px;z-index: 1000">
 								<div class="post-body">
+                                    <label class="btn" for='exp'></label>
                                      {% if post.body_html %}
                                         {{ post.body_html | safe }}
                                     {% else %}
                                         {{ post.body }}
                                     {% endif %}
+                                </div>
                                 </div>
 							</article>
 
@@ -313,10 +312,5 @@
 
         chart_keyCloud.setOption(option_keyCloud);
     </script>
-        <script src="/static/js_echarts/echarts.min.js"></script>
-        <script type="text/javascript" src="/static/js_echarts/jquery.min.js"></script>
-        <script type="text/javascript" src="/static/js_echarts/echarts-wordcloud.js"></script>
-        <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-liquidfill.min.js"></script>
-        <script type="text/javascript" src="/static/js_echarts/jquery-2.1.4.min.js"></script>
         </body>
 {% endblock %}
