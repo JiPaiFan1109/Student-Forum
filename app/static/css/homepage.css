@@ -214,7 +214,35 @@ label.count{
 div.post-body{
   font-size: 16px;
   line-height: 170%;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
+#exp:checked+div.post-body{
+  -webkit-line-clamp: 999;
+  max-height: none;
+}
+
+.btn::after{
+  content:'Expand' /*采用content生成*/
+}
+
+#exp:checked + .post-body .btn::after {
+content: ' Hide ';
+}
+
+#exp:checked + .post-body .btn::before {
+visibility: hidden;
+}
+
+label.btn{
+  position: relative;
+  left: 650px;
+  top: -4px;
+}
+
 
 textarea.form-control.flask-pagedown-input.tableSize{
   height: 200px;
