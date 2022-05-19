@@ -62,6 +62,8 @@ div.c1{
 	padding: 10px;
 }
 .sidebar ul li:first-child img {
+	background-image: url("../img/logo.jpeg");
+
 	width: 80px;
 	border-radius: 50%;
 }
