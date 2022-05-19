@@ -58,7 +58,6 @@ def lindex():
     posts = pagination.items
     return render_template('lindex.html', lform=lform, sform=sform, lposts=posts,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options=getWordCloud(), Ball_options=getLiquidBall(),
                            )
 
 
@@ -127,8 +126,7 @@ def index():
     return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options=getWordCloud(), KeyWordCloud_options=getKeyWordCloud(),
-                           Ball_options=getLiquidBall(),
+                           Cloud_options=getWordCloud(), KeyWordCloud_options=getKeyWordCloud(), Ball_options=getLiquidBall(),
                            cloudKeys=cloudKeys
                            )
 
@@ -200,7 +198,6 @@ def edit_profile():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.birthday = form.birthday.data
-        current_user.birthplace = form.birthplace.data
         current_user.name = form.name.data
         current_user.about_me = form.about_me.data
         current_user.institute = form.institute.data
