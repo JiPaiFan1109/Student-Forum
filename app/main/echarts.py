@@ -1,5 +1,5 @@
 from pyecharts import options as opts
-from pyecharts.charts import WordCloud, Liquid, Bar3D
+from pyecharts.charts import WordCloud, Liquid, Bar3D, Map
 from pyecharts.commons.utils import JsCode
 from pyecharts.globals import SymbolType
 from flask.json import jsonify
@@ -188,3 +188,25 @@ def bar3D_base() -> Bar3D:
 def getBar3D():
     bar3D = bar3D_base()
     return bar3D.dump_options_with_quotes()
+
+
+#全国出生地
+def getMapDataPair():
+    MapDataPair = 1
+    return MapDataPair
+
+def map_base() -> Map:
+    map = (
+        Map()
+            .add("商家A", data_pair=getMapDataPair() , maptype = "china")
+            .set_global_opts(
+            title_opts=opts.TitleOpts(title="Map-VisualMap（连续型）"),
+            visualmap_opts=opts.VisualMapOpts(max_=200),
+            )
+        )
+    return map
+
+@main.route("/Map")
+def getMap():
+    map = map_base()
+    return map.dump_options_with_quotes()
