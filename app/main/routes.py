@@ -150,13 +150,63 @@ def announcement():
     announcements = pagination.items
     return render_template('announcement.html', form=form, announcements=announcements,
                            pagination=pagination,
-                           Bar3D_options=getBar3D())
+                           Map_options=getMap())
 
 
 @main.route('/administrator', methods=['Get','Post'])
 @login_required
 def administrator():
-    return render_template('administrator.html', Bar3D_options = getBar3D())
+    form = EditProfileForm()
+    aform = ChangeAvatarForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.birthday = form.birthday.data
+        current_user.name = form.name.data
+        current_user.about_me = form.about_me.data
+        current_user.institute = form.institute.data
+        db.session.add(current_user._get_current_object())
+        db.session.commit()
+        flash('Your profile has been updated')
+        return redirect(url_for('main.edit_profile', username=current_user.username))
+    if aform.validate_on_submit():
+        avatar = request.files['avatar']
+        fname = avatar.filename
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        allowed_extensions = ['png', 'jpg', 'jpeg', 'gif']
+        fext = fname.rsplit('.', 1)[-1] if '.' in fname else ''
+        if fext not in allowed_extensions:
+            flash('Please check if its one of png, '
+                  'jpg, jpeg and gif')
+            return redirect(url_for('main.edit_profile',
+                                    username=current_user.username))
+        target = '{}{}.{}'.format(upload_folder, current_user.username, fext)
+        avatar.save(target)
+        current_user.real_avatar = '/static/avatars/{}.{}'.format(current_user.username, fext)
+        db.session.add(current_user)
+        flash('Your avatar has been updated.')
+        return redirect(url_for('main.edit_profile', username=current_user.username))
+    form.username.data = current_user.username
+    form.birthday.data = current_user.birthday
+    form.name.data = current_user.name
+    form.about_me.data = current_user.about_me
+    form.institute.data = current_user.institute
+    username = current_user.username
+    form = AnnouncementForm()
+    if form.validate_on_submit():
+        ann = Announcement(title=form.title.data,
+                           body=form.body.data,
+                           moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                           # author=current_user._get_current_object()
+                           )
+        db.session.add(ann)
+        return redirect(url_for('.announcement'))
+    page = request.args.get('page', 1, type=int)
+    pagination = Announcement.query.order_by(Announcement.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASK_ANNOUNCEMENT_PER_PAGE'],
+        error_out=False)
+    announcements = pagination.items
+    return render_template('administrator.html',form=form, announcements=announcements,
+                           pagination=pagination, Bar3D_options = getBar3D(),username=username, user=current_user)
 
 
 

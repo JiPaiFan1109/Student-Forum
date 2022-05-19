@@ -206,7 +206,7 @@ def getMapDataPair():
                 '陕西', '甘肃', '青海', '宁夏', '新疆']
     amount = []
     for i in provinces:
-        amount.append(User.query.filter_by(insititute=i).count())
+        amount.append(User.query.filter_by(institute=i).count())
     MapDataPair = [list(z) for z in zip(provinces, amount)]
     return MapDataPair
 
