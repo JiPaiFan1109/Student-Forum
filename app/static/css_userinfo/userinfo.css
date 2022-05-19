@@ -79,7 +79,7 @@ div.c1{
 	height: 100%;
 	color: #d2d2d2;
 	text-decoration: none;
-	border-left: 6px solid transparent;
+	border-left: 8px solid transparent;
 }
 .sidebar ul li a i {
 	font-size: 20px;
@@ -90,7 +90,7 @@ div.c1{
 }
 .sidebar ul li a:hover {
 	color: #fff;
-	border-left-color:#1f6377;
+	border-left-color: #2382DA;
 }
 .sidebar input:checked + label {
 	left: 0;

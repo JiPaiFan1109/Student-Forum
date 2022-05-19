@@ -193,9 +193,9 @@ def administrator():
                            pagination=pagination, Bar3D_options = getBar3D(),username=username, user=current_user)
 
 
-@main.route('/administrator1', methods=['Get', 'Post'])
+@main.route('/administrator2', methods=['Get', 'Post'])
 @login_required
-def administrator1():
+def administrator2():
     form = EditProfileForm()
 
     if form.validate_on_submit():
@@ -229,7 +229,7 @@ def administrator1():
         page, per_page=current_app.config['FLASK_ANNOUNCEMENT_PER_PAGE'],
         error_out=False)
     announcements = pagination.items
-    return render_template('administrator1.html', form=form, announcements=announcements,
+    return render_template('administrator2.html', form=form, announcements=announcements,
                            pagination=pagination, Map_options=getMap(), username=username, user=current_user)
 
 

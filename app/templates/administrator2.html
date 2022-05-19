@@ -28,7 +28,7 @@
 		<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../static/css_userinfo/font-awesome.css" type="text/css"/>
         <link rel="shortcut icon" href="../static/img/logo.jpeg" />
-        <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
+        <link rel="stylesheet" href="../static/css_userinfo/admin.css" type="text/css">
 		<link rel="shortcut icon" href="../static/img/logo.jpeg" />
 		<link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
 		<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
@@ -55,17 +55,15 @@
 	</div>
 
 
-		<div class="sidebar">
+		<div class="navbar">
 			<input type="checkbox" id="checkbox" />
 			<label for="checkbox">
 				<i class="fa fa-toggle-right"></i>
 			</label>
 			<ul>
 				<li>
-
 					<img src="{{ user.real_avatar }}" >
 					<span>{{ user.username }}</span>
-
 				</li>
 				<li>
 					<a href="{{url_for('.administrator')}}">
@@ -94,11 +92,7 @@
 	 <script>
 		 var chart_map = echarts.init(
 				 document.getElementById('map'), 'white', {renderer: 'canvas'});
-		 var option_map = {
-		 {
-			 Map_options | safe
-		 }
-		 }
+		 var option_map = {{ Map_options | safe }}
 		 ;
 		 chart_map.setOption(option_map);
 	 </script>
