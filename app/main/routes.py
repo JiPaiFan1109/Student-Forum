@@ -155,6 +155,15 @@ def announcement():
                            Bar3D_options=getBar3D())
 
 
+@main.route('/administrator', methods=['Get','Post'])
+@login_required
+def administrator():
+    return render_template('administrator.html', Bar3D_options = getBar3D())
+
+
+
+
+
 @main.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
     user = User.query.filter_by(username=username).first()
@@ -191,6 +200,7 @@ def edit_profile():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.birthday = form.birthday.data
+        current_user.birthplace = form.birthplace.data
         current_user.name = form.name.data
         current_user.about_me = form.about_me.data
         current_user.institute = form.institute.data
