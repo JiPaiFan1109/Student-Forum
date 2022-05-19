@@ -30,13 +30,12 @@
         <link rel="shortcut icon" href="../static/img/logo.jpeg" />
         <link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
 		<link rel="shortcut icon" href="../static/img/logo.jpeg" />
-				<link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
-                <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
-				<link rel="stylesheet" href="../static/css/announcement.css" type="text/css">
-				<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
-				<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-gl.min.js"></script>
-                <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
+		<link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
+		<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+		<link rel="stylesheet" href="../static/css/announcement.css" type="text/css">
+		<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+		<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-gl.min.js"></script>
+		<script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
 	</head>
 	<body>
 	 <div>
@@ -69,21 +68,19 @@
 
 				</li>
 				<li>
-					<a href="#top">
+					<a href="{{url_for('.administrator')}}">
 						<i class="fa fa-id-card-o" aria-hidden="true"></i>
 						<span>Category Bar3D</span>
 					</a>
 				</li>
-
 				<li>
 					<a href="{{url_for('.administrator1')}}">
 						<i class="fa fa-sun-o" aria-hidden="true"></i>
 						<span>Heat and PostAmount</span>
 					</a>
 				</li>
-
 				<li>
-					<a href="{{url_for('.administrator1')}}">
+					<a href="#top">
 						<i class="fa fa-map-marker" aria-hidden="true"></i>
 						<span>Birthplace Distribution</span>
 					</a>
@@ -91,17 +88,20 @@
 			</ul>
 		</div>
 
-<div id="bar3D" class="chart-container" style="left:300px;width:900px; height:500px;"></div>
+	 <div id="map" className="chart-container" style="left:300px;width:900px; height:500px;"></div>
 
 
-
-
- <script>
-        var chart_bar3D = echarts.init(
-            document.getElementById('bar3D'), 'white', {renderer: 'canvas'});
-        var option_bar3D = {{ Bar3D_options | safe }};
-        chart_bar3D.setOption(option_bar3D);
-    </script>
+	 <script>
+		 var chart_map = echarts.init(
+				 document.getElementById('map'), 'white', {renderer: 'canvas'});
+		 var option_map = {
+		 {
+			 Map_options | safe
+		 }
+		 }
+		 ;
+		 chart_map.setOption(option_map);
+	 </script>
 
 
 	</body>
