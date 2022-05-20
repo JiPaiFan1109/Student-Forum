@@ -156,82 +156,21 @@ def announcement():
 @main.route('/administrator', methods=['Get','Post'])
 @login_required
 def administrator():
-    form = EditProfileForm()
-
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.birthday = form.birthday.data
-        current_user.name = form.name.data
-        current_user.about_me = form.about_me.data
-        current_user.institute = form.institute.data
-        db.session.add(current_user._get_current_object())
-        db.session.commit()
-        flash('Your profile has been updated')
-        return redirect(url_for('main.edit_profile', username=current_user.username))
-
-    form.username.data = current_user.username
-    form.birthday.data = current_user.birthday
-    form.name.data = current_user.name
-    form.about_me.data = current_user.about_me
-    form.institute.data = current_user.institute
     username = current_user.username
-    form = AnnouncementForm()
-    if form.validate_on_submit():
-        ann = Announcement(title=form.title.data,
-                           body=form.body.data,
-                           moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                           # author=current_user._get_current_object()
-                           )
-        db.session.add(ann)
-        return redirect(url_for('.announcement'))
-    page = request.args.get('page', 1, type=int)
-    pagination = Announcement.query.order_by(Announcement.timestamp.desc()).paginate(
-        page, per_page=current_app.config['FLASK_ANNOUNCEMENT_PER_PAGE'],
-        error_out=False)
-    announcements = pagination.items
-    return render_template('administrator.html',form=form, announcements=announcements,
-                           pagination=pagination, Bar3D_options = getBar3D(),username=username, user=current_user)
+    return render_template('administrator.html', Bar3D_options = getBar3D(),username=username, user=current_user)
 
 
 @main.route('/administrator2', methods=['Get', 'Post'])
 @login_required
 def administrator2():
-    form = EditProfileForm()
-
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.birthday = form.birthday.data
-        current_user.name = form.name.data
-        current_user.about_me = form.about_me.data
-        current_user.institute = form.institute.data
-        db.session.add(current_user._get_current_object())
-        db.session.commit()
-        flash('Your profile has been updated')
-        return redirect(url_for('main.edit_profile', username=current_user.username))
-
-    form.username.data = current_user.username
-    form.birthday.data = current_user.birthday
-    form.name.data = current_user.name
-    form.about_me.data = current_user.about_me
-    form.institute.data = current_user.institute
     username = current_user.username
-    form = AnnouncementForm()
-    if form.validate_on_submit():
-        ann = Announcement(title=form.title.data,
-                           body=form.body.data,
-                           moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                           # author=current_user._get_current_object()
-                           )
-        db.session.add(ann)
-        return redirect(url_for('.announcement'))
-    page = request.args.get('page', 1, type=int)
-    pagination = Announcement.query.order_by(Announcement.timestamp.desc()).paginate(
-        page, per_page=current_app.config['FLASK_ANNOUNCEMENT_PER_PAGE'],
-        error_out=False)
-    announcements = pagination.items
-    return render_template('administrator2.html', form=form, announcements=announcements,
-                           pagination=pagination, Map_options=getMap(), username=username, user=current_user)
+    return render_template('administrator2.html', Map_options = getMap(), username=username, user=current_user)
 
+@main.route('/administrator3', method=['Get', 'Post'])
+@login_required
+def administrator3():
+    username = current_user.username
+    return render_template('administrator3.html', usrname = username, user = current_user)
 
 @main.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
