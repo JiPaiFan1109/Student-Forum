@@ -166,11 +166,11 @@ def administrator2():
     username = current_user.username
     return render_template('administrator2.html', Map_options = getMap(), username=username, user=current_user)
 
-@main.route('/administrator3', method=['Get', 'Post'])
+@main.route('/administrator3', methods=['Get', 'Post'])
 @login_required
 def administrator3():
     username = current_user.username
-    return render_template('administrator3.html', usrname = username, user = current_user)
+    return render_template('administrator3.html', Bar_options = getBar(), username = username, user = current_user)
 
 @main.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
