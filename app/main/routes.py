@@ -123,7 +123,6 @@ def index():
             page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
             error_out=False)
     posts = pagination.items
-
     return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
