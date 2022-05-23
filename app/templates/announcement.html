@@ -7,7 +7,7 @@
 				<link rel="stylesheet" href="../static/css/announcement.css" type="text/css">
 				<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
 				<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-gl.min.js"></script>
-
+                <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
 
 				 <div>
         {% include 'base.html' %}
@@ -68,15 +68,7 @@
 
 </form>
 
-	  <div id="bar3D" class="chart-container" style="width:900px; height:500px;"></div>
 	  {% endif %}
 
 
-
- <script>
-        var chart_bar3D = echarts.init(
-            document.getElementById('bar3D'), 'white', {renderer: 'canvas'});
-        var option_bar3D = {{ Bar3D_options | safe }};
-        chart_bar3D.setOption(option_bar3D);
-    </script>
 

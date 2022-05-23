@@ -86,19 +86,16 @@
 			</ul>
 		</div>
 
-<div id="bar3D" className="chart-container" style="left:350px;width:990px; height:570px;"></div>
+	 <div id="bar" className="chart-container" style="left:350px;width:990px; height:570px;"></div>
 
 
+	 <script>
+		 var chart_Bar = echarts.init(
+				 document.getElementById('bar'), 'white', {renderer: 'canvas'});
+		 var option_Bar = {{ Bar_options | safe }};
 
-
- <script>
-        var chart_bar3D = echarts.init(
-            document.getElementById('bar3D'), 'white', {renderer: 'canvas'});
-
-        var option_bar3D =  {{ Bar3D_options | safe }};
-
-        chart_bar3D.setOption(option_bar3D);
-    </script>
+		 chart_Bar.setOption(option_Bar);
+	 </script>
 
 
 	</body>

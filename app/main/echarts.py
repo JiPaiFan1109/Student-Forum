@@ -1,5 +1,5 @@
 from pyecharts import options as opts
-from pyecharts.charts import WordCloud, Liquid, Bar3D
+from pyecharts.charts import WordCloud, Liquid, Bar, Bar3D, Map
 from pyecharts.commons.utils import JsCode
 from pyecharts.globals import SymbolType
 from flask.json import jsonify
@@ -128,6 +128,36 @@ def getLiquidBall():
     return liquidball.dump_options_with_quotes()
 
 
+#2D柱状图
+def bar_base() -> Bar:
+    bar = (
+    Bar(
+        init_opts=opts.InitOpts(
+            animation_opts=opts.AnimationOpts(
+                animation_delay=1000, animation_easing="elasticOut"
+            )
+        )
+    )
+    .add_xaxis(getAllCategories())
+    .add_yaxis("Heat", getCategoryHeat(), gap="0%")
+    .add_yaxis("PostAmount", getCategoryAmount(), gap="0%")
+    .set_global_opts(title_opts=opts.TitleOpts(title="Heat and PostAmount"),
+                     toolbox_opts=opts.ToolboxOpts(),
+                     datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")],
+                     brush_opts=opts.BrushOpts(),
+                     xaxis_opts=opts.AxisOpts(name = "Category", axislabel_opts=opts.LabelOpts(rotate = -15, interval = 0)),
+                     yaxis_opts=opts.AxisOpts(),
+                     )
+    .set_series_opts()
+)
+    return bar
+
+@main.route("/Bar")
+def getBar():
+    bar = bar_base()
+    return bar.dump_options_with_quotes()
+
+
 #3D柱形图
 def getAllCategories():
     all_categories = []
@@ -188,3 +218,32 @@ def bar3D_base() -> Bar3D:
 def getBar3D():
     bar3D = bar3D_base()
     return bar3D.dump_options_with_quotes()
+
+
+#全国出生地
+def getMapDataPair():
+    provinces = ['北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江',
+                '上海', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北',
+                '湖南', '广东', '广西', '海南', '重庆', '四川', '贵州', '云南', '西藏',
+                '陕西', '甘肃', '青海', '宁夏', '新疆', '香港', '台湾', '澳门', '南海诸岛']
+    amount = []
+    for i in provinces:
+        amount.append(User.query.filter_by(institute=i).count())
+    MapDataPair = [list(z) for z in zip(provinces, amount)]
+    return MapDataPair
+
+def map_base() -> Map:
+    map = (
+        Map()
+            .add("PeopleAmount", data_pair=getMapDataPair(), maptype = "china")
+            .set_global_opts(
+            title_opts=opts.TitleOpts(title="BirthPlace Distribution"),
+            visualmap_opts=opts.VisualMapOpts(is_show=True),
+            )
+        )
+    return map
+
+@main.route("/Map")
+def getMap():
+    map = map_base()
+    return map.dump_options_with_quotes()

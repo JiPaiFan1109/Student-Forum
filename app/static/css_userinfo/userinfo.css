@@ -62,6 +62,8 @@ div.c1{
 	padding: 10px;
 }
 .sidebar ul li:first-child img {
+	background-image: url("../img/logo.jpeg");
+
 	width: 80px;
 	border-radius: 50%;
 }
@@ -77,7 +79,7 @@ div.c1{
 	height: 100%;
 	color: #d2d2d2;
 	text-decoration: none;
-	border-left: 6px solid transparent;
+	border-left: 8px solid transparent;
 }
 .sidebar ul li a i {
 	font-size: 20px;
@@ -88,7 +90,7 @@ div.c1{
 }
 .sidebar ul li a:hover {
 	color: #fff;
-	border-left-color:#1f6377;
+	border-left-color: #2382DA;
 }
 .sidebar input:checked + label {
 	left: 0;

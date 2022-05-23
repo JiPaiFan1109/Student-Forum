@@ -58,7 +58,6 @@ def lindex():
     posts = pagination.items
     return render_template('lindex.html', lform=lform, sform=sform, lposts=posts,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options=getWordCloud(), Ball_options=getLiquidBall(),
                            )
 
 
@@ -126,8 +125,7 @@ def index():
     return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
-                           Cloud_options=getWordCloud(), KeyWordCloud_options=getKeyWordCloud(),
-                           Ball_options=getLiquidBall(),
+                           Cloud_options=getWordCloud(), KeyWordCloud_options=getKeyWordCloud(), Ball_options=getLiquidBall(),
                            cloudKeys=cloudKeys
                            )
 
@@ -151,8 +149,27 @@ def announcement():
     announcements = pagination.items
     return render_template('announcement.html', form=form, announcements=announcements,
                            pagination=pagination,
-                           Bar3D_options=getBar3D())
+                           Map_options=getMap())
 
+
+@main.route('/administrator', methods=['Get','Post'])
+@login_required
+def administrator():
+    username = current_user.username
+    return render_template('administrator.html', Bar3D_options = getBar3D(),username=username, user=current_user)
+
+
+@main.route('/administrator2', methods=['Get', 'Post'])
+@login_required
+def administrator2():
+    username = current_user.username
+    return render_template('administrator2.html', Map_options = getMap(), username=username, user=current_user)
+
+@main.route('/administrator3', methods=['Get', 'Post'])
+@login_required
+def administrator3():
+    username = current_user.username
+    return render_template('administrator3.html', Bar_options = getBar(), username = username, user = current_user)
 
 @main.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
