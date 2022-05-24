@@ -55,12 +55,13 @@
 			</label>
 			<ul>
 				<li>
-					<img src="{{ user.real_avatar }}" >
+
+					<img src="../static/img/logo.jpeg" alt="" />
 					<span>{{ user.username }}</span>
 
 				</li>
 				<li>
-					<a href="#top">
+					<a href="{{url_for('auth.register')}}">
 						<i class="fa fa-id-card-o" aria-hidden="true"></i>
 						<span>Profile</span>
 					</a>
@@ -84,14 +85,31 @@
 					</a>
 				</li>
 				<li>
-					<a href="{{url_for('.ucomments', username=form.username.data ) }}">
+					<a href="{{url_for('auth.register')}}">
 						<i class="fa fa-reply" aria-hidden="true"></i>
 						<span>My Reply</span>
 					</a>
 				</li>
-
+				<li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-cogs" aria-hidden="true"></i>
+						<span>User Setting</span>
+					</a>
+				</li>
                 <li>
-					<a href="{{url_for('auth.logout')}}">
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-comments-o" aria-hidden="true"></i>
+						<span>Chat</span>
+					</a>
+				</li>
+                <li>
+					<a href="{{url_for('auth.register')}}">
+						<i class="fa fa-envelope-o" aria-hidden="true"></i>
+						<span>Email</span>
+					</a>
+				</li>
+                <li>
+					<a href="{{url_for('auth.register')}}">
 						<i class="fa fa-sign-out" aria-hidden="true"></i>
 						<span>Sign out</span>
 					</a>
@@ -120,9 +138,9 @@
 	 <!-- templates/user.html -->
 {% if user == current_user or current_user.is_administrator() %}
 
-    <img class="avatar" src="{{ user.real_avatar }}" >
+    <img class="avatar profile-thumbnail" src="{{ user.real_avatar }}" >
 <!--如下是初始背景图-->
-	 <img class="avatar" src="../static/img/one.jpeg" style="z-index: -10000" >
+	 <img class="avatar profile-thumbnail" src="../static/img/one.jpeg" style="z-index: -10000" >
 
     {% endif %}
     </a>
@@ -133,8 +151,8 @@
 			{{ form.csrf_token }}
 
     <p>
-        <i class="fa fa-user-secret" style=" font-size: 18px"></i>
-        <span style="font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 18px">Username</span><br>
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+		<span>User Name</span><br>
 <!--		{{form.username.label}}<br>-->
         {{form.username(style="
         width: 100%;
@@ -157,8 +175,7 @@
     </p>
 
     <p>
-		<i class="fa fa-id-badge" style=" font-size: 18px"></i>
-        <span style="font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 18px">Real Name</span><br>
+        {{form.name.label}}<br>
         {{form.name(style="
         width: 100%;
 		height:40px;
@@ -177,10 +194,10 @@
         padding: 5px 20px 5px 40px;
         ")}}
     </p>
-	<p>
-        <i class="fa fa-home" style=" font-size: 18px"></i>
-		<span style="font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 18px">Birthplace</span><br>
-		{{form.institute(style="
+
+			<p>
+        {{form.institute.label}}<br>
+        {{form.institute(style="
         width: 100%;
 		height:40px;
         width:460px;
@@ -199,8 +216,7 @@
         ")}}
     </p>
     <p>
-        <i class="fa fa-birthday-cake" aria-hidden="true" style=" font-size: 18px"></i>
-		<span style="font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 18px">Birthday</span><br>
+        {{form.birthday.label}}<br>
         {{form.birthday(style="
         width: 100%;
 		height:40px;
@@ -219,10 +235,8 @@
         padding: 5px 20px 5px 40px;
         ")}}
     </p>
-
     <p>
-        <i class="fa fa-pencil" aria-hidden="true" style=" font-size: 18px"></i>
-		<span style="font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif; font-size: 18px">About me</span><br>
+        {{form.about_me.label}}<br>
         {{form.about_me(style="
         width: 100%;
 		height:260px;

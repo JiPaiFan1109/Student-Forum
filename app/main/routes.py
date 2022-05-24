@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect, url_for, session, abort, req
 from flask_login import login_required, current_user
 from . import main
 from .forms import EditProfileForm, PostForm, AnnouncementForm, \
-    CommentForm, SearchForm, ChangeAvatarForm, ReplyForm, LostAndFoundForm
+    CommentForm, SearchForm, ChangeAvatarForm, ReplyForm, LostAndFoundForm, LikePostForm
 from .. import db
 from ..decorators import permission_required
 from ..models import User, Permission, Post, Comment, Announcement, Category, LAFPost
@@ -94,6 +94,7 @@ def index():
         db.session.add(post)
         return redirect(url_for('.index'))
     sform = SearchForm()
+    lform = LikePostForm()
     if sform.validate_on_submit():
         content = sform.text.data
     page = request.args.get('page', 1, type=int)
@@ -110,19 +111,72 @@ def index():
     category_id = request.args.get('category_id', type=int, default=None)
 
     pagination = query.filter(
-        Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%') +
-        Post.keyA.like('%' + content + '%') + Post.keyB.like('%' + content + '%') + Post.keyC.like(
-            '%' + content + '%') +
-        Post.keyD.like('%' + content + '%') + Post.keyE.like('%' + content + '%')).order_by(
-        Post.timestamp.desc()).paginate(
+        Post.title.like('%' + content + '%') +
+        Post.categories.like('%' + content + '%') +
+        Post.keyA.like('%' + content + '%') +
+        Post.keyB.like('%' + content + '%') +
+        Post.keyC.like('%' + content + '%') +
+        Post.keyD.like('%' + content + '%') +
+        Post.keyE.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
+    if lform.validate_on_submit():
+        userKey = []
+        keyPosts = current_user.posts.order_by(Post.timestamp.desc())
+        for i in keyPosts:
+            userKey.append(i.keyA)
+            userKey.append(i.keyB)
+            userKey.append(i.keyC)
+            userKey.append(i.keyD)
+            userKey.append(i.keyE)
+        word_counts = Counter(userKey)
+        uK = word_counts.most_common(5)
+        userKeys = []
+        for i in uK:
+            userKeys.append(i[0])
+        pagination = query.filter(
+            Post.title.like('%' + userKeys[0] + '%') +
+            Post.categories.like('%' + userKeys[0] + '%') +
+            Post.keyA.like('%' + userKeys[0] + '%') +
+            Post.keyB.like('%' + userKeys[0] + '%') +
+            Post.keyC.like('%' + userKeys[0] + '%') +
+            Post.keyD.like('%' + userKeys[0] + '%') +
+            Post.keyE.like('%' + userKeys[0] + '%') +
+            Post.title.like('%' + userKeys[0] + '%') +
+            Post.categories.like('%' + userKeys[1] + '%') +
+            Post.keyA.like('%' + userKeys[1] + '%') +
+            Post.keyB.like('%' + userKeys[1] + '%') +
+            Post.keyC.like('%' + userKeys[1] + '%') +
+            Post.keyD.like('%' + userKeys[1] + '%') +
+            Post.keyE.like('%' + userKeys[1] + '%') +
+            Post.title.like('%' + userKeys[1] + '%') +
+            Post.categories.like('%' + userKeys[2] + '%') +
+            Post.keyA.like('%' + userKeys[2] + '%') +
+            Post.keyB.like('%' + userKeys[2] + '%') +
+            Post.keyC.like('%' + userKeys[2] + '%') +
+            Post.keyD.like('%' + userKeys[2] + '%') +
+            Post.keyE.like('%' + userKeys[2] + '%') +
+            Post.title.like('%' + userKeys[2] + '%') +
+            Post.categories.like('%' + userKeys[3] + '%') +
+            Post.keyA.like('%' + userKeys[3] + '%') +
+            Post.keyB.like('%' + userKeys[3] + '%') +
+            Post.keyC.like('%' + userKeys[3] + '%') +
+            Post.keyD.like('%' + userKeys[3] + '%') +
+            Post.keyE.like('%' + userKeys[3] + '%') +
+            Post.title.like('%' + userKeys[3] + '%') +
+            Post.categories.like('%' + userKeys[4] + '%') +
+            Post.keyA.like('%' + userKeys[4] + '%') +
+            Post.keyB.like('%' + userKeys[4] + '%') +
+            Post.keyC.like('%' + userKeys[4] + '%') +
+            Post.keyD.like('%' + userKeys[4] + '%') +
+            Post.keyE.like('%' + userKeys[4] + '%')).order_by(Post.timestamp.desc()).paginate(
+            page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+            error_out=False)
     if category_id:
         pagination = query.filter(Post.category_id == category_id).order_by(Post.timestamp.desc()).paginate(
             page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
             error_out=False)
     posts = pagination.items
-
     return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
@@ -177,13 +231,26 @@ def user(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
         abort(404)
+    userKey = []
+    keyPosts = user.posts.order_by(Post.timestamp.desc())
+    for i in keyPosts:
+        userKey.append(i.keyA)
+        userKey.append(i.keyB)
+        userKey.append(i.keyC)
+        userKey.append(i.keyD)
+        userKey.append(i.keyE)
+    word_counts = Counter(userKey)
+    uK = word_counts.most_common(10)
+    userKeys = []
+    for i in uK:
+        userKeys.append(i[0])
     page = request.args.get('page', 1, type=int)
     pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
     return render_template('user.html', user=user, posts=posts,
-                           pagination=pagination)
+                           pagination=pagination, userKeys=userKeys)
 
 
 @main.route('/ucomments/<username>', methods=['GET', 'POST'])
