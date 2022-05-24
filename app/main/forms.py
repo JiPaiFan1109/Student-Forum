@@ -35,6 +35,10 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 
+class LikePostForm(FlaskForm):
+    submit = SubmitField('Might Like')
+
+
 class PostForm(FlaskForm):
     category_id = TextAreaField('Choose one category above', validators=[DataRequired()])
     title = TextAreaField('Change your title here:', validators=[DataRequired()])
