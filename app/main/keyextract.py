@@ -1,4 +1,3 @@
-# 采用TF-IDF方法提取文本关键词
 import sys,codecs
 import pandas as pd
 import numpy as np
@@ -10,21 +9,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from app.models import Post
 
-"""
-       TF-IDF权重：
-           1、CountVectorizer 构建词频矩阵
-           2、TfidfTransformer 构建tfidf权值计算
-           3、文本的关键字
-           4、对应的tfidf矩阵
-"""
-
-
 def dataPrepos(text, stopkey):
     l = []
-    pos = ['n', 'nz', 'v', 'vd', 'vn', 'l', 'a', 'd']  # 定义选取的词性
-    seg = jieba.posseg.cut(text)  # 分词
+    pos = ['n', 'nz', 'v', 'vd', 'vn', 'l', 'a', 'd']
+    seg = jieba.posseg.cut(text)
     for i in seg:
-        if i.word not in stopkey and i.flag in pos:  # 去停用词 + 词性筛选
+        if i.word not in stopkey and i.flag in pos:
             l.append(i.word)
     return l
 
