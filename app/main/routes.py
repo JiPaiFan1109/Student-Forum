@@ -134,6 +134,19 @@ def index():
         userKeys = []
         for i in uK:
             userKeys.append(i[0])
+        followKey = [];
+        keyFollowers = current_user.followers;
+        for i in keyFollowers:
+            followKey.append(i.keyA)
+            followKey.append(i.keyB)
+            followKey.append(i.keyC)
+            followKey.append(i.keyD)
+            followKey.append(i.keyE)
+        word_counts = Counter(followKey)
+        fK = word_counts.most_common(5)
+        followKeys = []
+        for i in fK:
+            followKeys.append(i[0])
         pagination = query.filter(
             Post.title.like('%' + userKeys[0] + '%') +
             Post.categories.like('%' + userKeys[0] + '%') +
@@ -169,7 +182,42 @@ def index():
             Post.keyB.like('%' + userKeys[4] + '%') +
             Post.keyC.like('%' + userKeys[4] + '%') +
             Post.keyD.like('%' + userKeys[4] + '%') +
-            Post.keyE.like('%' + userKeys[4] + '%')).order_by(Post.timestamp.desc()).paginate(
+            Post.keyE.like('%' + userKeys[4] + '%') +
+            Post.title.like('%' + userKeys[0] + '%') +
+            Post.categories.like('%' + userKeys[0] + '%') +
+            Post.keyA.like('%' + followKeys[0] + '%') +
+            Post.keyB.like('%' + followKeys[0] + '%') +
+            Post.keyC.like('%' + followKeys[0] + '%') +
+            Post.keyD.like('%' + followKeys[0] + '%') +
+            Post.keyE.like('%' + followKeys[0] + '%') +
+            Post.title.like('%' + followKeys[0] + '%') +
+            Post.categories.like('%' + followKeys[1] + '%') +
+            Post.keyA.like('%' + followKeys[1] + '%') +
+            Post.keyB.like('%' + followKeys[1] + '%') +
+            Post.keyC.like('%' + followKeys[1] + '%') +
+            Post.keyD.like('%' + followKeys[1] + '%') +
+            Post.keyE.like('%' + followKeys[1] + '%') +
+            Post.title.like('%' + followKeys[1] + '%') +
+            Post.categories.like('%' + followKeys[2] + '%') +
+            Post.keyA.like('%' + followKeys[2] + '%') +
+            Post.keyB.like('%' + followKeys[2] + '%') +
+            Post.keyC.like('%' + followKeys[2] + '%') +
+            Post.keyD.like('%' + followKeys[2] + '%') +
+            Post.keyE.like('%' + followKeys[2] + '%') +
+            Post.title.like('%' + followKeys[2] + '%') +
+            Post.categories.like('%' + followKeys[3] + '%') +
+            Post.keyA.like('%' + followKeys[3] + '%') +
+            Post.keyB.like('%' + followKeys[3] + '%') +
+            Post.keyC.like('%' + followKeys[3] + '%') +
+            Post.keyD.like('%' + followKeys[3] + '%') +
+            Post.keyE.like('%' + followKeys[3] + '%') +
+            Post.title.like('%' + followKeys[3] + '%') +
+            Post.categories.like('%' + followKeys[4] + '%') +
+            Post.keyA.like('%' + followKeys[4] + '%') +
+            Post.keyB.like('%' + followKeys[4] + '%') +
+            Post.keyC.like('%' + followKeys[4] + '%') +
+            Post.keyD.like('%' + followKeys[4] + '%') +
+            Post.keyE.like('%' + followKeys[4] + '%')).order_by(Post.timestamp.desc()).paginate(
             page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
             error_out=False)
     if category_id:
