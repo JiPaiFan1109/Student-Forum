@@ -94,7 +94,7 @@ def index():
         db.session.add(post)
         return redirect(url_for('.index'))
     sform = SearchForm()
-    lform = LikePostForm()
+    liform = LikePostForm()
     if sform.validate_on_submit():
         content = sform.text.data
     page = request.args.get('page', 1, type=int)
@@ -120,7 +120,7 @@ def index():
         Post.keyE.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
-    if lform.validate_on_submit():
+    if liform.validate_on_submit():
         userKey = []
         keyPosts = current_user.posts.order_by(Post.timestamp.desc())
         for i in keyPosts:
@@ -134,6 +134,19 @@ def index():
         userKeys = []
         for i in uK:
             userKeys.append(i[0])
+        followKey = [];
+        keyFollowers = current_user.followers;
+        for i in keyFollowers:
+            followKey.append(i.keyA)
+            followKey.append(i.keyB)
+            followKey.append(i.keyC)
+            followKey.append(i.keyD)
+            followKey.append(i.keyE)
+        word_counts = Counter(followKey)
+        fK = word_counts.most_common(5)
+        followKeys = []
+        for i in fK:
+            followKeys.append(i[0])
         pagination = query.filter(
             Post.title.like('%' + userKeys[0] + '%') +
             Post.categories.like('%' + userKeys[0] + '%') +
@@ -169,7 +182,42 @@ def index():
             Post.keyB.like('%' + userKeys[4] + '%') +
             Post.keyC.like('%' + userKeys[4] + '%') +
             Post.keyD.like('%' + userKeys[4] + '%') +
-            Post.keyE.like('%' + userKeys[4] + '%')).order_by(Post.timestamp.desc()).paginate(
+            Post.keyE.like('%' + userKeys[4] + '%') +
+            Post.title.like('%' + userKeys[0] + '%') +
+            Post.categories.like('%' + userKeys[0] + '%') +
+            Post.keyA.like('%' + followKeys[0] + '%') +
+            Post.keyB.like('%' + followKeys[0] + '%') +
+            Post.keyC.like('%' + followKeys[0] + '%') +
+            Post.keyD.like('%' + followKeys[0] + '%') +
+            Post.keyE.like('%' + followKeys[0] + '%') +
+            Post.title.like('%' + followKeys[0] + '%') +
+            Post.categories.like('%' + followKeys[1] + '%') +
+            Post.keyA.like('%' + followKeys[1] + '%') +
+            Post.keyB.like('%' + followKeys[1] + '%') +
+            Post.keyC.like('%' + followKeys[1] + '%') +
+            Post.keyD.like('%' + followKeys[1] + '%') +
+            Post.keyE.like('%' + followKeys[1] + '%') +
+            Post.title.like('%' + followKeys[1] + '%') +
+            Post.categories.like('%' + followKeys[2] + '%') +
+            Post.keyA.like('%' + followKeys[2] + '%') +
+            Post.keyB.like('%' + followKeys[2] + '%') +
+            Post.keyC.like('%' + followKeys[2] + '%') +
+            Post.keyD.like('%' + followKeys[2] + '%') +
+            Post.keyE.like('%' + followKeys[2] + '%') +
+            Post.title.like('%' + followKeys[2] + '%') +
+            Post.categories.like('%' + followKeys[3] + '%') +
+            Post.keyA.like('%' + followKeys[3] + '%') +
+            Post.keyB.like('%' + followKeys[3] + '%') +
+            Post.keyC.like('%' + followKeys[3] + '%') +
+            Post.keyD.like('%' + followKeys[3] + '%') +
+            Post.keyE.like('%' + followKeys[3] + '%') +
+            Post.title.like('%' + followKeys[3] + '%') +
+            Post.categories.like('%' + followKeys[4] + '%') +
+            Post.keyA.like('%' + followKeys[4] + '%') +
+            Post.keyB.like('%' + followKeys[4] + '%') +
+            Post.keyC.like('%' + followKeys[4] + '%') +
+            Post.keyD.like('%' + followKeys[4] + '%') +
+            Post.keyE.like('%' + followKeys[4] + '%')).order_by(Post.timestamp.desc()).paginate(
             page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
             error_out=False)
     if category_id:
@@ -177,7 +225,7 @@ def index():
             page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
             error_out=False)
     posts = pagination.items
-    return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
+    return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories, liform=liform,
                            catgory_id=category_id,
                            pagination=pagination, show_followed=show_followed,
                            Cloud_options=getWordCloud(), KeyWordCloud_options=getKeyWordCloud(), Ball_options=getLiquidBall(),
