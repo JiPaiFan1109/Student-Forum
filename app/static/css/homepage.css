@@ -255,5 +255,15 @@ select.selectPosition{
   border: none;
   width: 130px;
   color: #046ee1;
+}
 
+form.newForm{
+  position: absolute;
+  left: 660px;
+  margin-top: 47px;
+}
+
+input.btn.btn-default.new{
+  outline: none;
+  color: #2080af;
 }

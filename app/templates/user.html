@@ -42,6 +42,12 @@
 
 <div class="username">
         <span class="name">{{ user.username }}</span>
+	<span class="userKey">
+		<span class="userName">User KeyWords:</span>
+		{% for userKey in userKeys %}
+		{{userKey}}
+		{% endfor %}
+	</span>
 		<div class="foll">
             {% if current_user.can(Permission.FOLLOW) and user != current_user %}
                 {% if not current_user.is_following(user) %}
