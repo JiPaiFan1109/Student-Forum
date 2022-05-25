@@ -83,6 +83,12 @@
                     {% endif %}
                 {% endfor %}
  </select>
+<!--        <input class="su" name="submit" type="submit" value="Might Like">-->
+        <form action="" method="post" class="newForm" role="liform">
+            {{ form.csrf_token }}
+            <input class="btn btn-default new" name="submit" type="submit" value="Show Interests">
+        </form>
+
     <div id="liquid" class="chart-container" style="float:right; width:400px; height:400px;"></div>
 
 
