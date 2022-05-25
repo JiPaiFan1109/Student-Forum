@@ -240,7 +240,7 @@ def user(username):
         userKey.append(i.keyD)
         userKey.append(i.keyE)
     word_counts = Counter(userKey)
-    uK = word_counts.most_common(10)
+    uK = word_counts.most_common(5)
     userKeys = []
     for i in uK:
         userKeys.append(i[0])
