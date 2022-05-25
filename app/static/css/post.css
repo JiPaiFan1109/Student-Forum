@@ -4,6 +4,7 @@ body.color {
 
 }
 
+
 div.boxOne{
     position: absolute;
     width: 100%;
@@ -290,16 +291,4 @@ span.less{
     top: 2px;
     font-size: 17px;
     font-family: 'chineseThree', sans-serif;
-}
-
-span.userKey{
-    position: relative;
-    left: 640px;
-    top: 20px;
-    font-family: 'chineseThree', sans-serif;
-    font-size: 20px;
-}
-
-span.userKey.name{
-
 }
