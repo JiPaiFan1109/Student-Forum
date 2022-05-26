@@ -135,8 +135,15 @@ def index():
         for i in uK:
             userKeys.append(i[0])
         followKey = [];
-        keyFollowers = current_user.followers;
-        for i in keyFollowers:
+        paginatio = current_user.followers.paginate(
+            page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
+            error_out=False)
+        follows = [item.follower
+                   for item in paginatio.items]
+        print(follows, 'type is', type(follows))
+        print(follows[0], 'type is', type(follows[0]))
+        for i in follows:
+            print(i, 'type is', type(i))
             followKey.append(i.keyA)
             followKey.append(i.keyB)
             followKey.append(i.keyC)
@@ -292,6 +299,11 @@ def user(username):
     userKeys = []
     for i in uK:
         userKeys.append(i[0])
+    user.keyA = userKeys[0]
+    user.keyB = userKeys[1]
+    user.keyC = userKeys[2]
+    user.keyD = userKeys[3]
+    user.keyE = userKeys[4]
     page = request.args.get('page', 1, type=int)
     pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],

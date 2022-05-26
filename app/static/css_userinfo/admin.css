@@ -1,21 +1,18 @@
-/* 观看此视频之前可以看一下上个视频简介 接上个视频发的哈 */
 * {
-	/* 初始化 清除元素的内外边距 */
 	padding: 0;
 	margin: 0;
-	/* 盒子模型 */
 	box-sizing: border-box;
 }
 body {
-	/* 宽度占浏览器可视区域的宽度 */
 	width: 100vm;
 	background-color: #f2f2f2;
 }
 .navbar {
 	/* 相对定位 */
 	position: relative;
-	width: 100%;
+	width: 100px;
 	height: 50px;
+
 }
 .navbar input {
 	/* 隐藏元素 */
