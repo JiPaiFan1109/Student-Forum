@@ -18,6 +18,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
+            current_user.statue = True
             next = request.args.get('next')
             if next is None or not next.startswith('/'):
                 next = url_for('main.index')
@@ -29,6 +30,7 @@ def login():
 @auth.route('/logout')
 @login_required
 def logout():
+    current_user.statue = False
     logout_user()
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
@@ -53,7 +55,6 @@ def register():
         else:
             flash('You can now check your email')
         # flash('Register successfully')   #判断邮件是否成功发送
-
         return redirect(url_for('auth.login'))
         # return redirect(url_for('main.index'))
     return render_template('register.html', form=form, level=check.strength_level)
@@ -68,6 +69,7 @@ def confirm(token):
         db.session.commit()
     else:
         flash('这个确认链接不可用，或已超时')
+    current_user.statue = True
     return redirect(url_for('main.index'))
 
 

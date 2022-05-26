@@ -2,6 +2,8 @@ from datetime import datetime, timezone, timedelta
 from markdown import markdown
 import bleach
 from flask_login import UserMixin, AnonymousUserMixin
+from sqlalchemy.ext.hybrid import hybrid_property
+
 from . import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -99,7 +101,13 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     confirmed = db.Column(db.Boolean, default=False)
     real_avatar = db.Column(db.String(128), default=None)
+    keyA = db.Column(db.String, default='')
+    keyB = db.Column(db.String, default='')
+    keyC = db.Column(db.String, default='')
+    keyD = db.Column(db.String, default='')
+    keyE = db.Column(db.String, default='')
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    lafposts = db.relationship('LAFPost', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
     followed = db.relationship('Follow',
                                foreign_keys=[Follow.follower_id],
@@ -111,6 +119,7 @@ class User(UserMixin, db.Model):
                                 backref=db.backref('followed', lazy='joined'),
                                 lazy='dynamic',
                                 cascade='all, delete-orphan')
+    statue = db.Column(db.Boolean, default = False)
 
     def __init__(self, **kwargs):
         self.follow(self)
@@ -119,6 +128,10 @@ class User(UserMixin, db.Model):
             if self.email == current_app.config['FLASKY_ADMIN_A']:
                 self.role = Role.query.filter_by(name='Administrator').first()
             if self.email == current_app.config['FLASKY_ADMIN_B']:
+                self.role = Role.query.filter_by(name='Administrator').first()
+            if self.email == current_app.config['FLASKY_ADMIN_C']:
+                self.role = Role.query.filter_by(name='Administrator').first()
+            if self.email == current_app.config['FLASKY_ADMIN_D']:
                 self.role = Role.query.filter_by(name='Administrator').first()
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
@@ -224,6 +237,41 @@ class Post(db.Model):
     read_count = db.Column(db.Integer, default=0)
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
     categories = db.Column(db.String)
+    keyA = db.Column(db.String, default='')
+    keyB = db.Column(db.String, default='')
+    keyC = db.Column(db.String, default='')
+    keyD = db.Column(db.String, default='')
+    keyE = db.Column(db.String, default='')
+
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em',
+                        'i', 'li', 'ol', 'pre', 'strong', 'ul', 'h1',
+                        'h2', 'h3', 'p']
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+class LAFPost(db.Model):
+    __tablename__ = 'lafposts'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    details = db.Column(db.Text)
+    photo = db.Column(db.String(128), default=None)
+    lorf = db.Column(db.String)
+    statue = db.Column(db.Boolean, default=False)
+    location = db.Column(db.String)
+    contact = db.Column(db.String)
+    reward = db.Column(db.String, default='0')
+    body_html = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    moment = db.Column(db.String, index=True, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, default=11)
+    read_count = db.Column(db.Integer, default=0)
+    comments = db.relationship('Comment', backref='lafpost', lazy='dynamic')
+    categories = db.Column(db.String, default='Lost and Found')
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):
@@ -265,6 +313,7 @@ class Category(db.Model):
                             category8, category9, category10, category11, category12, category13, category14])
         db.session.commit()
 
+
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
@@ -277,7 +326,8 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     parent_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
     replies = db.relationship(
-        'Comment', backref=db.backref('parent', remote_side=[id]), lazy='dynamic'
+        'Comment', backref=db.backref('parent', remote_side=[id]), lazy='dynamic'),
+    lafpost_id = db.Column(db.Integer, db.ForeignKey('lafposts.id')
     )
 
     @staticmethod
@@ -297,6 +347,7 @@ class Announcement(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     moment = db.Column(db.String, index=True, default=datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    Read = db.Column(db.Integer, default = 0)
 
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):
@@ -311,3 +362,4 @@ class Announcement(db.Model):
 db.event.listen(Post.body, 'set', Post.on_changed_body)
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)
 db.event.listen(Announcement.body, 'set', Comment.on_changed_body)
+db.event.listen(LAFPost.details, 'set', LAFPost.on_changed_body)

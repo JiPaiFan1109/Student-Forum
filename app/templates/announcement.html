@@ -5,14 +5,15 @@
                 <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
 				<link rel="stylesheet" href="../static/css/announcement.css" type="text/css">
-
-
+				<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+				<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-gl.min.js"></script>
+                <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
 
 				 <div>
         {% include 'base.html' %}
         </div>
 
-  <div class="span8 page-content">
+  <div class="span8 page-content ann">
 
                     <div class="rows">
 						<ul class="announcements">
@@ -42,7 +43,7 @@
 
 
 				         </div>
-
+  </div>
 	  {% if current_user.role_id == 3 %}
 
 <form action="" method="post" class="formOne" role="form">
@@ -54,7 +55,7 @@
                 <br>
 <!--        <input style="border:0;border-bottom:1px solid black;">-->
 
-                    <input class="postThree" name="title" placeholder="Title" required></input>
+                    <input class="postThree line" name="title" placeholder="Title" required></input>
                 <br>
                 <br>
                 <textarea class="announce" id="body" name="body" placeholder="Your Announcement" required></textarea>
@@ -66,6 +67,8 @@
 <p>{{form.submit(class="Submit a")}}</p>
 
 </form>
+
 	  {% endif %}
 
-  </div>
+
+
