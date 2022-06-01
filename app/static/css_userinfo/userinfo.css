@@ -228,6 +228,14 @@ img.avatar{
 	border-radius: 6px;
 }
 
+img.avatar.lAvatar{
+	position: relative;
+	margin-top: -46px;
+	margin-left: 790px;
+	height: 45px;
+	width: 45px;
+}
+
 form.avForm{
 	position: absolute;
 

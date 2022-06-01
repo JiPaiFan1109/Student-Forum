@@ -1,27 +1,23 @@
 {% extends "bootstrap/base.html" %}
-{% block content %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
-<!--<!Doctype html>-->
+{% block content %}
+
+
         <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>BJUT Forum</title>
 
-                <!-- META TAGS -->
-                <meta charset="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-                <title>BJUT Forum</title>
-
-                <link rel="shortcut icon" href="../static/img/logo.jpeg" />
-
-                <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
-                <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-				<link rel="stylesheet" href="../static/css_userinfo/userinfo.css" type="text/css">
-				<link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
-                <script src="/static/js_wordCloud/echarts.min.js"></script>
-                <script type="text/javascript" src="/static/js_wordCloud/jquery.min.js"></script>
-                <script type="text/javascript" src="/static/js_wordCloud/echarts-wordcloud.js"></script>
-
+            <link rel="shortcut icon" href="../static/img/logo.jpeg" />
+            <link rel='stylesheet' id='main-css-css' href='../static/css_b/main_index.css' type='text/css' media='all' />
+            <link rel="stylesheet" href="../static/css/post.css" type="text/css">
+            <link rel="stylesheet" href="../static/css/homepage.css" type="text/css">
+            <script src="/static/js_echarts/echarts.min.js"></script>
+            <script type="text/javascript" src="/static/js_echarts/jquery.min.js"></script>
+            <script type="text/javascript" src="/static/js_echarts/echarts-wordcloud.js"></script>
+            <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-liquidfill.min.js"></script>
+            <script type="text/javascript" src="/static/js_echarts/jquery-2.1.4.min.js"></script>
         </head>
 
         <body>
@@ -77,19 +73,17 @@
 <select onchange="location.href = this.options[this.selectedIndex].value" name="category" style="outline: none" class="selectPosition">
 <!--            <option selected>Category</option>-->
             <option value="none" selected disabled hidden>Category</option>
-            <option value="{{ url_for('.show_all') }}"> Show All </option>
+            <option value="{{ url_for('main.index') }}"> Show All </option>
 
         {% for category in categories %}
-                    <!--         注意这里的current_board_id数据类型是int，才能与board.id相比较           -->
                     {% if category_id != category.id %}
-                        <!--    url_for('front.index', board_id=board.id)每次点击跳转到front_index.html页面，即当前界面，且传输给一个board_id的参数值，由board.id赋值            -->
     <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>
 
-                        <!--  没被选中，即没有被传输相同的board.id，图标样式是class="list-group-item">    -->
 <!--    <option value="{{ url_for('main.index', category_id=category.id, st=current_sort ) }}">{{ category.name }}</option>-->
                     {% endif %}
                 {% endfor %}
  </select>
+    <div id="liquid" class="chart-container" style="float:right; width:400px; height:400px;"></div>
 
 
 	<div class="page-container">
@@ -134,15 +128,29 @@
 											<span class="category">
 												<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>
 											</span>
+                                        <span class="Nless">
+                                            Key words:
+                                        </span>
+                                        <span class="less">
+                                            {{post.keyA}}
+                                            {{post.keyB}}
+                                            {{post.keyC}}
+                                            {{post.keyD}}
+                                            {{post.keyE}}
+                                        </span>
                                         <label class="count">Page View: {{ post.read_count }}</label>
 									</div><!-- end of post meta -->
 								</header>
+                                <div>
+                                    <input type="checkbox" id='exp' style="opacity: 0; position:absolute; left: 657px; top: 107px; width: 83px; height: 38px;z-index: 1000">
 								<div class="post-body">
+                                    <label class="btn" for='exp'></label>
                                      {% if post.body_html %}
                                         {{ post.body_html | safe }}
                                     {% else %}
                                         {{ post.body }}
                                     {% endif %}
+                                </div>
                                 </div>
 							</article>
 
@@ -161,13 +169,18 @@
 										</div>
 								</div>
 						</div>
+
 	</div>
-        <div id="Cloud" style="float:left; width:400px; height:400px;"></div>
-		<form action="" method="post" class="formOne" role="form">
-    {{ form.csrf_token }}
 
 
-			<div class="postOne"><label class="postThree" for="body"><font size="5" >Post whatever you want:</font></label>
+
+        <span id="Cloud" class="chartOne" style="float:left; width:400px; height:500px;"></span>
+		<span id="keyCloud" class="chartTwo"></span>
+
+        <form action="" method="post" class="formOne" role="form">
+            {{ form.csrf_token }}
+
+			<div class="postOne" style="float:none;"><label class="postThree" for="body"><font size="5" >Post whatever you want:</font></label>
                             <br>
                 <br>
 <!--        <input style="border:0;border-bottom:1px solid black;">-->
@@ -186,6 +199,7 @@
                     <option value="11">Lost and Found</option>
                     <option value="12">Second Hand Transactions</option>
                     <option value="13">BJUT</option>
+                    <option value="14">Others</option>
                 </select>
                 <br>
                 <br>
@@ -274,28 +288,29 @@
                 <!-- End of Footer -->
 
 
-<!--					<div class="row" id="footer_one">-->
-<!--                        <div class="col-md-12 text-center">-->
-<!--							<p class="copyright-text"><strong> Copyright © Group 1 Project- BJUT Student Forum</strong> All rights reserved.</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
                 <a href="#top" id="scroll-top"></a>
 
-        <script type="text/javascript">
+    <script>
+        var chart_liquid = echarts.init(
+            document.getElementById('liquid'), 'white', {renderer: 'canvas'});
 
-    // 基于准备好的dom，初始化echarts实例
-    var myChart_Cloud = echarts.init(document.getElementById('Cloud'));
-    // 指定图表的配置项和数据
-    var option_Cloud = {{ Cloud_options | safe }};
+        var option_liquid =  {{ Ball_options | safe }};
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart_Cloud.setOption(option_Cloud);
+        chart_liquid.setOption(option_liquid);
+    </script>
+         <script>
+        var chart_Cloud = echarts.init(
+            document.getElementById('Cloud'), 'white', {renderer: 'canvas'});
+        var option_Cloud = {{ Cloud_options | safe }}
 
-</script>
+        chart_Cloud.setOption(option_Cloud);
+    </script>
+        <script>
+        var chart_keyCloud = echarts.init(
+            document.getElementById('keyCloud'), 'white', {renderer: 'canvas'});
+        var option_keyCloud = {{ KeyWordCloud_options | safe }}
 
-
-
-
+        chart_keyCloud.setOption(option_keyCloud);
+    </script>
         </body>
 {% endblock %}

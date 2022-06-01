@@ -1,68 +1,82 @@
 from datetime import datetime
-
+from collections import Counter
 from flask import render_template, flash, redirect, url_for, session, abort, request, current_app, make_response
 from flask_login import login_required, current_user
-from flask.json import jsonify
 from . import main
 from .forms import EditProfileForm, PostForm, AnnouncementForm, \
-    CommentForm, SearchForm, ChangeAvatarForm
+    CommentForm, SearchForm, ChangeAvatarForm, ReplyForm, LostAndFoundForm
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Permission, Post, Category
-from ..models import User, Permission, Post, Comment, Announcement
+from ..models import User, Permission, Post, Comment, Announcement, Category, LAFPost
+from .echarts import *
+from .keyextract import testKey
+from wtforms import ValidationError
 
-from pyecharts import options as opts
-from pyecharts.charts import WordCloud
-from pyecharts.globals import SymbolType
-import random
 
-def wordCloud_base(wordPair) -> WordCloud:
-    cloud = (
-    WordCloud()
-        .add(series_name = "Category", data_pair = wordPair, shape = SymbolType.DIAMOND)
-        .set_global_opts(
-        title_opts=opts.TitleOpts(title="Category Heat", pos_left="center", pos_right="center", title_textstyle_opts=opts.TextStyleOpts(font_size=30)),
-        tooltip_opts=opts.TooltipOpts(is_show=False)
-                        )
-            )
-    return cloud
-
-@main.route('/WordCloud')
-def getWordCloud(wordPair):
-    wordCloud = wordCloud_base(wordPair)
-    return wordCloud.dump_options()
-
-def getWordPair(font):
-    all_categories = []
-    all_heat = []
-    word_pair = []
-    for i in Category.query.with_entities(Category.name).all():
-        all_categories.append(i[0])
-    for i in Category.query.with_entities(Category.heat).all():
-        all_heat.append(i[0])
-    for i in range(len(all_categories)):
-        word_pair.append([all_categories[all_heat.index(max(all_heat))], font[i]])
-        all_heat[all_heat.index(max(all_heat))] = -1
-    return word_pair
-
-@main.route("/getDynamicWordCloud")
-def update_word_cloud():
-    font1 = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
-            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
-    wordpair1 = getWordPair(font1)
-
-    font2 = [6181, 10000, 4055, 4386, 2244, 2467, 1484, 1868, 865, 1112,
-            582, 847, 550, 555, 366, 462, 282, 360, 265, 273]
-    wordpair2 = getWordPair(font2)
-
-    luckyWordPair = random.choice(wordpair1, wordpair2)
-    return jsonify(luckyWordPair)
+@main.route('/lost&found', methods=['GET', 'POST'])
+def lindex():
+    lform = LostAndFoundForm()
+    content = ''
+    if lform.validate_on_submit() and \
+            current_user.can(Permission.WRITE):
+        t = lform.title.data
+        photo = request.files['photo']
+        fname = photo.filename
+        upload_folder = current_app.config['LAF_UPLOAD_FOLDER']
+        allowed_extensions = ['png', 'jpg', 'jpeg', 'gif']
+        fext = fname.rsplit('.', 1)[-1] if '.' in fname else ''
+        if fext not in allowed_extensions:
+            flash('Please check if its one of png, '
+                  'jpg, jpeg and gif')
+            return redirect(url_for('.lindex'))
+        target = '{}{}.{}'.format(upload_folder, t, fext)
+        photo.save(target)
+        lpost = LAFPost(title=lform.title.data,
+                        details=lform.details.data,
+                        author=current_user._get_current_object(),
+                        photo='/static/lostAndFoundPhoto/{}.{}'.format(t, fext),
+                        contact=lform.contact.data,
+                        location=lform.location.data,
+                        reward=lform.reward.data,
+                        lorf=lform.lorf.data,
+                        moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        category = Category.query.get(11)
+        category.heat += 1
+        db.session.add(lpost)
+        flash('Your post has been pushed.')
+        return redirect(url_for('.lindex'))
+    sform = SearchForm()
+    if sform.validate_on_submit():
+        content = sform.text.data
+    page = request.args.get('page', 1, type=int)
+    query = LAFPost.query
+    pagination = query.filter(
+        LAFPost.title.like('%' + content + '%')).order_by(
+        LAFPost.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
+        error_out=False)
+    posts = pagination.items
+    return render_template('lindex.html', lform=lform, sform=sform, lposts=posts,
+                           pagination=pagination, show_followed=show_followed,
+                           )
 
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = PostForm()
     content = ''
+    result = testKey()
+    keyList = result['key']
+    cloudKey = []
+    for i in range(len(Post.query.all())):
+        k = keyList[i].split()
+        for i in k:
+            cloudKey.append(i)
+        word_counts = Counter(cloudKey)
+        cK = word_counts.most_common(10)
+        cloudKeys = []
+        for i in cK:
+            cloudKeys.append(i[0])
     if form.validate_on_submit() and \
             current_user.can(Permission.WRITE):
         category_id = form.category_id.data
@@ -95,7 +109,12 @@ def index():
     categories = Category.query.all()
     category_id = request.args.get('category_id', type=int, default=None)
 
-    pagination = query.filter(Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%')).order_by(Post.timestamp.desc()).paginate(
+    pagination = query.filter(
+        Post.title.like('%' + content + '%') + Post.categories.like('%' + content + '%') +
+        Post.keyA.like('%' + content + '%') + Post.keyB.like('%' + content + '%') + Post.keyC.like(
+            '%' + content + '%') +
+        Post.keyD.like('%' + content + '%') + Post.keyE.like('%' + content + '%')).order_by(
+        Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
     if category_id:
@@ -104,12 +123,11 @@ def index():
             error_out=False)
     posts = pagination.items
 
-    font = [10000, 6181, 4386, 4055, 2467, 2244, 1868, 1484, 1112, 865,
-            847, 582, 555, 550, 462, 366, 360, 282, 273, 265]
-
-    return render_template('index.html', form=form, sform=sform, posts=posts, categories = categories, catgory_id = category_id, pagination=pagination,
-                           show_followed=show_followed,
-                           Cloud_options = getWordCloud(getWordPair(font))
+    return render_template('index.html', form=form, sform=sform, posts=posts, categories=categories,
+                           catgory_id=category_id,
+                           pagination=pagination, show_followed=show_followed,
+                           Cloud_options=getWordCloud(), KeyWordCloud_options=getKeyWordCloud(), Ball_options=getLiquidBall(),
+                           cloudKeys=cloudKeys
                            )
 
 
@@ -131,7 +149,17 @@ def announcement():
         error_out=False)
     announcements = pagination.items
     return render_template('announcement.html', form=form, announcements=announcements,
-                           pagination=pagination)
+                           pagination=pagination,
+                           Bar3D_options=getBar3D())
+
+
+@main.route('/administrator', methods=['Get','Post'])
+@login_required
+def administrator():
+    return render_template('administrator.html', Bar3D_options = getBar3D())
+
+
+
 
 
 @main.route('/user/<username>', methods=['GET', 'POST'])
@@ -287,14 +315,66 @@ def show_followed():
     return resp
 
 
+@main.route('/lpost/<int:id>', methods=['GET', 'Post'])
+def lpost(id):
+    lpost = LAFPost.query.get_or_404(id)
+    lpost.read_count += 1
+    category = Category.query.get(lpost.categories)
+    category.heat += 1
+    comment_count = lpost.comments.count()
+    form = CommentForm()
+    rform = ReplyForm()
+    if form.validate_on_submit():
+        comment = Comment(body=form.body.data,
+                          post=lpost,
+                          author=current_user._get_current_object(),
+                          moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been published')
+        return redirect(url_for('.lpost', id=lpost.id, page=-1, user=current_user))
+    if rform.validate_on_submit():
+        comment = Comment(body=rform.body.data,
+                          post=lpost,
+                          author=current_user._get_current_object(),
+                          moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                          parent=int(rform.parent))
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your reply has been published')
+        return redirect(url_for('.lpost', id=lpost.id, page=-1, user=current_user))
+    page = request.args.get('page', 1, type=int)
+    if page == -1:
+        page = (lpost.comments.count() - 1) // \
+               current_app.config['FLASKY_COMMENTS_PER_PAGE'] + 1
+    pagination = lpost.comments.order_by(Comment.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
+        error_out=False)
+    comments = pagination.items
+    return render_template('lpost.html', posts=[lpost], form=form,
+                           comments=comments, pagination=pagination, user=current_user, comment_count=comment_count)
+
+
 @main.route('/post/<int:id>', methods=['GET', 'Post'])
 def post(id):
+    result = testKey()
+    keyList = result['key']
+    keys = []
+    k = keyList[id - 1].split()
+    for i in k:
+        keys.append(i)
     post = Post.query.get_or_404(id)
     post.read_count += 1
     category = Category.query.get(post.category_id)
     category.heat += 1
+    post.keyA = keys[0]
+    post.keyB = keys[1]
+    post.keyC = keys[2]
+    post.keyD = keys[3]
+    post.keyE = keys[4]
     comment_count = post.comments.count()
     form = CommentForm()
+    rform = ReplyForm()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
                           post=post,
@@ -303,6 +383,16 @@ def post(id):
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been published')
+        return redirect(url_for('.post', id=post.id, page=-1, user=current_user))
+    if rform.validate_on_submit():
+        comment = Comment(body=rform.body.data,
+                          post=post,
+                          author=current_user._get_current_object(),
+                          moment=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                          parent=int(rform.parent))
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your reply has been published')
         return redirect(url_for('.post', id=post.id, page=-1, user=current_user))
     page = request.args.get('page', 1, type=int)
     if page == -1:
@@ -327,36 +417,14 @@ def edit(id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.body = form.body.data
+        post.category_id = form.category_id.data
+        categories = Category.query.get(post.category_id)
+        post.categories = categories.name
         db.session.add(post)
         flash('The post has been updated.')
         return redirect(url_for('main.index'))
         # return redirect(url_for('post', id=post.id))
     form.title.data = post.title
     form.body.data = post.body
+    form.category_id.data = post.category_id
     return render_template('edit_post.html', form=form)
-
-#
-# @main.route('/change-avatar', methods=['GET', 'POST'])
-# @login_required
-# def change_avatar():
-#     form = ChangeAvatarForm()
-#     if aform.avatar.data is not None:
-#         avatar = request.files['avatar']
-#         fname = avatar.filename
-#         upload_folder = current_app.config['UPLOAD_FOLDER']
-#         allowed_extensions = ['png', 'jpg', 'jpeg', 'gif']
-#         fext = fname.rsplit('.', 1)[-1] if '.' in fname else ''
-#         if fext not in allowed_extensions:
-#             flash('Please check if its one of png, '
-#                   'jpg, jpeg and gif')
-#             return redirect(url_for('main.edit_profile',
-#                                     username=current_user.username))
-#         target = '{}{}.{}'.format(upload_folder, current_user.username, fext)
-#         avatar.save(target)
-#         current_user.real_avatar = '/static/avatars/{}.{}'.format(current_user.username, fext)
-#         db.session.add(current_user)
-#         flash('Your avatar has been updated.')
-#         return redirect(url_for('main.edit_profile', username=current_user.username))
-#     return render_template('userinfo.html', form=form, username=current_user.username)
-
-
