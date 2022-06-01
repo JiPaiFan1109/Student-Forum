@@ -1,5 +1,5 @@
 from pyecharts import options as opts
-from pyecharts.charts import WordCloud, Liquid, Bar3D, Map
+from pyecharts.charts import WordCloud, Liquid, Bar, Bar3D, Map
 from pyecharts.commons.utils import JsCode
 from pyecharts.globals import SymbolType
 from flask.json import jsonify
@@ -129,11 +129,33 @@ def getLiquidBall():
 
 
 #2D柱状图
+def bar_base() -> Bar:
+    bar = (
+    Bar(
+        init_opts=opts.InitOpts(
+            animation_opts=opts.AnimationOpts(
+                animation_delay=1000, animation_easing="elasticOut"
+            )
+        )
+    )
+    .add_xaxis(getAllCategories())
+    .add_yaxis("Heat", getCategoryHeat(), gap="0%")
+    .add_yaxis("PostAmount", getCategoryAmount(), gap="0%")
+    .set_global_opts(title_opts=opts.TitleOpts(title="Heat and PostAmount"),
+                     toolbox_opts=opts.ToolboxOpts(),
+                     datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")],
+                     brush_opts=opts.BrushOpts(),
+                     xaxis_opts=opts.AxisOpts(name = "Category", axislabel_opts=opts.LabelOpts(rotate = -15, interval = 0)),
+                     yaxis_opts=opts.AxisOpts(),
+                     )
+    .set_series_opts()
+)
+    return bar
 
-
-
-
-
+@main.route("/Bar")
+def getBar():
+    bar = bar_base()
+    return bar.dump_options_with_quotes()
 
 
 #3D柱形图
@@ -203,17 +225,53 @@ def getMapDataPair():
     provinces = ['北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江',
                 '上海', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北',
                 '湖南', '广东', '广西', '海南', '重庆', '四川', '贵州', '云南', '西藏',
-                '陕西', '甘肃', '青海', '宁夏', '新疆']
+                '陕西', '甘肃', '青海', '宁夏', '新疆', '香港', '台湾', '澳门', '南海诸岛']
     amount = []
     for i in provinces:
-        amount.append(User.query.filter_by(insititute=i).count())
+        amount.append(User.query.filter_by(institute=i).count())
+    amount[0] = 100;#北京
+    amount[1] = 83;#天津
+    amount[2] = 65;#河北
+    amount[3] = 51;#山西
+    amount[4] = 20;#内蒙古
+    amount[5] = 0;#辽宁
+    amount[6] = 30;#吉林
+    amount[7] = 50;#黑龙江
+    amount[8] = 100;#上海
+    amount[9] = 5;#江苏
+    amount[10] = 15;#浙江
+    #amount[11] = 100;#安徽
+    amount[12] = 56;#福建
+    amount[13] = 90;#江西
+    amount[14] = 70;#山东
+    amount[15] = 80;#河南
+    amount[16] = 0;#湖北
+    amount[17] = 20;#湖南
+    amount[18] = 70;#广东
+    amount[19] = 0;#广西
+    amount[20] = 0;#海南
+    amount[21] = 40;#重庆
+    amount[22] = 60;#四川
+    amount[23] = 50;#贵州
+    amount[24] = 39;#云南
+    amount[25] = 6;#西藏
+    amount[26] = 50;#陕西
+    amount[27] = 40;#甘肃
+    amount[28] = 3;#青海
+    amount[29] = 90;#宁夏
+    amount[30] = 9;#新疆
+    amount[31] = 20;#香港
+    amount[32] = 50;#台湾
+    amount[33] = 50;#澳门
+    #amount[34] = 0;#南海诸岛
     MapDataPair = [list(z) for z in zip(provinces, amount)]
+
     return MapDataPair
 
 def map_base() -> Map:
     map = (
         Map()
-            .add("PeopleAmount", data_pair=getMapDataPair() , maptype = "china")
+            .add("PeopleAmount", data_pair=getMapDataPair(), maptype = "china")
             .set_global_opts(
             title_opts=opts.TitleOpts(title="BirthPlace Distribution"),
             visualmap_opts=opts.VisualMapOpts(is_show=True),
