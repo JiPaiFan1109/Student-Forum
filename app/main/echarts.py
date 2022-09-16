@@ -1,15 +1,16 @@
+import random
+from collections import Counter
+
+from flask.json import jsonify
 from pyecharts import options as opts
 from pyecharts.charts import WordCloud, Liquid, Bar, Bar3D, Map
 from pyecharts.commons.utils import JsCode
 from pyecharts.globals import SymbolType
-from flask.json import jsonify
 
 from . import main
 from .keyextract import testKey
 from ..models import Category, User, Post
 
-import random
-from collections import Counter
 
 #Category词云图部分
 def getWordPair():

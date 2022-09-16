@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../All_Project/3019JProject/.idea/3019JProject.iml" filepath="$PROJECT_DIR$/../All_Project/3019JProject/.idea/3019JProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/COMP2008JCODE.iml" filepath="$PROJECT_DIR$/.idea/COMP2008JCODE.iml" />
     </modules>
   </component>
