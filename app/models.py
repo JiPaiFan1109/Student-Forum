@@ -133,6 +133,8 @@ class User(UserMixin, db.Model):
                 self.role = Role.query.filter_by(name='Administrator').first()
             if self.email == current_app.config['FLASKY_ADMIN_D']:
                 self.role = Role.query.filter_by(name='Administrator').first()
+            if self.email == current_app.config['FLASKY_ADMIN_E']:
+                self.role = Role.query.filter_by(name='Administrator').first()
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
 

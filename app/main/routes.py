@@ -12,6 +12,9 @@ from .echarts import *
 from .keyextract import testKey
 from wtforms import ValidationError
 
+@main.route('/testing_file', methods=['GET', 'POST'])
+def testing_file():
+    return render_template("testing_file.html", Map_options=getWordCloud())
 
 @main.route('/lost&found', methods=['GET', 'POST'])
 def lindex():
