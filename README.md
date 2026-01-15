@@ -1,7 +1,6 @@
-~~We decided to make a web forum mainly face to BJUT students. Students can~~
-publish new posts on the forum and interact with other posts. Also, the forum
-can search for old posts by keywords, visits hotness ranking, and recommendation
-degree. Meanwhile, the system administrator can manage users, posts, delete or
-ban inappropriate content, and send announcements or notifications to users. The
-forum will also be divided into several different sections for students to access
-specific content as well as for administrators to manage it effectively.
+这是一个为BJUT学生建造的论坛项目，
+支持邮箱注册登录及短信验证，包含基本的关注点赞发帖功能。
+主页将展示热点发帖及热点搜索词。
+此外，管理员端可以显示基本的用户使用情况（基于用户数据可视化功能）
+
+This is a forum project built for BJUT students, supporting email registration and login as well as SMS verification. It includes basic functions such as following, liking, and posting. The homepage will display trending posts and popular search terms. Additionally, the administrator interface can display basic user activity (based on user data visualization features).
